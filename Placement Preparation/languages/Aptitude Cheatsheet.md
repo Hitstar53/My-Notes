@@ -1,6 +1,4 @@
 Link to Practice Aptitude [here](https://www.indiabix.com/aptitude/questions-and-answers/)
-
-This is a Change from my Ipad!
 # Profit - Loss & Sales
 Profit = Selling Price (SP) - Cost Price (CP)
 Loss = Cost Price (CP) - Selling Price (SP)
