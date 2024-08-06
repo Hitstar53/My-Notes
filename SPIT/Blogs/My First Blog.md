@@ -15,7 +15,7 @@
 2.1 Third Semester: New Classroom, New Stories
 2.2 Getting the Hang of It!
 2.3 Fourth Semester: Being More Extroverted
-2.4 Summer Vacation: The Good and The Bad
+2.4 Summer Vacation: Work-Life Balance
 
 ### 3. Year Three: Weathering the Storm
 3.1 College Clubs: Unchartered Territory

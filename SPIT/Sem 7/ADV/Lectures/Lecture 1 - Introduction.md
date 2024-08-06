@@ -24,3 +24,4 @@ Other types of data: Binary (case of nominal with 2 categories), Interval & Rati
 	3. Mode: The most frequently occurring value(s) in a dataset, best suited for nominal data. Data can be Uni-modal (1 mode), multi-modal (more than 1 mode) or non-modal (all categories of equal frequency).
 ### 2. Categorical plots
 ### 3. Relational plots
+
