@@ -7,10 +7,11 @@ Find SQL Top 50 Practice Problems [here](https://leetcode.com/studyplan/top-sql-
 [[#5. Transaction Control Language (TCL)]]
 [[#6. Joins]]
 [[#7. Aggregate Functions]]
-[[#8. Subqueries]]
-[[#9. Views]]
-[[#10. Indexes]]
-[[#11. Stored Procedures and Functions]]
+[[#8. Window Functions]]
+[[#9. Subqueries]]
+[[#10. Views]]
+[[#11. Indexes]]
+[[#12. Stored Procedures and Functions]]
 
 ## 1. Data Definition Language (DDL)
 
@@ -83,25 +84,25 @@ RENAME TABLE employees TO employee_details;
 ```
 
 ### DROP TABLE
-```sql
+```mysql
 DROP TABLE employees;
 ```
 
 ### TRUNCATE TABLE
-```sql
+```mysql
 TRUNCATE TABLE employees;
 ```
 
 ## 2. Data Manipulation Language (DML)
 
 ### INSERT
-```sql
+```mysql
 INSERT INTO employees (employee_id, first_name, last_name, hire_date, salary)
 VALUES (1, 'John', 'Doe', '2023-01-15', 50000.00);
 ```
 
 ### UPDATE
-```sql
+```mysql
 UPDATE employees
 SET salary = 55000.00
 WHERE employee_id = 1;
@@ -112,7 +113,7 @@ UPDATE CUSTOMERS SET AGE = AGE+5, SALARY = SALARY+3000;
 ```
 
 ### DELETE
-```sql
+```mysql
 DELETE FROM employees
 WHERE employee_id = 1;
 ```
@@ -140,6 +141,12 @@ SELECT * FROM employees
 WHERE salary > 50000;
 ```
 
+### EXISTS
+```mysql
+SELECT SupplierName FROM Suppliers  
+WHERE EXISTS (SELECT ProductName FROM Products WHERE Products.SupplierID = Suppliers.supplierID AND Price < 20);
+```
+
 ### IN / NOT IN 
 ```mysql
 SELECT * from CUSTOMERS WHERE NAME IN ('Khilan', 'Hardik', 'Muffy');
@@ -151,6 +158,17 @@ SELECT * from CUSTOMERS WHERE AGE NOT IN (25, 23, 22);
 ```mysql
 SELECT * FROM CUSTOMERS 
 WHERE (AGE = 25 OR salary < 4500) AND (name = 'Komal' OR name = 'Kaushik');
+```
+
+### ANY / ALL
+```mysql
+SELECT product_id, product_name, unit_price 
+FROM Product
+WHERE unit_price > ANY (SELECT price FROM Sales WHERE seller_id = 1);
+
+SELECT product_id, product_name, unit_price 
+FROM Product 
+WHERE unit_price > ALL (SELECT price FROM Sales WHERE seller_id = 1 );
 ```
 
 ### BETWEEN
@@ -231,27 +249,41 @@ ROLLBACK;
 ## 6. Joins
 
 ### INNER JOIN
+= (A ∩ B)
 ```mysql
 SELECT e.first_name, e.last_name, d.department_name
 FROM employees e
-INNER JOIN departments d ON e.department_id = d.department_id;
+JOIN departments d ON e.department_id = d.department_id;
 ```
 
-### LEFT JOIN
+### LEFT OUTER JOIN
+= A ∪ (A ∩ B)
 ```mysql
 SELECT e.first_name, e.last_name, d.department_name
 FROM employees e
 LEFT JOIN departments d ON e.department_id = d.department_id;
 ```
 
-### RIGHT JOIN
+### RIGHT OUTER JOIN
+= B ∪ (A ∩ B)
 ```mysql
 SELECT e.first_name, e.last_name, d.department_name
 FROM employees e
 RIGHT JOIN departments d ON e.department_id = d.department_id;
 ```
 
+### FULL OUTER JOIN
+= (A ∪ B)
+```mysql
+SELECT employees.emp_name, salaries.salary FROM employees 
+LEFT JOIN salaries ON employees.emp_id = salaries.emp_id 
+UNION 
+SELECT employees.emp_name, salaries.salary FROM employees 
+RIGHT JOIN salaries ON employees.emp_id = salaries.emp_id;
+```
+
 ### CROSS JOIN
+= (A × B)
 ```mysql
 SELECT e.first_name, e.last_name, d.department_name
 FROM employees e
@@ -335,7 +367,44 @@ END AS Threshold
 FROM OrderDetails;
 ```
 
-## 8. Subqueries
+## 8. Window Functions
+
+### ROW NUMBER
+```postgresql
+SELECT employee_id, department_id, salary, 
+ROW_NUMBER() OVER (PARTITION BY department_id ORDER BY salary DESC) AS rn
+FROM employees;
+```
+
+### RANK
+```postgresql
+SELECT employee_id, department_id, salary, 
+RANK() OVER (PARTITION BY department_id ORDER BY salary DESC) AS rk
+FROM employees;
+```
+
+### DENSE RANK
+```postgresql
+SELECT employee_id, department_id, salary, 
+DENSE_RANK() OVER (PARTITION BY department_id ORDER BY salary DESC) AS drk
+FROM employees;
+```
+
+### LAG
+```postgresql
+SELECT employee_id, department_id, salary, 
+LAG(salary, 1, 0) OVER (PARTITION BY department_id ORDER BY salary) AS prev_salary
+FROM employees;
+```
+
+### LEAD
+```postgresql
+SELECT employee_id, department_id, salary, 
+LEAD(salary, 1, 0) OVER (PARTITION BY department_id ORDER BY salary) AS next_salary
+FROM employees;
+```
+
+## 9. Subqueries
 
 ### Subquery in WHERE clause
 ```mysql
@@ -357,7 +426,7 @@ UPDATE CUSTOMERS SET SALARY = SALARY * 0.25
 WHERE AGE IN (SELECT AGE FROM CUSTOMERS_BKP WHERE AGE >= 27 );
 ```
 
-## 9. Views
+## 10. Views
 
 ### Create View
 ```mysql
@@ -381,7 +450,7 @@ SET salary = 85000 WHERE name = 'Ramesh';
 DROP VIEW high_salary_employees;
 ```
 
-## 10. Indexes
+## 11. Indexes
 
 ### Create Index
 ```mysql
@@ -393,7 +462,18 @@ CREATE INDEX idx_last_name ON employees(last_name);
 DROP INDEX idx_last_name ON employees;
 ```
 
-## 11. Stored Procedures and Functions
+## 12. Stored Procedures, Functions and CTEs
+
+### CTE (Common Table Expression)
+```mysql
+WITH cte_name AS (
+    SELECT column1, column2
+    FROM table_name
+    WHERE condition
+)
+
+SELECT * FROM cte_name;
+```
 
 ### Create Stored Procedure
 ```mysql

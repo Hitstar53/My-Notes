@@ -1,3 +1,5 @@
+This session was taken as part of Amazon's Enabling Abilities Program
+
 Mock Interview 1: (Bad)
 Problem Definition:
 ![[Pasted image 20240626184144.png]]
