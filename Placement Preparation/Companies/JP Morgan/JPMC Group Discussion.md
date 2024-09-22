@@ -21,7 +21,7 @@ As we delve deeper into this topic, I propose we explore not just the factors th
 
 Moreover, in an era of shifting global dynamics, how does India's rise impact the international economic order, particularly in relation to other emerging economies and the Global South?
 
-These are the questions I believe we must grapple with as we discuss India's position as the world's fifth-largest economy. ==I look forward to a robust and insightful exchange of ideas with all of you. ==
+These are the questions I believe we must grapple with as we discuss India's position as the world's fifth-largest economy. I look forward to a robust and insightful exchange of ideas with all of you.
 
 
 ## Important Points During The GD:
