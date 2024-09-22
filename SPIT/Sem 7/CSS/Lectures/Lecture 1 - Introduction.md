@@ -1,4 +1,5 @@
 # Overview of Course
+![[Pasted image 20240920224846.png]]
 ## Syllabus:
 1. Covers internet security as part of syllabus.
 2. different types of cryptography algorithms
