@@ -2,9 +2,9 @@
 #### Recommender System Functions:
 1. **Increase the number of items sold:** This is probably the most important function for a commercial RS, i.e., to be able to sell an additional set of items compared to those usually sold without any kind of recommendation.
 2. **Sell more diverse items:** Another major function of a RS is to enable the user to select items that might be hard to find without a precise recommendation. For instance, in a movie RS such as Netflix, the service provider is interested in renting all the DVDs in the catalogue, not just the most popular ones.
-3. **Increase the user satisfaction:** A well designed RS can also improve the expe- rience of the user with the site or the application. The user will find the recommendations interesting, relevant and, with a properly designed human-computer interaction, she will also enjoy using the system.
-4. **Increase user fidelity:** A user should be loyal to a Web site which, when visited, recognizes the old customer and treats him as a valuable visitor. This is a nor- mal feature of a RS since many RSs compute recommendations, leveraging the information acquired from the user in previous interactions, e.g., her ratings of items.
-5. **Better understand what the user wants:** Another important function of a RS, which can be leveraged to many other applications, is the description of the user’s preferences, either collected explicitly or predicted by the system. The service provider may then decide to re-use this knowledge for a number of other goals such as improving the management of the item’s stock or production.
+3. **Increase the user satisfaction:** A well designed RS can also improve the experience of the user with the site or the application. The user will find the recommendations interesting, relevant and, with a properly designed human-computer interaction, she will also enjoy using the system.
+4. **Increase user fidelity:** A user should be loyal to a Web site which, when visited, recognizes the old customer and treats him as a valuable visitor. This is a normal feature of a RS since many RSs compute recommendations, leveraging the information acquired from the user in previous interactions, e.g., her ratings of items.
+5. **Better understand what the user wants:** Another important function of a RS, which can be leveraged to many other applications, is the description of the user’s preferences, either collected explicitly or predicted by the system. The service provider may then decide to reuse this knowledge for a number of other goals such as improving the management of the item’s stock or production.
 
 #### Data & Knowledge Sources
 1. **Items:** Items are the objects that are recommended. Items may be characterized by their complexity and their value or utility. The value of an item may be positive if the item is useful for the user, or negative if the item is not appropriate and the user made a wrong decision when selecting it. We note that when a user is acquiring an item she will always incur in a cost, which includes the cognitive cost of searching for the item and the real monetary cost eventually paid for the item.
@@ -23,7 +23,7 @@
 Ratings represent a user's explicit or implicit feedback for an item, generally captured in a matrix format.
 
 1. **Explicit Ratings**: Direct user feedback, like giving a movie 4 stars.
-   The main problems with explicit ratings are that such ratings require addi- tional efforts from the users of the recommender system and users might not be willing to provide such ratings as long as the value cannot be easily seen. Thus, the number of available ratings could be too small, which in turn results in poor recommendation quality.
+   The main problems with explicit ratings are that such ratings require additional efforts from the users of the recommender system and users might not be willing to provide such ratings as long as the value cannot be easily seen. Thus, the number of available ratings could be too small, which in turn results in poor recommendation quality.
 2. **Implicit Ratings**: Inferred from behavior, such as how long a user watches a video or the number of clicks
    Although implicit ratings can be collected constantly and do not require additional efforts from the side of the user, one cannot be sure whether the user behavior is correctly interpreted.
 
@@ -31,11 +31,25 @@ Ratings are typically arranged in a **User-Item Matrix**, where rows represent u
 
 In the explicit collection of ratings, the user is asked to provide her opinion about an item on a rating scale. Ratings can take on a variety of forms: 
 1. **Numerical ratings** such as the 1-5 stars provided in the book recommender associated with Amazon.com. 
-2. **Ordinal ratings**, such as “strongly agree, agree, neutral, disagree, strongly dis- agree” where the user is asked to select the term that best indicates her opinion regarding an item (usually via questionnaire).
-3. **Binary ratings** that model choices in which the user is simply asked to decide if a certain item is good or bad.
+2. **Ordinal ratings**, such as “strongly agree, agree, neutral, disagree, strongly disagree” where the user is asked to select the term that best indicates her opinion regarding an item (usually via questionnaire).
+3. **Binary ratings** that model choices in which the user is simply asked to decide if a certain item is good or bad, example Likes and Dislikes on a YouTube video.
 4. **Unary ratings** can indicate that a user has observed or purchased an item, or otherwise rated the item positively. In such cases, the absence of a rating indicates that we have no information relating the user to the item (perhaps she purchased the item somewhere else).
 
 **Example**: In a movie recommendation system, a matrix with users as rows and movies as columns will store ratings (from 1 to 5) in the respective cell.
+
+#### Applications of Recommendation Systems
+Recommender systems are widely used across industries for:
+1. **E-commerce**: Amazon uses collaborative filtering to recommend products based on users’ past purchases and browsing history.
+2. **Entertainment**: Netflix and YouTube recommend videos or movies based on your watching history and ratings.
+3. **Social Media**: Facebook and Instagram suggest friends or posts by analyzing user interactions and connections.
+4. **Content Discovery**: News sites like Google News recommend articles based on reading history.
+
+#### Issues with Recommender Systems
+Some of the key issues faced by recommender systems include:
+1. **Cold Start Problem**: When a new user or item enters the system, there is no previous data available to generate recommendations.
+2. **Scalability**: Large datasets with millions of users and items require efficient algorithms for real-time recommendations.
+3. **Sparsity**: The user-item matrix is often sparse, meaning most users rate only a small subset of available items, making accurate predictions harder.
+4. **Bias**: Recommender systems can be biased towards popular items or those with many ratings, potentially leading to a lack of diversity in recommendations.
 
 
 ### Module 1.2: Evaluation of RS
