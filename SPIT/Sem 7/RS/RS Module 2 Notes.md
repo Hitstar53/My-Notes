@@ -1,5 +1,5 @@
 #### Collaborative Filtering Based Recommendations
-The main idea of collaborative recommendation approaches is to exploit infor- mation about the past behavior or the opinions of an existing user community for predicting which items the current user of the system will most probably like or be interested in. These types of systems are in widespread industrial use today, in particular as a tool in online retail sites to customize the content to the needs of a particular customer and to thereby promote additional items and increase sales.
+The main idea of collaborative recommendation approaches is to exploit information about the past behavior or the opinions of an existing user community for predicting which items the current user of the system will most probably like or be interested in. These types of systems are in widespread industrial use today, in particular as a tool in online retail sites to customize the content to the needs of a particular customer and to thereby promote additional items and increase sales.
 
 | Feature                          | User-Based Nearest Neighbor                     | Item-Based Nearest Neighbor                     |
 | -------------------------------- | ----------------------------------------------- | ----------------------------------------------- |
