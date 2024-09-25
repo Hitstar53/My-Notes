@@ -66,9 +66,17 @@ Recommender systems can be vulnerable to different types of attacks, where malic
 
 **Types of Attacks**:
 1. **Profile Injection Attacks (Shilling Attacks)**: Malicious users inject fake profiles with the aim of influencing recommendations. They can either:
-	   - **Push Attack**: Aim to promote certain items by giving them artificially high ratings.
-	- **Nuke Attack**: Aim to demote certain items by giving them artificially low ratings.
+	1. **Push Attack**: Aim to promote certain items by giving them artificially high ratings.
+	2. **Nuke Attack**: Aim to demote certain items by giving them artificially low ratings.
    **Example**: In an e-commerce system, a seller might create fake user accounts to upvote their product, pushing it higher in the recommendations.
+   
+   Types of Profile Injection Attacks:
+   1. **Random Attack:** In the random attack, all item ratings of the injected profile (except the target item rating, of course) are filled with random values drawn from a normal distribution that is determined by the mean rating value and the standard deviation of all ratings in the database. The intuitive idea of this approach is that the generated profiles should contain “typical” ratings so they are considered as neighbors to many other real profiles.
+   2. **Average Attack:** A bit more sophisticated than the random attack is the average attack. In this method, the average rating per item is used to determine the rating values for the profile to be injected. Intuitively, the profiles that are generated based on this strategy should have more neighbors, as more details about the existing rating datasets are taken into account.
+   3. **Bandwagon Attack:** The bandwagon attack exploits additional, external knowledge about a rating database in a domain to increase the chances that the injected profiles have many neighbors. In nearly all domains in which recommenders are applied, there are “blockbusters” – very popular items that are liked by a larger number of users. The idea, therefore, is to inject profiles that – besides the high or low rating for the target items – contain only high rating values for very popular items.
+   4. **Segment Attack:** The rationale for segment attack is straightforwardly derived from the well-known marketing insight that promotional activities can be more effective when they are tailored to individual market segments. When designing an attack that aims to push item A, the problem is thus to identify a subset of the user community that is generally interested in items that are similar to A.
+   5. **Special Nuke Attack:** (Love/hate attack) In the corresponding attack profiles, the target item is given the minimum value, whereas some other randomly chosen items (those in the filler set) are given the highest possible rating value.
+  
 2. **Data Poisoning**: This involves inserting misleading data into the training dataset to degrade the performance of the recommender system. Poisoned data skews the recommendations away from their true target.
 3. **Reverse Attacks**: Malicious users might exploit the system to get biased recommendations for themselves by creating patterns in their own profile that the system might interpret as similar to high-rated items.
 
