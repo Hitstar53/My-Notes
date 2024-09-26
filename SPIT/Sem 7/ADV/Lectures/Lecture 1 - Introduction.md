@@ -20,8 +20,9 @@ Other types of data: Binary (case of nominal with 2 categories), Interval & Rati
 ### 1. Distribution plots
 1. **Histogram**: frequency on y-axis and numeric data converted to ranges on x-axis, it works with numeric discretized continuous data (interval data), conversion is called binning, and ranges are called bins. It also tells us a central tendency of the data, and dispersion/spread of the data:
 	1. Mean: Avg. of all data val. in a dataset, best suited for continuous / interval data
-	2. Median: Mid val. of a sorted dataset, best suited for ordinal data.
-	3. Mode: The most frequently occurring value(s) in a dataset, best suited for nominal data. Data can be Uni-modal (1 mode), multi-modal (more than 1 mode) or non-modal (all categories of equal frequency).
+	   $$ Mean(\bar{x})=∑_{i=1}^nx_in=\text{Mean} (\bar{x}) = \frac{\sum_{i=1}^{n} x_i}{n}Mean(xˉ)=n∑_{i=1}^nx $$
+	1. Median: Mid val. of a sorted dataset, best suited for ordinal data.
+	2. Mode: The most frequently occurring value(s) in a dataset, best suited for nominal data. Data can be Uni-modal (1 mode), multi-modal (more than 1 mode) or non-modal (all categories of equal frequency).
 ### 2. Categorical plots
 ### 3. Relational plots
 
