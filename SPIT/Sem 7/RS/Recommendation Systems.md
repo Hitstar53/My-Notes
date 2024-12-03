@@ -1,15 +1,13 @@
-#### Syllabus for the Course:
-![[Pasted image 20240919200356.png]]
-![[Pasted image 20240919200438.png]]
+## Syllabus for the Course:
+![[Pasted image 20241130112519.png]]
 
 ## Module 1: Introduction to RS
 #### Module 1.1: Introduction
 Refer [[RS_textbook2.pdf#page=25&selection=0,0,3,8|RS_textbook2]]: Chapter 1
-Refer [[RS Module 1 Notes]] for summary
-
+Refer [[RS Module 1 Notes#Module 1.1 Introduction|RS Module 1 Notes]] for summary
 #### Module 1.2: Performance Evaluation of RS
 Refer [[RS_textbook2.pdf#page=274&selection=0,9,2,33|RS_textbook2]]: Chapter 8
-Refer [[RS Module 1 Notes]] for summary
+Refer [[RS Module 1 Notes#Module 1.2 Evaluation of RS|RS Module 1 Notes]] for summary
 
 ## Module 2: Collaborative Based Filtering
 #### Module 2.1: Collaborative Filtering
@@ -27,9 +25,9 @@ Refer [[RS Module 3 Notes]] for Summary
 #### Module 4.1: Knowledge Based RS
 Refer [[RS_textbook1.pdf#page=7&annotation=5986R|RS_textbook1]]: Chapter 4
 Refer [[RS Module 4 Notes]] for Summary
-
 #### Module 4.2: Hybrid RS
 Refer [[RS_textbook1.pdf#page=8&annotation=5975R|RS_textbook1]]: Chapter 5
+Refer [[RS Module 4 Notes]] for Summary
 
 ## Module 5: Context Aware & Constraint Based Approaches
 #### Module 5.1: Context Aware RS
@@ -38,6 +36,7 @@ Refer [[RS Module 5 Notes]] for Summary
 
 #### Module 5.2: Constraint Based RS
 Refer [[RS_textbook2.pdf]]: Chapter 6
+Refer [[RS Module 5 Notes]] for Summary
 
 ### Mse Info
 1. Only theory based questions, no numericals
