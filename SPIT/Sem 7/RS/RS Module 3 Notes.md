@@ -108,3 +108,5 @@ In content-based systems, classification algorithms can be used to categorize it
 
 #### Summary
 Content-based filtering systems build **user profiles** based on the features of items a user has liked. These systems excel at recommending items similar to those a user has already enjoyed, though they face challenges such as **overspecialization** and **cold-start problems** for new users. By using techniques like **feature extraction**, **tagging**, and **similarity-based retrieval**, content-based recommenders provide personalized recommendations but require a rich set of item features to work effectively.
+
+![[Content-Based Filtering.png]]

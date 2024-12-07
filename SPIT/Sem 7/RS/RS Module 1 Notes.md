@@ -153,3 +153,5 @@ $$
 6. **MRR (Mean Reciprocal Rank)**: The average of reciprocal ranks of the first relevant item in each ranked list. Higher MRR means the relevant items tend to appear earlier in the recommendation lists. $$ MRR = \frac{1}{|U|} \sum_{i=1}^{|U|} \frac{1}{rank_i} $$
 #### Summary
 Recommender systems aim to personalize user experiences by leveraging data sources like user-item interactions and ratings. Key approaches such as content-based filtering, collaborative filtering, demographic methods, and hybrid techniques are explored. Critical challenges like cold-start issues, sparsity, and scalability, importance of fair and unbiased recommendations. Evaluation methods, including precision, recall, RMSE, and ranking measures like NDCG. Real-world examples demonstrate the practical application of these concepts.
+
+![[Recommender Systems.png]]

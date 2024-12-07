@@ -131,3 +131,5 @@ Following our characterization of a recommendation task (see Definition 1), we w
 
 #### Summary
 Constraint-Based Recommender Systems are a powerful approach for domains where user preferences and constraints play a critical role in decision-making. By leveraging explicit constraints and domain knowledge, these systems can deliver highly accurate and relevant recommendations. However, they require careful design of the knowledge base and inference mechanisms to ensure they meet user needs effectively. Combining CBRS with other approaches, such as hybrid recommenders, can address their limitations and broaden their applicability.
+
+![[Recommender Systems_ Context-Aware & Constraint-Based.png]]

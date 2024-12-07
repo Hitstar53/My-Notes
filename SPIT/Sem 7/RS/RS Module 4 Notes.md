@@ -170,3 +170,5 @@ In pipelined designs, the output of one method becomes the input for another. Pi
 
 #### Summary
 Hybrid approaches in recommendation systems overcome the limitations of individual methods by combining their strengths. Depending on the use case and data availability, various hybridization strategies can be implemented, such as weighted, switching, mixed, or pipelined designs. Hybrid RS is widely adopted in modern recommendation systems to provide accurate, diverse, and contextually relevant suggestions.
+
+![[Knowledge-Based & Hybrid Recommendation Systems.png]]

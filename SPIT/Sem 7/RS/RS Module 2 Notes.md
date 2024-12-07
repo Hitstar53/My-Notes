@@ -126,3 +126,4 @@ Types of Profile Injection Attacks:
 #### Summary
 Collaborative filtering is one of the most widely used techniques in recommender systems. Whether it’s user-based or item-based, the system leverages the preferences of similar entities to make recommendations. Modern approaches often involve model-based techniques like matrix factorization, which captures latent patterns in the data. Additionally, addressing challenges like data sparsity, scalability, and vulnerabilities (such as shilling attacks) is critical to building robust and reliable recommender systems.
 
+![[Collaborative Filtering.png]]
