@@ -11,6 +11,9 @@
 8. Unit 2: Secret and public key cryptography techniques
 9. Unit 3: Hashing Algorithms & Authentication Protocols
 
+## Textbook Reference Guide:
+![[WhatsApp Image 2024-12-02 at 19.57.02_4e546a3b.jpg]]
+
 # Lecture Notes:
 Unit 1: Introduction to CSS
 ## 1. OSI Security Architecture
