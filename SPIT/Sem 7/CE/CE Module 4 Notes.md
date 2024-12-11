@@ -14,10 +14,10 @@ Sound signals are waves that propagate through a medium and are characterized by
 - **Measurement**: Loudness is measured in decibels (**dB**) and depends on both amplitude and human ear sensitivity: $L = log(I)$, here $I$ is the intensity.
 
 **2. Pitch**:
-- **Pitch** is a characteristic of soundby which a correct note can be distinguished from a grave or a flat note. Pitch depends upon the frequencies of the sound wave. A note has a higher pitch when the frequency is high and a note of low frequency has a low pitch.
+- **Pitch** is a characteristic of sound by which a correct note can be distinguished from a grave or a flat note. Pitch depends upon the frequencies of the sound wave. A note has a higher pitch when the frequency is high and a note of low frequency has a low pitch.
 
 **3. Fidelity and Frequency Response**:
-- **Fidelity**: Ability of an audio system to reproduce sound faithfully without distortion.
+- **Fidelity**: Ability of an audio system to reproduce sound faithfully without distortion i.e. amplify all of them equally.
 - Fidelity is the quality of faithfulness or loyalty. Therefore the fidelity is dependent on the frequency response of the AF amplifier.
 - High fidelity (Hi-Fi) is essential in order reproduce a good quality music faithfully i.e. without introducing any distortion.
 - **Frequency Response**: The range of frequencies an audio system can handle, typically **20 Hz to 20,000 Hz** for human hearing.
@@ -26,8 +26,8 @@ Sound signals are waves that propagate through a medium and are characterized by
 
 ##### Sensitivity and Selectivity of the Human Ear
 **Sensitivity**:
-- Refers to the ear's ability to detect weak sounds.
-- **Range**: As low as 0.1 pW/m².
+- Refers to the ear's ability to detect weakest (Low Intensity) sounds.
+- **Range**: As low as 0.1 pW/m² (or 10 dB below threshold of hearing)
 - Ear is Most sensitive between **3 kHz and 4 kHz**.
 - Sensitivity of ear for higher frequency decreases with age, it decreases as the sound frequency goes below 500 Hz irrespective of the age.
 
@@ -67,6 +67,15 @@ A good practical microphone is expected to meet the following requirements:
 
 ##### Loudspeakers
 Loudspeakers convert electrical audio signals into sound waves.
+
+Some of the important characteristics are follows: 
+1. Directivity 
+2. Signal to noise ratio 
+3. Efficiency 
+4. Frequency response 
+5. Distortion 
+6. Speaker coil impedance 
+7. Power handling capacity
 ##### Types:
 1. **Cone Type**: Uses a moving coil attached to a conical diaphragm.
 2. **Electrodynamic**: Replaces the permanent magnet with an electromagnet for higher power.

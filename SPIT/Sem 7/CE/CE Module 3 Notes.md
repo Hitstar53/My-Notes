@@ -142,12 +142,10 @@ SECAM transmits chrominance information sequentially:
 Afghanistan, Benin, Burkina Faso, Bulgaria, Burundi, Central African Republic, Chad, Congo, Czechoslovakia, Djibouti, Egypt, France, French Guiana, Gabon, Greece, Guadalupe, Guinea, Gyprus, Haiti, Hungary, Iran, Iraq, Ivory Coast, Lebanon, Libya, Madagascar, Mali, Martinique, Mauritius, Mauritania, Monaco, Morocco, Niger, North Korea, Poland, Russia, Rwanda, Saudi Arabia, Senegal, Syria , Togo, Tunisia, Vietnam, Western Samoa, Zaire
 
 **Advantages**:
-
 1. Excellent resilience to signal degradation.
 2. Reliable in long-distance and weak-signal conditions.
 
 **Disadvantages**:
-
 1. Sequential color transmission can lead to slower processing.
 2. Limited compatibility with NTSC and PAL systems.
 
@@ -161,6 +159,16 @@ Afghanistan, Benin, Burkina Faso, Bulgaria, Burundi, Central African Republic, C
 |**Resolution**|Lower|Higher|Higher|
 |**Resilience**|Low (phase errors)|Moderate|High|
 |**Regions Used**|North America, Japan|Europe, Asia, Australia|France, Russia, Africa|
+
+##### Compatibility with Color Television:
+Compatibility implies that the colour television signal must produce a normal black and white picture on a monochrome receiver without any modification of the receiver circuitry and a color receiver must be able to produce a black and white picture from a normal monochrome signal. This is referred to as reverse compatibility.
+##### Requirements for Compatibility:
+1. It should occupy the same bandwidth as the corresponding monochrorne signal.
+2. The location and spacing of picture and sound carrier frequencies should remain the same.
+3. The color signal should have the same luminance (brightness) information as would a monochrome signal, transmitting the same scene.
+4. The composite colour signal should contain color information together with the ancillary signals needed to allow this to be decoded.
+5. The colour information should be carried in such a way that it does not affect the picture reproduced on the screen of a monochrome receiver.
+6. The system must employ the same deflection frequencies and sync signals as used for monochrome transmission and reception.
 
 
 #### Module 3.2: Advanced TV Systems
