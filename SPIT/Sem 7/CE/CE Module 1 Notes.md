@@ -88,6 +88,7 @@ Skin-attachable haptic interfaces are flexible, lightweight devices that adhere 
 - **Electronic Skin**: Flexible, attachable patches for sensory feedback in robotics or gaming.
 - **Vibrotactile Patches**: Localized vibration stimulation for enhancing sensory perception.
 
+
 **4. Mid-Air Haptic Interfaces**
 Mid-air haptic interfaces allow users to experience tactile sensations without physical contact, using focused energy fields like ultrasound or air.
 

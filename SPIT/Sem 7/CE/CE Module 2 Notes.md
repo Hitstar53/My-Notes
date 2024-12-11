@@ -23,12 +23,12 @@ I2C only uses two wires to transmit data between devices:
 
 
 **STEPS OF I2C DATA TRANSMISSION**
-1. The master sends the start condition to every connected slave by switching the SDA line from a high voltage level to a low voltage level before switching the SCL line from high to low
-2. The master sends each slave the 7 or 10 bit address of the slave it wants to communicate with, along with the read/write bit
-3. Each slave compares the address sent from the master to its own address. If the address matches, the slave returns an ACK bit by pulling the SDA line low for one bit. If the address from the master does not match the slave’s own address, the slave leaves the SDA line high.
-4. The master sends or receives the data frame
-5. After each data frame has been transferred, the receiving device returns another ACK bit to the sender to acknowledge successful receipt of the frame
-6. To stop the data transmission, the master sends a stop condition to the slave by switching SCL high before switching SDA high
+1. The master sends the **start condition** to every connected slave by switching the SDA line from a **high voltage level to a low voltage** level **before** switching the **SCL line from high to low**.
+2. The master sends each slave the **7 or 10 bit address** of the slave it wants to communicate with, along with the **read/write bit**.
+3. Each slave compares the address sent from the master to its own address. If the address matches, the slave returns an **ACK bit** by pulling the **SDA line low for one bit**. If the address from the master does not match the slave’s own address, the slave leaves the **SDA line high**.
+4. The master sends or receives the **data frame**.
+5. After each data frame has been transferred, the receiving device returns **another ACK bit** to the sender to acknowledge successful receipt of the frame
+6. To stop the data transmission, the master sends a **stop condition** to the slave by switching **SCL high before** switching **SDA high**.
 
 
 **ADVANTAGES AND DISADVANTAGES OF I2C**
@@ -45,6 +45,7 @@ There is a lot to I2C that might make it sound complicated compared to other pro
 1. Slower data transfer rate than SPI
 2. The size of the data frame is limited to 8 bits
 3. More complicated hardware needed to implement than SPI
+4. Half-duplex communication is used.
 
 ##### SPI (Serial Peripheral Interface)
 SPI is a common communication protocol used by many different devices. For example, SD card reader modules, RFID card reader modules, and 2.4 GHz wireless transmitter/receivers all use SPI to communicate with microcontrollers. One unique benefit of SPI is the fact that data can be transferred without interruption. Any number of bits can be sent or received in a continuous stream. With I2C and UART, data is sent in packets, limited to a specific number of bits. Start and stop conditions define the beginning and end of each packet, so the data is interrupted during transmission. 
