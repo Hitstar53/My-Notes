@@ -7,7 +7,7 @@ Link to Amazon Data Engineer Interview Guide can be found [here](https://prepful
 3. Amazon Leadership Session (PPT) (8th Sept)
 4. Virtual Technical Interview-1 (10th Sept)
 5. Virtual Technical Interview-2 (Final Round) (11th Sept)
-6. Result in 5 days time. (16th Sept)
+6. Expected Result in 5 days time. (16th Sept) (Actual Result came after 1+ month in Nov)
 
 ## Important Interview Topics
 - [ ] [[SQL Cheat Sheet]] - Basic & Advanced, Query Optimization and Indexing, Ranking Queries
