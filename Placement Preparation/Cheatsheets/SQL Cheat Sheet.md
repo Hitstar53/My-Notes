@@ -1,4 +1,5 @@
 Find SQL Top 50 Practice Problems [here](https://leetcode.com/studyplan/top-sql-50/)
+Find Notes on DBMS Concepts [here](https://takeuforward.org/dbms/most-asked-dbms-interview-questions)
 ## Table of Contents
 [[#1. Data Definition Language (DDL)]]
 [[#2. Data Manipulation Language (DML)]]
@@ -141,6 +142,17 @@ SELECT * FROM employees
 WHERE salary > 50000;
 ```
 
+### CASE
+```mysql
+SELECT employee_id, salary,
+  CASE
+    WHEN salary >= 100000 THEN 'High'
+    WHEN salary >= 50000 THEN 'Medium'
+    ELSE 'Low'
+  END AS salary_range
+FROM employees;
+```
+
 ### EXISTS
 ```mysql
 SELECT SupplierName FROM Suppliers  
@@ -177,6 +189,12 @@ SELECT * FROM Products
 WHERE Price BETWEEN 10 AND 20;
 ```
 
+### COALESCE
+```mysql
+SELECT name, COALESCE(phone, 'Not Provided') AS contact_info 
+FROM users;
+```
+
 ### LIKE
 ```mysql
 SELECT * FROM CUSTOMERS WHERE NAME LIKE 'K___%';
@@ -184,6 +202,27 @@ SELECT * FROM CUSTOMERS WHERE NAME LIKE 'K___%';
 /* wildcards
 _ - matches a single character
 % - matches zero, one or more characters
+*/
+```
+
+### REGEXP / RLIKE
+```mysql
+SELECT DISTINCT CITY 
+FROM STATION 
+WHERE CITY REGEXP '^[AEIOUaeiou]';
+
+/* patterns
+^      → Start of string
+$      → End of string
+.      → Any single character
+[abc]  → Matches a, b, or c
+[^abc] → Matches anything except a, b, or c
+[a-z]  → Range: a through z
+*      → 0 or more of the preceding token
++      → 1 or more of the preceding token (not in MySQL REGEXP)
+{n,m}  → n to m repetitions (not in MySQL REGEXP)
+()     → Group expressions (limited in MySQL REGEXP)
+|      → Alternation (A or B)
 */
 ```
 
@@ -215,6 +254,15 @@ SELECT COUNT(DISTINCT AGE) as UniqueAge FROM CUSTOMERS;
 ### CONCAT
 ```mysql
 SELECT CONCAT(NAME,' ',AGE) AS DETAILS, ADDRESS FROM CUSTOMERS ORDER BY NAME;
+```
+
+### CAST / CONVERT
+```mysql
+SELECT CAST(salary AS CHAR) AS salary_string
+FROM employees;
+
+SELECT CONVERT(salary, CHAR) AS salary_string
+FROM employees;
 ```
 
 ## 4. Data Control Language (DCL)
@@ -367,7 +415,33 @@ END AS Threshold
 FROM OrderDetails;
 ```
 
-## 8. Window Functions
+## 8. SET OPERATIONS
+### UNION / UNION ALL
+```mysql
+SELECT name FROM students
+UNION
+SELECT name FROM teachers;
+
+SELECT name FROM students
+UNION ALL
+SELECT name FROM teachers;
+```
+
+### INTERSECT
+```mysql
+SELECT name FROM students
+INTERSECT
+SELECT name FROM teachers;
+```
+
+### EXCEPT
+```postgresql
+SELECT name FROM students
+EXCEPT
+SELECT name FROM teachers;
+```
+
+## 9. Window Functions
 
 ### ROW NUMBER
 ```postgresql
@@ -404,7 +478,7 @@ LEAD(salary, 1, 0) OVER (PARTITION BY department_id ORDER BY salary) AS next_sal
 FROM employees;
 ```
 
-## 9. Subqueries
+## 10. Subqueries
 
 ### Subquery in WHERE clause
 ```mysql
@@ -426,7 +500,50 @@ UPDATE CUSTOMERS SET SALARY = SALARY * 0.25
 WHERE AGE IN (SELECT AGE FROM CUSTOMERS_BKP WHERE AGE >= 27 );
 ```
 
-## 10. Views
+## 11. DATE FUNCTIONS
+### CURRENT DATE / TIME
+```mysql
+SELECT CURDATE();  -- current date
+SELECT CURTIME();  -- current time
+SELECT NOW();      -- current date & time
+
+/* data types
+- `DATE` - format YYYY-MM-DD
+- `DATETIME` - format: YYYY-MM-DD HH:MI:SS
+- `TIMESTAMP` - format: YYYY-MM-DD HH:MI:SS
+- `YEAR` - format YYYY or YY
+*/
+```
+
+### DATE_FORMAT
+```mysql
+SELECT DATE_FORMAT(NOW(), '%Y-%m-%d') AS formatted_date;
+```
+
+### DATE_ADD
+```mysql
+-- Add 10 days to the current date
+SELECT DATE_ADD(CURDATE(), INTERVAL 10 DAY) AS future_date;
+
+-- Add 2 months to a specific date
+SELECT DATE_ADD('2025-07-26', INTERVAL 2 MONTH);
+```
+
+### DATEDIFF
+```mysql
+SELECT DATEDIFF('2025-12-31', '2025-01-01') AS days_difference;
+```
+
+### EXTRACT
+```postgresql
+SELECT EXTRACT(YEAR FROM hire_date) AS hire_year FROM employees;
+
+/* terms that can be extracted
+MICROSECOND, SECOND, MINUTE, HOUR, DAY, WEEK, MONTH, QUARTER, YEAR
+*/
+```
+
+## 12. Views
 
 ### Create View
 ```mysql
@@ -450,7 +567,23 @@ SET salary = 85000 WHERE name = 'Ramesh';
 DROP VIEW high_salary_employees;
 ```
 
-## 11. Indexes
+
+### MATERIALIZED VIEWS
+Not available in MySQL
+```postgresql
+CREATE MATERIALIZED VIEW emp_summary AS
+SELECT department_id, AVG(salary) AS avg_salary
+FROM employees
+GROUP BY department_id;
+
+-- Refresh
+REFRESH MATERIALIZED VIEW emp_summary;
+
+-- Drop
+DROP MATERIALIZED VIEW emp_summary;
+```
+
+## 13. Indexes
 
 ### Create Index
 ```mysql
@@ -462,7 +595,7 @@ CREATE INDEX idx_last_name ON employees(last_name);
 DROP INDEX idx_last_name ON employees;
 ```
 
-## 12. Stored Procedures, Functions and CTEs
+## 14. Stored Procedures, Functions and CTEs
 
 ### CTE (Common Table Expression)
 ```mysql

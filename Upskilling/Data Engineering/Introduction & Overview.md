@@ -1,4 +1,3 @@
-### Introduction & Overview
 Overview Video on Data Engineering [here](https://youtu.be/qWru-b6m030?si=wEUwqfIqihVLOVMg)
 Overview Video on Data Pipeline [here](https://www.youtube.com/watch?v=kGT4PcTEPP8)
 
@@ -13,8 +12,6 @@ Difference between Databases, Data Warehouse & Data Lakes [here](https://www.you
 #### Dev Tutorials
 Fundamentals of Data Engineering Masterclass [here](https://youtu.be/hf2go3E2m8g?si=NjLXWPzn74Old2dM)
 Build Video on ELT Pipeline [here](https://youtu.be/OLXkGB7krGo?si=lHCOZ4YEYmB-g3bx)
-
-## Data Engineering Concepts
 
 
 
