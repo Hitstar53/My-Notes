@@ -16,22 +16,22 @@
 2. 2-Dim DP: A matrix of (i,j) or more than 1 array/list of items
 
 ## Top 5 DP Patterns:
-1. Based on Fibonacci Numbers:
+1. **Based on Fibonacci Numbers:**
 	1. Climbing Stairs
 	2. House Robber
-2. 0/1 Knapsack
+2. **0/1 Knapsack**
 	1. Target Sum
 	2. Partial Equal Subset Sum
-3. Unbound Knapsack
+3. **Unbound Knapsack**
 	1. Coin Change I & II
 	2. Min. cost for tickets
-4. Longest Common Subsequence
+4. **Longest Common Subsequence**
 	1. Longest Increasing Subsequence (LIS)
 	2. Edit Distance
 	3. Distinct Subsequences
 	4. Longest Palindromic subsequence
 	5. Palindromic substrings
-5. Shortest Path
+5. **Shortest Path**
 	1. Unique paths I & II
 
 ## An Example:

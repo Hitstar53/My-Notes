@@ -6,7 +6,7 @@ Profit% = (Profit / CP) × 100
 Loss% = (Loss / CP) × 100
 Discount = MP - SP
 Discount% = (Discount / MP) × 100
-
+ 
 ## Interest Calculations:
 **Simple Interest:**
 ![[Pasted image 20240727185909.png]]

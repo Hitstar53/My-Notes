@@ -10,8 +10,9 @@ enumerate(): #gives index,value tuples
 zip(): #combine lists, gives tuples with min len
 open(): #use file path and mode="" as arguements to open a file
 ```
+
 ## Data Structures:
-1. Array/Lists:
+### Array/Lists:
 ```python
 import array
 arr = array.array("i", [1,2,3,4,5])
@@ -28,7 +29,100 @@ lis.reverse() #reverse order
 lis.count(x)
 lis.index(x)
 ```
-2. Linked Lists:
+
+### Stack:
+```python
+stack = []
+stack.append(1) #to perform pushing
+stack.pop() #to perform popping
+stack[-1] #to peak
+```
+
+### Queues:
+```python
+from collections import deque
+q = deque()
+q.append(1) #to perform enqueue
+q.popleft() #to perform dequeue
+
+from queue import Queue
+q = Queue(maxsize=3) #maxsize=0 means dynamic len
+q.put(1) #to perform enqueue
+q.get() #to perform dequeue
+q.empty()
+q.full()
+```
+
+### HashMaps:
+```python
+hm = {} or dict()
+hm['key'] = value #to insert or update
+hm.pop('key') #to remove value
+hm.keys() #all keys as list
+hm.values() #all values as list
+hm.items() #all key-value tuples as list
+
+from collections import defaultdict, OrderedDict
+hm = defaultdict(type) #type: int, str, list
+hm = OrderedDict() #for preserving order of insertion
+```
+
+### Strings:
+```python
+s = "something"
+# casing-related
+s.upper()
+s.isupper()
+s.lower()
+s.islower()
+s.capitalize()
+
+#char-related
+s.isalpha()
+s.isnumeric()
+s.alnum()
+s.isdigit()
+s.count("char")
+s.find("char")
+s.rfind("char")
+
+#slicing & formatting
+s[start:end:step]
+s.strip()
+s.replace(old,new)
+s.split("sep")
+"".join(list)
+f"This is a {value}"
+```
+
+### HashSets:
+```python
+myset = set()
+myset.add(1)
+myset.add(2)
+myset.remove(2)
+```
+
+### Heaps:
+```python
+import heapq
+minHeap = []
+heapq.heappush(minHeap,3)
+heapq.heappush(minHeap,2)
+minHeap[0]
+heapq.heappop()
+
+maxHeap = []
+heapq.heappush(maxHeap,-3) #to push multiply with negative
+heapq.heappush(maxHeap,-2)
+-1*minHeap[0] #while removing again multiply by negative
+-1*heapq.heappop()
+
+heapq.nlargest()
+heapq.nsmallest()
+```
+
+### Linked List:
 ```python
 class Node:
 	def __init__(self, data):
@@ -92,75 +186,8 @@ class LinkedList:
 			current = current.next 
 		print("None")
 ```
-3. Stack:
-```python
-stack = []
-stack.append(1) #to perform pushing
-stack.pop() #to perform popping
-stack[-1] #to peak
-```
-4. Queues:
-```python
-from collections import deque
-q = deque()
-q.append(1) #to perform enqueue
-q.popleft() #to perform dequeue
 
-from queue import Queue
-q = Queue(maxsize=3) #maxsize=0 means dynamic len
-q.put(1) #to perform enqueue
-q.get() #to perform dequeue
-q.empty()
-q.full()
-```
-5. HashMaps:
-```python
-hm = {}
-hm = dict()
-hm['key'] = value #to insert or update
-hm.pop('key') #to remove value
-hm.keys() #all keys as list
-hm.values() #all values as list
-hm.items() #all key-value tuples as list
-
-from collections import defaultdict, OrderedDict
-hm = defaultdict(type) #type: value,list
-hm = OrderedDict() #for preserving order of insertion
-```
-6. Strings:
-```python
-s = "something"
-# casing-related
-s.upper()
-s.isupper()
-s.lower()
-s.islower()
-s.capitalize()
-
-#char-related
-s.isalpha()
-s.isnumeric()
-s.alnum()
-s.count("char")
-s.find("char")
-s.rfind("char")
-
-#slicing & formatting
-s[start:end:step]
-s.strip()
-s.replace(old,new)
-s.split("sep")
-"".join(list)
-f"This is a {value}"
-```
-7. HashSets:
-```python
-myset = set()
-myset.add(1)
-myset.add(2)
-myset.remove(2)
-```
-8. Binary Tree:
+### Binary Tree:
 ```python
 class Node:
     def __init__(self, data):
@@ -229,22 +256,4 @@ class BinaryTree:
             self._postorder(node.left)
             self._postorder(node.right)
             print(node.data, end=" ")
-```
-9. Heaps:
-```python
-import heapq
-minHeap = []
-heapq.heappush(minHeap,3)
-heapq.heappush(minHeap,2)
-minHeap[0]
-heapq.heappop()
-
-maxHeap = []
-heapq.heappush(maxHeap,-3) #to push multiply with negative
-heapq.heappush(maxHeap,-2)
--1*minHeap[0] #while removing again multiply by negative
--1*heapq.heappop()
-
-heapq.nlargest()
-heapq.nsmallest()
 ```
