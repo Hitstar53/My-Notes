@@ -27,7 +27,7 @@ Before writing any code, one must achieve a complete and unambiguous understandi
 ### Phase 2: The Brute-Force Baseline
 Formulating a brute-force solution is a strategic starting point, not a sign of weakness. This initial approach serves two primary functions: it verifies a correct understanding of the problem's logic and establishes a baseline against which optimizations can be measured. The most straightforward solution often involves nested loops to explore all possible combinations or permutations, typically resulting in a time complexity of $O(N^2)$ or worse. Outlining the logic of this naive approach demonstrates a foundational grasp of the problem before proceeding to more sophisticated solutions.
 
-**Note:** This step is not required while solving problems if you already have identified the optimal approach, but it is crucial while working through a solution in an interview.
+**Note:** This step is not required while solving problems in an online assessment if you already have identified the optimal approach because time is key, but it is crucial while working through a solution in an interview as it shows your thought process to the interviewer.
 
 ### Phase 3: Optimization and Pattern Matching
 The transition from a brute-force to an optimal solution is the most critical phase of the problem-solving process. The inefficiencies inherent in the brute-force method, specifically, the redundant computations are the primary indicators for which algorithmic pattern to apply. For example, if a brute-force solution for a subarray problem repeatedly recalculates the sum of overlapping subarrays, this points directly toward the **Sliding Window** or **Prefix Sum** patterns, which are designed to eliminate such re-computations. This phase involves a conscious effort to map the problem's characteristics and the brute-force solution's bottlenecks to the patterns detailed in [[#Section 2 The Art of Pattern Recognition - A Heuristic Guide|Section 2]].
@@ -293,7 +293,6 @@ The core components of a backtracking algorithm are:
 1. **Choice:** A set of available options at the current state.
 2. **Constraint:** A rule that determines if a choice is valid.
 3. **Goal:** A condition that determines if a complete solution has been found.
-    
 
 #### General Code Template
 This template provides a foundational structure for most backtracking problems.
