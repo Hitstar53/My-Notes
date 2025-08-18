@@ -1,13 +1,13 @@
 To prepare for data engineering interview refer - [[DE-1 Interview Prep]]
 ### Week 1-2: Advanced Python & SQL
-##### Python: [[Python Cheatsheet for DSA]]
+##### Python: [[Python Cheatsheet]]
 * [ ] Basic Data Structures: Arrays, Lists, tuples, HashMap, Collections
 * [ ] Advanced Data Structures: Trees, Sets, Graphs
 * [ ] Performance Optimization: List Comprehension, Generators, Lambda Functions
 * [ ] Writing Modular, Reusable Code with OOP Concepts
 * [ ] Error Handling: Logging & De-bugging Techniques
 * [ ] Libraries: NumPy (Extract & Transform), Pandas (Manipulate & Analyze), boto3 (AWS SDK)
-##### SQL: [[SQL Cheat Sheet]]
+##### SQL: [[SQL Cheatsheet]]
 * [ ] Complex Joins, Window Functions, CTEs, Stored Procedures
 * [ ] Query Optimization Techniques
 * [ ] Performance Optimization: Indexing & Partitioning

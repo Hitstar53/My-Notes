@@ -1,11 +1,11 @@
 ## Introduction to SQL
 Structured Query Language (SQL) is the standard language for managing and manipulating relational databases. It is used to perform tasks such as retrieving data, inserting new records, updating existing ones, and deleting data. SQL commands are traditionally categorized into several groups, which define their role in the database.
 
-**Resources:**
-Find Leetcode (Basic) SQL Top 50 Problems [here](https://leetcode.com/studyplan/top-sql-50/)
-More SQL Practice Problems on HackerRank [here](https://www.hackerrank.com/domains/sql)
-Find Notes on DBMS Concepts [here](https://takeuforward.org/dbms/most-asked-dbms-interview-questions)
-Find external notes for SQL [here](https://www.w3schools.com/sql/)
+> [!seealso] Resources:
+> Find Leetcode (Basic) SQL Top 50 Problems [here](https://leetcode.com/studyplan/top-sql-50/)
+> More SQL Practice Problems on HackerRank [here](https://www.hackerrank.com/domains/sql)
+> Find Notes on DBMS Concepts [here](https://takeuforward.org/dbms/most-asked-dbms-interview-questions)
+> Find external notes for SQL [here](https://www.w3schools.com/sql/)
 
 ## Table of Contents
 1. [[#Section 1 Data Definition Language (DDL)]]
