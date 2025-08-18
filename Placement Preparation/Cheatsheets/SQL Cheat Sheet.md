@@ -26,10 +26,10 @@ Find external notes for SQL [here](https://www.w3schools.com/sql/)
 ## Section 1: Data Definition Language (DDL)
 DDL commands are used to define and manage the structure of your database and its objects, such as tables, indexes, and views. These commands are foundational, as they build the framework where your data will live.
 
-**Use Cases & Tips:**
-- Use DDL to set up your database schema from scratch or to modify it as your application's needs evolve.
-- Be cautious with `DROP` and `TRUNCATE`, as they can lead to irreversible data loss. `DROP` removes the entire table structure, while `TRUNCATE` only removes all rows.
-- `TRUNCATE` is generally faster than `DELETE` for clearing a table because it deallocates the data pages with minimal logging, whereas `DELETE` removes rows one by one and logs each deletion.
+> [!tip]
+> - Use DDL to set up your database schema from scratch or to modify it as your application's needs evolve.
+> - Be cautious with `DROP` and `TRUNCATE`, as they can lead to irreversible data loss. `DROP` removes the entire table structure, while `TRUNCATE` only removes all rows.
+> - `TRUNCATE` is generally faster than `DELETE` for clearing a table because it deallocates the data pages with minimal logging, whereas `DELETE` removes rows one by one and logs each deletion.
 
 ### Databases:
 ##### 1. CREATE DATABASE
@@ -115,9 +115,9 @@ TRUNCATE TABLE employees;
 ## Section 2: Data Manipulation Language (DML)
 DML commands are used to manage the data within your database tables. These are the most frequently used commands in day-to-day operations.
 
-**Use Cases & Tips:**
-- Always use a `WHERE` clause with `UPDATE` and `DELETE` statements unless you intend to modify every single row in the table. Forgetting the `WHERE` clause is a common and dangerous mistake.
-- Wrap related DML operations in a transaction (using `BEGIN TRANSACTION`, `COMMIT`, `ROLLBACK`) to ensure data integrity. If one part of the operation fails, you can roll back the entire set of changes.
+> [!tip]
+> - Always use a `WHERE` clause with `UPDATE` and `DELETE` statements unless you intend to modify every single row in the table. Forgetting the `WHERE` clause is a common and dangerous mistake.
+> - Wrap related DML operations in a transaction (using `BEGIN TRANSACTION`, `COMMIT`, `ROLLBACK`) to ensure data integrity. If one part of the operation fails, you can roll back the entire set of changes.
 
 ##### 1. INSERT
 ```mysql
@@ -145,10 +145,10 @@ WHERE employee_id = 1;
 ## Section 3: Data Query Language (DQL)
 DQL is used to retrieve data from the database. The `SELECT` statement is the cornerstone of SQL, allowing for powerful and complex data retrieval.
 
-**Use Cases & Tips:**
-- **Performance:** Avoid using `SELECT *` in production code. Explicitly name the columns you need. This reduces the amount of data transferred and can sometimes allow the database to use more efficient query plans (like index-only scans).
-- **Readability:** Use aliases (`AS`) for columns and tables, especially in complex queries with joins, to make your code much easier to understand.
-- **Filtering:** Apply `WHERE` clauses as early as possible in your query to filter the dataset. The less data subsequent operations (like joins or aggregations) have to process, the faster your query will be.
+> [!tip]
+> - **Performance:** Avoid using `SELECT *` in production code. Explicitly name the columns you need. This reduces the amount of data transferred and can sometimes allow the database to use more efficient query plans (like index-only scans).
+> - **Readability:** Use aliases (`AS`) for columns and tables, especially in complex queries with joins, to make your code much easier to understand.
+> - **Filtering:** Apply `WHERE` clauses as early as possible in your query to filter the dataset. The less data subsequent operations (like joins or aggregations) have to process, the faster your query will be.
 
 ##### 1. SELECT
 ```mysql
@@ -313,9 +313,9 @@ REVOKE INSERT ON employees FROM user1;
 ## Section 5: Transaction Control Language (TCL)
 TCL commands are used to manage transactions in the database, ensuring that a series of operations are treated as a single, atomic unit. This is critical for maintaining data integrity.
 
-**Use Cases & Tips:**
-- Transactions are essential for operations that require multiple steps, like transferring money between two accounts (a debit from one and a credit to another). If either step fails, the entire transaction can be rolled back, leaving the database in a consistent state.
-- `SAVEPOINT` is useful for complex transactions where you might want to undo only a portion of the work without rolling back the entire transaction.
+> [!tip]
+> - Transactions are essential for operations that require multiple steps, like transferring money between two accounts (a debit from one and a credit to another). If either step fails, the entire transaction can be rolled back, leaving the database in a consistent state.
+> - `SAVEPOINT` is useful for complex transactions where you might want to undo only a portion of the work without rolling back the entire transaction.
 
 ##### 1. BEGIN TRANSACTION
 ```mysql
@@ -335,10 +335,10 @@ ROLLBACK;
 ## Section 6: Joins
 Joins are fundamental to relational databases. They are used to combine rows from two or more tables based on a related column between them, allowing you to query data across your entire schema.  
 
-**Use Cases & Tips:**
-- **Choosing the Right Join:** `INNER JOIN` is for when you only want records that exist in both tables. `LEFT JOIN` is perfect when you want all records from the "left" table, regardless of whether they have a match in the "right" table (e.g., finding all customers and their orders, even if a customer has no orders).
-- **Performance:** Ensure that the columns used in your `ON` clause are indexed. Joining on indexed columns is significantly faster than joining on unindexed ones.
-- **Readability:** Always use table aliases when joining multiple tables to keep your query clean and avoid ambiguity with column names.
+> [!tip]
+> - **Choosing the Right Join:** `INNER JOIN` is for when you only want records that exist in both tables. `LEFT JOIN` is perfect when you want all records from the "left" table, regardless of whether they have a match in the "right" table (e.g., finding all customers and their orders, even if a customer has no orders).
+> - **Performance:** Ensure that the columns used in your `ON` clause are indexed. Joining on indexed columns is significantly faster than joining on unindexed ones.
+> - **Readability:** Always use table aliases when joining multiple tables to keep your query clean and avoid ambiguity with column names.
 
 ##### 1. INNER JOIN
 = (A ∩ B)
@@ -385,9 +385,9 @@ CROSS JOIN departments d ON e.department_id = d.department_id;
 ## Section 7: Aggregate Functions
 These commands are used to summarize data. `GROUP BY` collapses multiple rows into a single summary row, and aggregate functions perform a calculation on a set of values to return a single value.  
 
-**Use Cases & Tips:**
-- **`WHERE` vs. `HAVING`:** This is a critical distinction. `WHERE` filters rows _before_ any grouping or aggregation occurs. `HAVING` filters groups _after_ the aggregation has been performed. You cannot use an aggregate function in a `WHERE` clause.
-- **Multi-column Grouping:** You can group by multiple columns to get more granular aggregations (e.g., `GROUP BY country, city`).
+> [!tip]
+> - **`WHERE` vs. `HAVING`:** This is a critical distinction. `WHERE` filters rows _before_ any grouping or aggregation occurs. `HAVING` filters groups _after_ the aggregation has been performed. You cannot use an aggregate function in a `WHERE` clause.
+> - **Multi-column Grouping:** You can group by multiple columns to get more granular aggregations (e.g., `GROUP BY country, city`).
 
 ##### 1. COUNT
 ```mysql
@@ -448,9 +448,9 @@ HAVING AVG(salary) > 50000;
 ## Section 8: Set Operations
 Set operators combine the results of two or more `SELECT` statements into a single result set. While joins combine tables horizontally based on columns, set operators combine results vertically based on rows.  
 
-**Use Cases & Tips:**
-- **`UNION` vs. `UNION ALL`:** `UNION` removes duplicate rows from the combined result set, which requires a sorting operation behind the scenes. `UNION ALL` includes all rows, including duplicates, and is therefore much faster. If you know your combined results won't have duplicates or if duplicates are acceptable, always use `UNION ALL` for better performance.
-- **Requirements:** The `SELECT` statements involved must have the same number of columns, and the corresponding columns must have compatible data types.
+> [!tip]
+> - **`UNION` vs. `UNION ALL`:** `UNION` removes duplicate rows from the combined result set, which requires a sorting operation behind the scenes. `UNION ALL` includes all rows, including duplicates, and is therefore much faster. If you know your combined results won't have duplicates or if duplicates are acceptable, always use `UNION ALL` for better performance.
+> - **Requirements:** The `SELECT` statements involved must have the same number of columns, and the corresponding columns must have compatible data types.
 
 ##### 1. UNION & UNION ALL
 ```mysql
@@ -480,10 +480,10 @@ SELECT name FROM teachers;
 ## Section 9: Window Functions
 Window functions perform calculations across a set of rows that are related to the current row. Unlike aggregate functions, they do not collapse rows; they return a value for each row based on the "window" of data defined by the `OVER()` clause.  
 
-**Use Cases & Tips:**
-- **Running Totals & Moving Averages:** Use `SUM() OVER (...)` or `AVG() OVER (...)` to calculate metrics that accumulate or average over a specific window of rows.
-- **Ranking:** `ROW_NUMBER()` gives a unique number to each row. `RANK()` gives the same rank to tied values but leaves gaps. `DENSE_RANK()` gives the same rank to tied values but does not leave gaps. Choose the one that fits your specific ranking logic.
-- **Comparing to Previous/Next Rows:** `LAG()` and `LEAD()` are incredibly useful for comparing a row's value to the value in the preceding or following row, respectively (e.g., calculating day-over-day growth).
+> [!tip]
+> - **Running Totals & Moving Averages:** Use `SUM() OVER (...)` or `AVG() OVER (...)` to calculate metrics that accumulate or average over a specific window of rows.
+> - **Ranking:** `ROW_NUMBER()` gives a unique number to each row. `RANK()` gives the same rank to tied values but leaves gaps. `DENSE_RANK()` gives the same rank to tied values but does not leave gaps. Choose the one that fits your specific ranking logic.
+> - **Comparing to Previous/Next Rows:** `LAG()` and `LEAD()` are incredibly useful for comparing a row's value to the value in the preceding or following row, respectively (e.g., calculating day-over-day growth).
 
 ##### 1. ROW NUMBER
 ```postgresql
@@ -523,10 +523,10 @@ FROM employees;
 ## Section 10: Subqueries
 These are methods for nesting queries within other queries, which is essential for performing complex, multi-step logic.
 
-**Use Cases & Tips:**
-- **Subquery vs. Join:** Often, a subquery can be rewritten as a `JOIN`, which can be more readable and sometimes more performant. However, subqueries are very powerful, especially with operators like `IN`, `NOT IN`, `EXISTS`, and `NOT EXISTS`.
-- **Performance:** For checking existence, `EXISTS` is generally more efficient than `IN` because it stops processing as soon as it finds a match, whereas `IN` may need to scan the entire subquery result.  
-- **Readability:** For complex queries, always prefer CTEs over nested subqueries. They break the logic into named, sequential steps, making the query vastly easier to read, debug, and maintain.
+> [!tip]
+> - **Subquery vs. Join:** Often, a subquery can be rewritten as a `JOIN`, which can be more readable and sometimes more performant. However, subqueries are very powerful, especially with operators like `IN`, `NOT IN`, `EXISTS`, and `NOT EXISTS`.
+> - **Performance:** For checking existence, `EXISTS` is generally more efficient than `IN` because it stops processing as soon as it finds a match, whereas `IN` may need to scan the entire subquery result.  
+> - **Readability:** For complex queries, always prefer CTEs over nested subqueries. They break the logic into named, sequential steps, making the query vastly easier to read, debug, and maintain.
 
 ##### 1. Subquery in WHERE clause
 ```mysql
@@ -551,10 +551,10 @@ WHERE AGE IN (SELECT AGE FROM CUSTOMERS_BKP WHERE AGE >= 27 );
 ## Section 11: Date Functions
 Date functions are essential for manipulating and querying temporal data. They allow you to extract components from dates, perform arithmetic, and format them for display. Syntax often varies between SQL dialects (like MySQL, PostgreSQL, and SQL Server).  
 
-**Use Cases & Tips:**
-- **Time-based Filtering:** Use date functions in `WHERE` clauses to filter records within a specific time frame, such as the last 30 days or the current month.  
-- **Reporting and Grouping:** `EXTRACT` or `DATE_TRUNC` are powerful for grouping data by month, year, or quarter to create summary reports.  
-- **Calculating Durations:** `DATEDIFF` is perfect for calculating user age, subscription length, or the time between two events.
+> [!tip]
+> - **Time-based Filtering:** Use date functions in `WHERE` clauses to filter records within a specific time frame, such as the last 30 days or the current month.  
+> - **Reporting and Grouping:** `EXTRACT` or `DATE_TRUNC` are powerful for grouping data by month, year, or quarter to create summary reports.  
+> - **Calculating Durations:** `DATEDIFF` is perfect for calculating user age, subscription length, or the time between two events.
 
 ##### 1. CURRENT DATE & TIME
 ```mysql
@@ -601,10 +601,10 @@ MICROSECOND, SECOND, MINUTE, HOUR, DAY, WEEK, MONTH, QUARTER, YEAR
 ## Section 12: Views
 A view is a virtual table based on the result-set of a stored SQL query. It contains rows and columns, just like a real table, but does not store the data itself. Views are used to simplify complex queries, provide a layer of security, and ensure data consistency.  
 
-**Use Cases & Tips:**
-- **Simplification:** Encapsulate a complex join or calculation into a view. This allows end-users to query the view with a simple `SELECT` statement without needing to understand the underlying complexity.
-- **Security:** Grant users access to a view that only exposes certain columns or rows, thereby restricting their access to sensitive data in the underlying tables.  
-- **Maintenance:** If the logic of a complex query needs to change, you only need to update the view definition (`ALTER VIEW`), and all applications using the view will automatically get the new logic.
+> [!tip]
+> - **Simplification:** Encapsulate a complex join or calculation into a view. This allows end-users to query the view with a simple `SELECT` statement without needing to understand the underlying complexity.
+> - **Security:** Grant users access to a view that only exposes certain columns or rows, thereby restricting their access to sensitive data in the underlying tables.  
+> - **Maintenance:** If the logic of a complex query needs to change, you only need to update the view definition (`ALTER VIEW`), and all applications using the view will automatically get the new logic.
 
 ##### 1. Create View
 ```mysql
@@ -646,9 +646,9 @@ DROP MATERIALIZED VIEW emp_summary;
 ## Section 13: Indexes & Constraints
 These are database objects used to enforce data integrity and improve query performance.
 
-**Use Cases & Tips:**
-- **Data Integrity:** Constraints are rules that prevent invalid data from being entered into your tables. A `PRIMARY KEY` (which is both `UNIQUE` and `NOT NULL`) is essential for uniquely identifying each row. A `FOREIGN KEY` is crucial for maintaining referential integrity between tables.
-- **Performance:** Indexes are the single most important factor in query performance. They allow the database to find rows with specific column values quickly without scanning the entire table. Create indexes on columns that are frequently used in `WHERE` clauses and `JOIN` conditions.
+> [!tip]
+> - **Data Integrity:** Constraints are rules that prevent invalid data from being entered into your tables. A `PRIMARY KEY` (which is both `UNIQUE` and `NOT NULL`) is essential for uniquely identifying each row. A `FOREIGN KEY` is crucial for maintaining referential integrity between tables.
+> - **Performance:** Indexes are the single most important factor in query performance. They allow the database to find rows with specific column values quickly without scanning the entire table. Create indexes on columns that are frequently used in `WHERE` clauses and `JOIN` conditions.
 
 ### Indexes:
 ##### 1. Create Index
