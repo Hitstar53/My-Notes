@@ -1,4 +1,6 @@
 To prepare for data engineering interview refer - [[DE-1 Interview Prep]]
+To revise all concepts refer to [[Data Engineering Cheatsheet]]
+
 ### Week 1-2: Advanced Python & SQL
 ##### Python: [[Python Cheatsheet]]
 * [ ] Basic Data Structures: Arrays, Lists, tuples, HashMap, Collections

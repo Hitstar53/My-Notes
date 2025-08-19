@@ -1,4 +1,5 @@
 Link to External Python Cheatsheet [here](https://www.geeksforgeeks.org/python-cheat-sheet/) 
+Implementation of data structures can be found [[Data Structures in Python|here]]
 # Language Mechanics
 
 ## Literals

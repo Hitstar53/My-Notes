@@ -1,4 +1,24 @@
-## In-Built Functions:
+**Before Getting Started:**
+> [!seealso] 
+> More on Python Concepts can be found in [[Python Cheatsheet]]
+> Detailed explanation on DSA can be found in [[DSA Cheatsheet]]
+
+## Contents:
+1. [[#In-Built Functions]]
+2. [[#Array/Lists]]
+3. [[#Stack]]\
+4. [[#Queues]]
+5. [[#HashMaps]]
+6. [[#Strings]]
+7. [[#HashSets]]
+8. [[#Heaps]]
+9. [[#Linked List]]
+10. [[#Binary Tree]]
+
+
+## Data Structures:
+Before diving into implementation of data structures, here are some important python functions to remember while implementing data structures, more can be found in the above mentioned python cheatsheet.
+### In-Built Functions:
 ```python
 print(): #with sep="" and end="" arguements
 sum(): #with start=val arguement
@@ -11,7 +31,6 @@ zip(): #combine lists, gives tuples with min len
 open(): #use file path and mode="" as arguements to open a file
 ```
 
-## Data Structures:
 ### Array/Lists:
 ```python
 import array
