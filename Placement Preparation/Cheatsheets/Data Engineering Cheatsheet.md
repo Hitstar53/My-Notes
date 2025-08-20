@@ -44,7 +44,7 @@ A data engineer's value lies in their ability to write sophisticated and efficie
 ##### Query Optimization
 Poorly written queries can lead to slow performance and high costs, especially in cloud data warehouses. Key concepts include understanding **Indexes**, which are special lookup tables that the database search engine can use to speed up data retrieval, and analyzing **Query Execution Plans**, which show how the database intends to execute a query, helping to identify performance bottlenecks.
 
-> [!important] 
+> [!seealso] 
 > 1. For more detailed info along with code examples and syntax on SQL commands and clauses please refer this [[SQL Cheatsheet]]
 > 2. For tips on how to solve SQL questions please refer [[SQL Interview Tips]]
 
@@ -101,7 +101,7 @@ print("Data cleaning and transformation complete. Output saved to cleaned_sales_
 > [!info] 
 > The choice of whether to perform a transformation in SQL or Python is a critical design decision. For large-scale operations on structured data already within a database or data warehouse, SQL is almost always more performant. Its engine is highly optimized for set-based operations. Python with Pandas is better suited for tasks involving unstructured data, complex programmatic logic that is difficult to express in SQL, or for interacting with external APIs and systems before the data is loaded into a database.
 
-> [!important] 
+> [!seealso] 
 > 1. To learn more about python, its language syntax, fundamentals and implementations of everyday use functions, please refer this [[Python Cheatsheet]]
 > 2. To practice DSA in python please refer the [[DSA Cheatsheet]]
 
