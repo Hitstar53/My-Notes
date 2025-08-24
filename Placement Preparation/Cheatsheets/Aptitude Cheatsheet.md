@@ -1,5 +1,17 @@
-Link to Practice Aptitude [here](https://www.indiabix.com/aptitude/questions-and-answers/)
-## Profit - Loss & Sales
+> [!important] 
+> Link to Practice Aptitude [here](https://www.indiabix.com/aptitude/questions-and-answers/)
+
+### Contents:
+1. [[#Section 1 Profit - Loss & Sales]]
+2. [[#Section 2 Interest Calculations]]
+3. [[#Section 3 Ratio & Proportions]]
+4. [[#Section 4 Permutation & Combinations]]
+5. [[#Section 5 Time & Distance]]
+6. [[#Section 6 Problems on Boats]]
+7. [[#Section 7 Problems on Trains]]
+8. [[#Section 8 Clock Problems]]
+
+### Section 1: Profit - Loss & Sales
 Profit = Selling Price (SP) - Cost Price (CP)
 Loss = Cost Price (CP) - Selling Price (SP)
 Profit% = (Profit / CP) × 100
@@ -7,35 +19,35 @@ Loss% = (Loss / CP) × 100
 Discount = MP - SP
 Discount% = (Discount / MP) × 100
  
-## Interest Calculations:
-**Simple Interest:**
+### Section 2: Interest Calculations
+#### 1. Simple Interest:
 ![[Pasted image 20240727185909.png]]
 
-**Compound Interest:**
+#### 2. Compound Interest:
 ![[Pasted image 20240727185814.png]]
 
-## Ratio & Proportions
+### Section 3: Ratio & Proportions
 ![[Pasted image 20240727191148.png]]
 
-**More Properties**
+#### More Properties
 ![[Pasted image 20240727191249.png]]
 
-## Permutation & Combinations
-**Permutations**
+### Section 4: Permutation & Combinations
+#### 1. Permutations:
 ![[Pasted image 20240727191027.png]]
 
-**Combinations**
+#### Combinations:
 ![[Pasted image 20240727190915.png]]
 
-## Time & Distance
+### Section 5: Time & Distance
 ![[Pasted image 20240727191713.png]]
 
-## Problems on Boats
+### Section 6: Problems on Boats
 ![[Pasted image 20240728104932.png]]
 
-## Problems on Trains
+### Section 7: Problems on Trains
 ![[Pasted image 20240727191520.png]]
 
-## Clock
+### Section 8: Clock Problems
 ![[Pasted image 20240728104745.png]]
 

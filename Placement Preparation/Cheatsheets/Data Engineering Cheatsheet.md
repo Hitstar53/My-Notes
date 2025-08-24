@@ -39,7 +39,7 @@ A data engineer's value lies in their ability to write sophisticated and efficie
 
 - **Subqueries & Common Table Expressions (CTEs)**: A subquery is a `SELECT` statement nested inside another statement. While powerful, they can become difficult to read. CTEs, defined using the `WITH` clause, are a more modern and readable way to break down complex queries into logical, reusable steps.
 
-- **Window Functions**: Unlike aggregate functions, which collapse rows into a single output, window functions perform a calculation across a set of rows related to the current row, returning a value for every single row. They are essential for tasks like calculating running totals, moving averages, or ranking results within categories (e.g., `RANK()`, `LEAD()`, `LAG()`, `SUM() OVER (...)`).
+- **Window Functions**: Unlike aggregate functions, which collapse rows into a single output, window functions perform a calculation across a set of rows, returning a value for every single row. They are essential for tasks like calculating running totals, moving averages, or ranking results within categories (e.g., `RANK()`, `LEAD()`, `LAG()`, `ROW_NUMBER()`).
 
 ##### Query Optimization
 Poorly written queries can lead to slow performance and high costs, especially in cloud data warehouses. Key concepts include understanding **Indexes**, which are special lookup tables that the database search engine can use to speed up data retrieval, and analyzing **Query Execution Plans**, which show how the database intends to execute a query, helping to identify performance bottlenecks.
@@ -170,12 +170,12 @@ Relational databases, such as **PostgreSQL, MySQL, and SQL Server**, have been t
 - **Use Cases**: Relational databases excel in applications that require high data integrity and involve complex queries with joins across multiple tables. They are the standard for financial systems, inventory management, and most traditional business applications.
 
 #### Non-Relational (NoSQL) Databases
-NoSQL databases emerged to address the limitations of relational databases, particularly the need for massive scalability, schema flexibility, and the ability to handle unstructured data. The term "NoSQL" is an umbrella for a variety of database models that do not use the relational table structure.
+The term NoSQL ("Not Only SQL") refers to a diverse category of database systems that do not use the relational model as their primary data structure. NoSQL databases emerged to address the limitations of relational databases, particularly the need for massive scalability, schema flexibility, and the ability to handle unstructured data. The term "NoSQL" is an umbrella for a variety of database models that do not use the relational table structure.
 
 - **Data Model**: NoSQL databases are often schema-less or have a dynamic schema, allowing the structure of the data to evolve. This flexibility is ideal for handling diverse and rapidly changing data formats. There are several major types:
-    1. **Document Stores (e.g., MongoDB)**: Store data in JSON-like documents, which can be nested. This is a natural fit for many application development patterns.
-    2. **Key-Value Stores (e.g., Redis, Amazon DynamoDB)**: The simplest model, storing data as a collection of key-value pairs. They are incredibly fast and highly scalable, making them perfect for caching, session management, and real-time bidding applications.
-    3. **Wide-Column Stores (e.g., Apache Cassandra, HBase)**: These databases store data in tables, rows, and columns, but the names and format of the columns can vary from row to row in the same table. They are optimized for queries over very large datasets.
+    1. **Document Stores (e.g., MongoDB)**: Data is stored in flexible, semi-structured documents, most commonly in JSON (JavaScript Object Notation) or BSON (Binary JSON) format. Each document can have its own unique structure, making this model ideal for hierarchical data and applications with evolving schemas.
+    2. **Key-Value Stores (e.g., Redis, Amazon DynamoDB)**: This is the simplest NoSQL model, where data is stored as a collection of key-value pairs, much like a dictionary or hash map. This model is highly optimized for fast read and write operations based on a known key. They are incredibly fast and highly scalable, making them perfect for caching, session management, and real-time bidding applications.
+    3. **Wide-Column Stores (e.g., Apache Cassandra, HBase)**: These databases store data in tables, rows, and columns, but the names and format of the columns can vary from row to row in the same table. This model is highly efficient for analytical queries that need to read a subset of columns across a large number of rows.
     4. **Graph Databases (e.g., Neo4j, Amazon Neptune)**: Designed specifically to store and navigate relationships. Data is modeled as nodes (entities) and edges (relationships), making them ideal for social networks, fraud detection, and recommendation engines.
 
 - **Key Concepts**: Instead of strict ACID compliance, many NoSQL databases are designed around the principles of the **CAP Theorem** and **BASE**. The CAP theorem states that a distributed system can only provide two of the following three guarantees: **Consistency, Availability, and Partition Tolerance**. Most NoSQL databases choose Availability and Partition Tolerance over strong Consistency. This leads to the **BASE** model (Basically Available, Soft state, Eventual consistency), which guarantees that the system will be available but may serve slightly stale data for a short period until all replicas are updated.
@@ -195,6 +195,9 @@ NoSQL databases emerged to address the limitations of relational databases, part
 
 > [!important] 
 > The choice between these database architectures is not arbitrary but is driven by the specific needs of the application. A system processing financial transactions cannot compromise on consistency, making a relational database the correct choice. Conversely, a social media application that needs to scale to millions of users and handle flexible data profiles would benefit from a NoSQL approach. A modern data engineer must understand this entire spectrum to select the appropriate technology for each use case.
+
+> [!seealso] 
+> To get more in-depth explanation on DBMS Concepts please refer this [[DBMS Cheatsheet]]
 
 ### Storage Systems: Data Warehouse & Data Lake
 While operational databases are designed to run applications, analytical storage systems are designed to support business intelligence, reporting, and data science. The evolution of these systems tells the story of the changing needs of data analytics, from structured corporate reporting to large-scale machine learning.
