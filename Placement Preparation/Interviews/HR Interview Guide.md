@@ -11,10 +11,21 @@
 > 
 > I am currently looking for opportunities in the software industry. If there’s any area apart from my expertise that you would like me to expand in.. I’ll be happy to do so.
 
+> [!success] Latest Answer [2025]
+> Hello, my name is Hatim Sawai. I am a recent Computer Engineering graduate from Sardar Patel Institute of Technology, Mumbai, having completed my degree in June 2025.
+> 
+> Recently, I finished a 6-month data engineering internship at Amazon with the TFAW team in the FinAuto Org. There, I contributed to a Redshift data warehouse used for financial crime analysis. My main project involved addressing a major bottleneck in the data onboarding process. My Mentor and I designed and implemented an automated, self-service pipeline using AWS Lambda and Step Functions, which transformed the workflow. This automation drastically reduced onboarding times and contributed to an estimated 50% in cost savings for the team.
+> 
+> During my degree I built a strong foundation in full-stack development. My academic projects and leadership experience as the Tech Head for the Google Developer Student Club have further honed my skills in teamwork and mentorship.
+
+
 #### Q2. Strengths / What are you good at?
 
 > [!warning] Old Answer [2024]
 > Overtime I have developed many strengths throughout my degree, some of them are being an active team player, I am a good listener, I always make sure to listen to both sides of a story. I am also a bit of a perfectionist and like to do things with highest level of quality.
+
+> [!success] Latest Answer [2025]
+> Overtime I have developed many strengths throughout my degree, some of them are being an active team player, I am a good listener, I always make sure to listen to both sides of a story. I am also a bit of a perfectionist and like to do things with highest level of quality. During my time at Amazon, i was able to solve ambiguity in the approaches and had made sure that the team was on the same page and i had all the info before proceeding forward with implementation.
 
 #### Q3. Weaknesses / How did you overcome?
 
@@ -22,6 +33,12 @@
 > One area I'm continuously working to improve is my public speaking skills. As someone who's naturally more introverted, I used to find it challenging to present my ideas to large groups. However, I've recognized the importance of this skill in the tech industry, especially when it comes to sharing project updates or pitching ideas.
 > 
 > To address this, I've been actively seeking opportunities to practice. I volunteered to lead more presentations in my university projects and joined the Google Developer Student Club, where I've had chances to speak and host events, this has boosted my confidence a lot.
+
+> [!success] Latest Answer [2025]
+> An area I actively improved during my Amazon internship was my approach to problem-solving. Initially, when I faced a complex issue, I would sometimes go to my mentor for help without troubleshooting it deeply myself. After getting feedback, I learned to first deep-dive into the topic, document what I had tried, and only then approach my mentor to _discuss_ potential approaches rather than just ask for a solution. This has made me a more independent and effective engineer.
+> 
+> This reminds me of how I worked on my public speaking skills in college. I used to be more introverted and found presenting to large groups challenging. To overcome this, I took on a leadership role in the Google Developer Student Club, where I conducted workshops and hosted events. That experience built my confidence significantly, and it’s a challenge I no longer faced at Amazon.
+
 
 #### Q4. Where do you see yourself in 5 years / What are your future plans?
 
@@ -40,18 +57,21 @@
 
 #### Q7. Toughest Challenge you have faced?
 
-> [!success] Latest Answer
+> [!success] Latest Answer [2024]
 > One of the toughest Challenges i have faced so far, during my time at college and in general, is dealing with my disability, i am a pwd student with a vision issue which means basically i struggle to see in low lighting conditions, this has prevented me from many social interactions and sometimes lowered my confidence, but i have worked on myself in these years at university to overcome this social anxiety and now i am a much more confident person.
 
 #### Q8. Something that is not on your Resume?
 
-> [!success] Latest Answer
-> Something thats not my resume? well one interesting initiative which i was a part of was something called "Community of Coders" it was a collab of different technical clubs of our college to bring juniors and seniors together and form a robust coding culture in our college. I played a major role as i was one of the board of directors of the whole project and an administrator of the discord server which we made for this. I took major decisions as to the whole planning of it, hosted many events with juniors too.
+> [!success] Latest Answer [2024]
+> Something that's not my resume? well one interesting initiative which i was a part of During my Uni Degree was something called "Community of Coders" it was a collab of different technical clubs of our college to bring juniors and seniors together and form a robust coding culture in our college. I played a major role as i was one of the board of directors of the whole project and an administrator of the discord server which we made for this. I took major decisions as to the whole planning of it, hosted many events with juniors too.
 
 #### Q9. A time when I had to face a conflict in a team?
 
 > [!warning] Old Answer [2024]
 > So, once i was part of the technical team of Oculus Coding League, our university's tech fest, and we as a team of 5 were supposed to make the main website for the event. What happened is there was a conflict of interest between 2 of our group members, it got to the point where at a crucial time one of them refused to join further meetings. I took it on myself to resolve the whole situation, let them talk it out in a separate meet and eventually the team came back together and the event was a huge success!
+
+> [!success] Latest Answer [2025]
+> During my internship at Amazon, there was about a month or so left on the project completion, we had initially planned for a new web UI instead of using existing tickets to create the automation. Now, we in the team especially 2 of our senior engineers had conflicting view on whether the UI was necessary in the first place. So i took ownership and gathered all the info, the components we would need, the time and effort needed and created a document and also scheduled a meeting with them and our team to discuss the proposal. By the end of the meeting we all came to the conclusion that it was not needed. One of the senior engineer even appreciated me for taking the effort which was not required of an intern to resolve the conflicts as soon as possible.
 
 #### Questions for the Interviewers
 1. How is the work culture at the company?

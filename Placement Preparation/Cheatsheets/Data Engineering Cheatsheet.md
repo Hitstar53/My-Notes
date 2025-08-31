@@ -1,13 +1,14 @@
 > [!seealso] 
 > 1. To learn via external sources follow the [[Data Engineering Road Map]]
-> 2. To learn more about concepts in detail please refer the following textbooks:
+> 2. To revise concepts refer this [Youtube Video](https://www.youtube.com/watch?v=hf2go3E2m8g)
+> 3. To learn more about concepts in detail please refer the following textbooks:
 > [[Data Engineering Fundamentals.pdf]]
 > [[Data Engineering with Python.pdf]]
 > [[Data-Warehouse-1.pdf]]
 > [[Data.Warehouse-2.pdf]]
 > [[TDG - Spark.pdf]]
 > [[TDG - Hadoop.pdf]]
-> 3. To get an idea of interviews refer [[DE-1 Interview Prep]] & [[Amazon Data Eng Prep.pdf]]
+> 4. To get an idea of interviews refer [[DE-1 Interview Prep]] & [[Amazon Data Eng Prep.pdf]]
 
 ## Contents:
 1. [[#Section 1 The Foundations]]
@@ -349,7 +350,7 @@ The star schema is the simplest and most common form of dimensional modeling.
 
 #### Snowflake Schema
 The snowflake schema is an extension of the star schema where dimension tables are normalized.
-1. **Structure**: In a snowflake schema, large dimension tables are broken down into a more normalized structure, creating multiple related tables. For instance, the `Product` dimension might be split into a `products` table, a `subcategories` table, and a `categories` table, linked by foreign keys.58 The resulting diagram looks like a snowflake, as these smaller tables branch off the main dimension tables.
+1. **Structure**: In a snowflake schema, large dimension tables are broken down into a more normalized structure, creating multiple related tables. For instance, the `Product` dimension might be split into a `products` table, a `subcategories` table, and a `categories` table, linked by foreign keys. The resulting diagram looks like a snowflake, as these smaller tables branch off the main dimension tables.
 
 > [!success] Pros:
 > - **Storage Efficiency**: Normalization reduces data redundancy, which saves storage space.
