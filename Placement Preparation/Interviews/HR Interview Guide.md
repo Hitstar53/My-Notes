@@ -42,17 +42,17 @@
 
 #### Q4. Where do you see yourself in 5 years / What are your future plans?
 
-> [!warning] Old Answer [2024]
+> [!success] Latest Answer [2024]
 > I do not know what the future has in store for me, but I want to become financially independent, able to provide for my family and keep learning new things about my field, especially AI which I am passionate about.
 
 #### Q5. Why do you want to Work Here? / Why should we Hire you?
 
 > [!hint] 
-> Answer will be company specific, some general stuff can be mentioned like: Spoken to seniors who work here and they said the work culture is very good, I see a potential for growth while working at the company in areas of my interest, as well as in other fields.
+> Answer will be **company specific**, some general stuff can be mentioned like: Spoken to seniors who work here and they said the work culture is very good, I see a potential for growth while working at the company in areas of my interest, as well as in other fields.
 
 #### Q6. Why did you choose this degree program?
 
-> [!warning] Old Answer [2024]
+> [!success] Latest Answer [2024]
 > While in my school i had interests in various other fields like architecture and even medical, hence i took proper counselling and it helped me see where my passion was and where was I the most capable, turned out to be computer engineering, its a perfect degree for me whole like technology since a young ae and wanted in-depth knowledge of computer science as I see this as the most important field of the future.
 
 #### Q7. Toughest Challenge you have faced?

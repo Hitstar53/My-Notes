@@ -1,3 +1,4 @@
+## Resources:
 > [!seealso] 
 > 1. To learn via external sources follow the [[Data Engineering Road Map]]
 > 2. To revise concepts refer this [Youtube Video](https://www.youtube.com/watch?v=hf2go3E2m8g)
