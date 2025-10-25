@@ -364,7 +364,7 @@ import heapq
 # To find the Kth largest element in an array
 def find_kth_largest(nums, k):
     # Use a min-heap of size k
-    min_heap =
+    min_heap = []
     for num in nums:
         if len(min_heap) < k:
             heapq.heappush(min_heap, num)

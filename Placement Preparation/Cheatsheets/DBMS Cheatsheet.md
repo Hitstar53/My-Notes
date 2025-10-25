@@ -8,14 +8,24 @@
 ## Section 1: Fundamentals of DBMS
 This foundational section deconstructs the Database Management System (DBMS), moving from its high-level purpose and operational environment to its internal software components. It establishes the essential vocabulary and architectural principles that govern all subsequent topics.
 
-### What is a DBMS? Purpose and Core Functions
-A Database Management System (DBMS) is a sophisticated software system designed to create, manage, and interact with databases. It acts as an intermediary between the user or application and the physical database, providing a structured and efficient way to handle large volumes of data. The primary purpose of a DBMS is to offer an abstract, simplified interface that shields users from the complexities of underlying data storage mechanisms. This abstraction is crucial for ensuring data consistency, enforcing security protocols, and guaranteeing reliable access.
+### What is a DBMS? Purpose & Core Functions
+A Database is an organized collection of various kinds of data. For example, a company database may include their employees' details, sales data. product information, etc.
+
+A Database Management System (DBMS) is a software system designed to create, manage, and interact with databases. It acts as an intermediary between the user or application and the physical database, providing a structured and efficient way to handle large volumes of data. It allows efficient addition, retrieval, modification and deletion of stored data.
 
 The core functions of a DBMS can be categorized into four main areas:
 1. **Data Definition**: This involves defining the structure, or schema, of the database. Users can specify the types of data to be stored, create tables, define relationships between them, and establish constraints to maintain data integrity.
 2. **Data Manipulation**: This function allows users to insert new data, update existing records, and delete obsolete information. A DBMS provides the tools to perform these operations efficiently and safely.
 3. **Data Retrieval**: A key function of a DBMS is to provide users with the ability to query the database to retrieve specific information. This is often accomplished through a specialized query language.
 4. **Administration**: This encompasses a wide range of management tasks, including enforcing data security by controlling user access, ensuring data integrity through constraints, managing concurrency to allow multiple users to work simultaneously without conflict, and performing regular backups and recovery procedures to prevent data loss.
+
+#### Database Schema
+Data abstraction manages complexity by hiding unnecessary details from the user. A schema is a description of how data will be stored in a database and defines the basic database structure.
+
+Schemas are created at three levels of Abstraction:
+1. A **Physical Schema** describes the database design at the physical level in the form of files, etc.
+2. A **A Logical Schema** is a conceptual understanding of data representing the database at a logical level.
+3. A **View Schema** is the user representation of design and describes the database at an application level. 
 
 ### Key Components of a DBMS Environment
 A functional DBMS does not operate in isolation; it is part of a larger, integrated environment. Understanding this ecosystem is essential to appreciating the role and dependencies of the database system. The environment is composed of five principal components.
@@ -87,7 +97,7 @@ Dr. Edgar F. Codd, the creator of the relational model, proposed a set of thirte
 
 ### Alternative Data Models: Hierarchical & Network Models
 Before the relational model became dominant, earlier models were used to structure data, each with distinct characteristics and limitations.
-1. **Hierarchical Model**: This model organizes data in a tree-like structure. Each record has a single parent, and each parent can have one or more child records. This creates a strict one-to-many relationship. While simple to understand, its rigidity is a significant drawback, as it cannot naturally represent many-to-many relationships.
+1. **Hierarchical Model**: Earliest Model developed in the 1950s by IBM. This model organizes data in a tree-like structure. Each record has a single parent, and each parent can have one or more child records. This creates a strict one-to-many relationship. While simple to understand, its rigidity is a significant drawback, as it cannot naturally represent many-to-many relationships.
 2. **Network Model**: An evolution of the hierarchical model, the network model allows a record (called a "member") to have multiple parent records (called "owners"). This is achieved by representing data as a graph, enabling the modeling of more complex, many-to-many relationships. However, this flexibility came at the cost of increased complexity in navigating and managing the database.
 
 
@@ -98,14 +108,22 @@ This section transitions from abstract models to the practical discipline of des
 The Entity-Relationship (ER) model is a high-level, conceptual data modeling technique used to visualize the structure of a database before its physical implementation. It provides a graphical representation that is easy for both technical and non-technical stakeholders to understand.
 
 The core components of an ER diagram are :
-1. **Entity**: An entity represents a real-world object, concept, or event about which data is collected. Examples include `Student`, `Course`, or `Professor`. In an ER diagram, an entity type is typically represented by a rectangle.
-2. **Attribute**: An attribute is a property or characteristic of an entity. For example, the `Student` entity might have attributes like `StudentID`, `StudentName`, and `DateOfBirth`. Attributes are often depicted as ovals connected to their entity.
-3. **Relationship**: A relationship represents an association between two or more entities. For instance, a `Student` _enrolls in_ a `Course`. Relationships are typically shown as diamond shapes connecting the related entities.
+1. **Entity:** An entity represents a real-world object, concept, or event about which data is collected. Examples include `Student`, `Course`, or `Professor`. In an ER diagram, an entity type is typically represented by a **Rectangle**. Types of Entities are:
+	1. **Strong Entity:** It has a key Attribute and does not depend on any other entity in the Schema. Has a PK which identifies it uniquely.
+	2. **Weak Entity:** Key attribute can't be defined, or it depends on another entity in the schema. Represented by a **Double Rectangle**.
 
-A crucial aspect of relationships is defining their **Cardinality Constraints**, which specify the number of instances of one entity that can be associated with instances of another entity. The common cardinalities are:
-1. **One-to-One (1:1)**: Each entity instance is related to exactly one instance of the other entity.
-2. **One-to-Many (1:N)**: One entity instance can be related to multiple instances of another entity, but each of those instances is related to only one instance of the first.
-3. **Many-to-Many (M:N)**: Instances of each entity can be related to multiple instances of the other entity
+2. **Attribute:** An attribute is a property or characteristic of an entity. For example, the `Student` entity might have attributes like `StudentID`, `StudentName`, and `DateOfBirth`. Attributes are often depicted as **Ellipses** connected to their entity. Types of Attributes are:
+	1. **Key Attribute:** Which Uniquely identifies each entity in an Entity Set.
+	2. **Composite Attribute:** Composed of many other attributes.
+	3. **Multivalued Attribute:** Consisting of more than 1 value for an Entity.
+	4. **Derived Attribute:** Can be derived from other attributes of the Entity.
+
+3. **Relationship:** A relationship represents an association between two or more entities. For instance, a `Student` _enrolls in_ a `Course`. Relationships are typically shown as **Diamond** shapes connecting related entities with **Lines**.
+
+4. **Cardinality:** Number of times an entity can participate in a relationship is called cardinality. It specifies the number of instances of one entity that can be associated with instances of another entity. The common cardinalities are:
+	1. **One-to-One (1:1)**: Each entity instance is related to exactly one instance of the other entity.
+	2. **One-to-Many (1:N/N:1)**: One entity instance can be related to multiple instances of another entity, but each of those instances is related to only one instance of the first.
+	3. **Many-to-Many (M:N)**: Instances of each entity can be related to multiple instances of the other entity
 
 ### The Extended ER (EER) Model
 As data complexity grows, the standard ER model can become insufficient for representing intricate real-world scenarios. The Extended Entity-Relationship (EER) model builds upon the basic ER model by introducing advanced concepts to handle more complex applications and data relationships.  
@@ -144,7 +162,7 @@ The main types of functional dependencies are:
 3. **Transitive Dependency**: An indirect dependency where A→B and B→C, but B does not determine A. This implies an indirect dependency A→C. For example, if `StudentID \rightarrow DepartmentID` and `DepartmentID \rightarrow DepartmentHead`, then there is a transitive dependency `StudentID \rightarrow DepartmentHead`. Eliminating such dependencies is the goal of the Third Normal Form (3NF).
 
 ### Database Normalization & Forms
-Normalization is a systematic process of organizing the columns and tables in a relational database to minimize data redundancy and improve data integrity. The primary goal is to eliminate undesirable characteristics known as insertion, update, and deletion anomalies, which can arise in poorly designed tables.
+Normalization is a systematic process of organizing the columns and tables in a relational database to minimize data redundancy and improve data integrity. The primary goal is to eliminate undesirable characteristics known as **insertion, update, and deletion anomalies**, which can arise in poorly designed tables.
 
 The process is hierarchical, with each normal form building upon the previous one. A step-by-step example illustrates the process:
 
@@ -163,18 +181,18 @@ This table suffers from multiple issues, including multi-valued attributes (`Emp
 A table is in 1NF if all its attribute values are atomic (indivisible). The `EmployeeSkills` column violates this rule. To conform to 1NF, we eliminate the repeating group by creating a separate row for each skill.
 **1NF Table:**
 
-|ProjectID|ProjectName|EmployeeID|EmployeeName|EmployeeSkill|
-|---|---|---|---|---|
-|P101|Apollo|E01|John Smith|Java|
-|P101|Apollo|E01|John Smith|Python|
-|P102|Gemini|E02|Jane Doe|SQL|
-|P101|Apollo|E02|Jane Doe|SQL|
-|_Primary Key: {ProjectID, EmployeeID, EmployeeSkill}_|||||
+| ProjectID                                             | ProjectName | EmployeeID | EmployeeName | EmployeeSkill |
+| ----------------------------------------------------- | ----------- | ---------- | ------------ | ------------- |
+| P101                                                  | Apollo      | E01        | John Smith   | Java          |
+| P101                                                  | Apollo      | E01        | John Smith   | Python        |
+| P102                                                  | Gemini      | E02        | Jane Doe     | SQL           |
+| P101                                                  | Apollo      | E02        | Jane Doe     | SQL           |
+| _Primary Key: {ProjectID, EmployeeID, EmployeeSkill}_ |             |            |              |               |
 
 **Step 2: Achieve Second Normal Form (2NF)**
 A table is in 2NF if it is in 1NF and all non-key attributes are fully functionally dependent on the entire primary key. In our 1NF table, we have partial dependencies:
-1. `ProjectID \rightarrow ProjectName` (`ProjectName` depends only on a part of the primary key).
-2. `EmployeeID \rightarrow EmployeeName` (`EmployeeName` depends only on a part of the primary key).
+1. `ProjectID -> ProjectName` (`ProjectName` depends only on a part of the primary key).
+2. `EmployeeID -> EmployeeName` (`EmployeeName` depends only on a part of the primary key).
 To resolve this, we decompose the table into smaller tables:
 
 **Projects Table (2NF):**
@@ -221,7 +239,7 @@ A table is in 3NF if it is in 2NF and there are no transitive dependencies. Let'
 | E01        | John Smith   | D01    | Engineering |
 | E02        | Jane Doe     | D02    | Marketing   |
 
-Here, `EmployeeID \rightarrow DeptID` and `DeptID \rightarrow DeptName`. This creates a transitive dependency: `EmployeeID \rightarrow DeptName`. To achieve 3NF, we decompose again:
+Here, `EmployeeID -> DeptID` and `DeptID -> DeptName`. This creates a transitive dependency: `EmployeeID -> DeptName`. To achieve 3NF, we decompose again:
 
 **Employees Table (3NF):**
 

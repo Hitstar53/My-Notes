@@ -940,7 +940,7 @@ React provides two primary hooks for managing local state in functional componen
 	const [state, dispatch] = useReducer(reducer, initialState);
 	```
 	It returns the current `state` and a `dispatch` function. Let's break down the key components:
-	1. **The Reducer Function:** This is a pure function that you write. It accepts the current `state` and an `action` object as arguments and must return the _next_ state.12 All of your state update logic is consolidated within this single function, typically using a `switch` statement to handle different types of actions.
+	1. **The Reducer Function:** This is a pure function that you write. It accepts the current `state` and an `action` object as arguments and must return the _next_ state. All of your state update logic is consolidated within this single function, typically using a `switch` statement to handle different types of actions.
 	2. **The Action Object:** A plain JavaScript object that describes a state change. By convention, it has a `type` property (a string that identifies the action) and an optional `payload` property containing any data needed to compute the next state.
 	3. **The Dispatch Function:** Instead of calling a setter function with the new state, you call `dispatch` with an action object. This signals your intent to update the state. React then passes the current state and your action to your reducer function, which computes the new state and triggers a re-render.
 

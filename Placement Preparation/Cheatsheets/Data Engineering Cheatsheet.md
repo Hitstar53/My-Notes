@@ -742,7 +742,7 @@ The most sophisticated data platform is worthless if the data within it cannot b
 ### Data Quality and Testing
 Historically, data quality was a reactive process of cleaning up bad data after it had already caused problems downstream. The modern approach is to treat data quality as a proactive testing discipline, embedding automated checks directly into data pipelines to catch issues early.
 
-- **Key Tools & Techniques**:
+**Key Tools & Techniques**:
 1. **Great Expectations**: A leading open-source tool for data validation. It allows you to define "Expectations"—assertions about your data—in a declarative format. For example, you can assert that a column's values must not be null, must be unique, or must fall within a certain range. These expectations are then used to validate data as it flows through a pipeline, and the pipeline can be configured to fail if the data does not meet the defined quality standards.
 
 2. **dbt Tests**: dbt (data build tool) has built-in testing capabilities that make it easy to enforce data quality within the data warehouse. It provides generic tests (like `unique` and `not_null`) that can be applied to any column with a simple configuration, as well as the ability to write custom tests as SQL `SELECT` statements. These tests are executed as part of the dbt run, ensuring that data models are validated as they are built.

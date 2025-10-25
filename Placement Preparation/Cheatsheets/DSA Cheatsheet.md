@@ -227,9 +227,9 @@ In a proper implementation, all three of these core operations have a time compl
 #### Python Implementation Strategies
 Python offers several ways to implement a stack, with different performance characteristics.
 
-1. **Using `list`**: This is the simplest method. The `list.append()` method serves as `push`, and `list.pop()` (without an index) serves as `pop`. Both operations target the end of the list and have an amortized time complexity of 'O(1)'.33 While generally efficient, the underlying dynamic array can occasionally require resizing, which is an $O(n)$ operation, though this cost is averaged out over many appends.
+1. **Using `list`**: This is the simplest method. The `list.append()` method serves as `push`, and `list.pop()` (without an index) serves as `pop`. Both operations target the end of the list and have an amortized time complexity of 'O(1)'. While generally efficient, the underlying dynamic array can occasionally require resizing, which is an $O(n)$ operation, though this cost is averaged out over many appends.
     ```python
-    stack_list =
+    stack_list = []
     # Push operations
     stack_list.append('A')
     stack_list.append('B')
@@ -329,11 +329,11 @@ alices_score = student_scores["Alice"]
 print(f"Alice's score: {alices_score}")
 
 # Adding a new key-value pair (O(1) on average)
-student_scores = 88
+student_scores["David"] = 88
 print(f"After adding David: {student_scores}")
 
 # Updating a value (O(1) on average)
-student_scores = 90
+student_scores["Bob"] = 90
 print(f"After updating Bob's score: {student_scores}")
 
 # Deleting a key-value pair (O(1) on average)
