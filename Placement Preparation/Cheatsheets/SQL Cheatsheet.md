@@ -12,17 +12,20 @@
 11. [[#Section 10 Window / Analytical Functions]]
 12. [[#Section 11 Date Functions]]
 13. [[#Section 12 Views & Temp Tables]]
-14. [[#Section 13 Indexes, Constraints & Synonyms]]
-15. [[#Section 14 Stored Procedures, Functions & CTEs]]
+14. [[#Section 13 Indexes, Synonyms & Sequences]]
+15. [[#Section 14 Constraints]]
+16. [[#Section 15 Functions & CTEs]]
+17. [[#Section 16 Stored Procedures & Triggers]]
+18. [[#Section 17 Data Dictionary Views]]
 
 ## Introduction to SQL
 Structured Query Language (SQL) is the standard language for managing and manipulating relational databases. It is used to perform tasks such as retrieving data, inserting new records, updating existing ones, and deleting data. SQL commands are traditionally categorized into several groups, which define their role in the database.
 #### Database Objects:
 1. **Table**: Acts as a basic unit of storage that is composed of rows & columns.
 2. **View**: Logically represents the subsets of data from one or more table.
-3. **Sequence**: Is a numeric value generator (OracleDB).
+3. **Sequence**: Is a numeric value generator (Oracle).
 4. **Index**: Improves performance of queries on large tables.
-5. **Synonym/Alias**: Give alternative names to Objects.
+5. **Synonym**: Give alternative names to Objects (Oracle).
 
 > [!important] Things to Remember About Writing SQL:
 > 1. Not Case-Sensitive, unless indicated.
@@ -836,6 +839,7 @@ A view is a virtual table based on the result-set of a stored SQL query. It cont
 > - **Security:** Grant users access to a view that only exposes certain columns or rows, thereby restricting their access to sensitive data in the underlying tables.  
 > - **Maintenance:** If the logic of a complex query needs to change, you only need to update the view definition (`ALTER VIEW`), and all applications using the view will automatically get the new logic.
 
+### Views:
 ##### 1. Create View
 ```mysql
 CREATE OR REPLACE VIEW high_salary_employees AS
@@ -873,8 +877,32 @@ REFRESH MATERIALIZED VIEW emp_summary;
 DROP MATERIALIZED VIEW emp_summary;
 ```
 
-## Section 13: Indexes, Constraints & Synonyms
-These are database objects used to enforce data integrity and improve query performance.
+### Temp Tables:
+It is a table that exists for a brief period of time, generally contains a subset of data from a regular table. It is used to store and process intermediate results. It is automatically deleted when the session is ended.
+##### 1. Create Temp Table
+```plsql
+CREATE GLOBAL TEMPORARY TABLE temp_employees (
+    emp_id INT,
+    emp_name VARCHAR2(50)
+) ON COMMIT DELETE ROWS;
+
+-- MySQL
+CREATE TEMPORARY TABLE temp_sales AS
+SELECT * FROM sales WHERE region = 'Asia';
+
+/*
+SCOPE:
+GLOBAL - Across sessions
+LOCAL - Session specific
+
+ON COMMIT:
+DELETE ROWS - deletes rows after commit
+PRESERVE ROWS - keeps rows until session is ended
+*/
+```
+
+## Section 13: Indexes, Synonyms & Sequences
+These are database objects used to enforce data integrity and improve query performance, and help with DQL statements.
 
 > [!tip] Tips on Indexes
 > - **Data Integrity:** Constraints are rules that prevent invalid data from being entered into your tables. A `PRIMARY KEY` (which is both `UNIQUE` and `NOT NULL`) is essential for uniquely identifying each row. A `FOREIGN KEY` is crucial for maintaining referential integrity between tables.
@@ -891,6 +919,50 @@ CREATE INDEX idx_last_name ON employees(last_name);
 DROP INDEX idx_last_name ON employees;
 ```
 
+### Synonyms:
+##### 1. Create Synonyms:
+```plsql
+CREATE SYNONYM EMP FOR employees;
+-- or
+CREATE PUBLIC SYNONYM EMP FOR employees;
+```
+
+##### 2. Drop Synonyms:
+```plsql
+DROP SYNONYM EMP;
+```
+
+### Sequences:
+##### 1. Create Sequence
+Sequence is used to produce a unique sequence of numeric values in a series according to specified specifications. It is user-defined schema object. It is not associated with any table.
+```plsql
+-- syntax
+CREATE SEQUENCE name_of_sequence (
+	[ START WITH initial_value ]
+	[ INCREMENT BY incremental_value ]
+	[ MAXVALUE {max_value} | NO MAXVALUE ]
+	[ MINVALUE {min_value} | NO MINIVALUE ]
+	[ CACHE {size_of_cache} | NOCACHE ]
+	[ CYCLE | NOCYCLE ];
+);
+
+-- example
+CREATE SEQUENCE seq1 (
+	START WITH 1
+	INCREMENT BY 3
+	MAXVALUE 30
+	NOCACHE
+	NOCYCLE
+);
+
+INSERT INTO employees (emp_id, emp_name)
+VALUES (seq1.NEXTVAL, 'John Doe'); -- get the next value in the sequence
+
+-- Get current value
+SELECT seq1.CURRVAL FROM dual; -- get the current value in the sequence
+```
+
+## Section 14: Constraints
 ### Constraints:
 ##### 1. Primary Key
 ```mysql
@@ -1034,20 +1106,7 @@ ALTER TABLE Persons ALTER City SET DEFAULT 'Sandnes';
 ALTER TABLE Persons ALTER City DROP DEFAULT;
 ```
 
-### Synonyms:
-##### 1. Create Synonyms:
-```plsql
-CREATE SYNONYM EMP FOR employees;
--- or
-CREATE PUBLIC SYNONYM EMP FOR employees;
-```
-
-##### 2. Drop Synonyms:
-```plsql
-DROP SYNONYM EMP;
-```
-
-## Section 14: Stored Procedures, Functions & CTEs
+## Section 15: Functions & CTEs
 ### CTE (Common Table Expression)
 ##### 1. Create CTE 
 ```mysql
@@ -1060,6 +1119,26 @@ WITH cte_name AS (
 SELECT * FROM cte_name;
 ```
 
+### Functions
+functions manipulate data and return a result
+##### 1. Create Function
+```mysql
+CREATE FUNCTION calculate_bonus (salary DECIMAL(10,2)) RETURNS DECIMAL(10,2)
+BEGIN
+    DECLARE bonus DECIMAL(10,2);
+    SET bonus = salary * 0.1;
+    RETURN bonus;
+END;
+```
+
+##### 2. Use Function
+```mysql
+SELECT first_name, last_name, calculate_bonus(salary) AS bonus
+FROM employees;
+```
+
+
+## Section 16: Stored Procedures & Triggers
 ### Stored Procedures:
 ##### 1. Create Stored Procedure
 ```mysql
@@ -1094,20 +1173,12 @@ END;
 CALL get_employees_by_dept(10);
 ```
 
-### Functions
-functions manipulate data and return a result
-##### 1. Create Function
-```mysql
-CREATE FUNCTION calculate_bonus (salary DECIMAL(10,2)) RETURNS DECIMAL(10,2)
-BEGIN
-    DECLARE bonus DECIMAL(10,2);
-    SET bonus = salary * 0.1;
-    RETURN bonus;
-END;
+### Triggers
+##### 1. Create Trigger
+```plsql
+CREATE OR REPLACE TRIGGER
 ```
 
-##### 2. Use Function
-```mysql
-SELECT first_name, last_name, calculate_bonus(salary) AS bonus
-FROM employees;
-```
+## Section 17: Data Dictionary Views
+
+
