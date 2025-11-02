@@ -16,7 +16,7 @@
 15. [[#Section 14 Constraints]]
 16. [[#Section 15 Functions & CTEs]]
 17. [[#Section 16 Stored Procedures & Triggers]]
-18. [[#Section 17 Data Dictionary Views]]
+18. [[#Section 17 Data Dictionary Views - Oracle]]
 
 ## Introduction to SQL
 Structured Query Language (SQL) is the standard language for managing and manipulating relational databases. It is used to perform tasks such as retrieving data, inserting new records, updating existing ones, and deleting data. SQL commands are traditionally categorized into several groups, which define their role in the database.
@@ -161,6 +161,9 @@ UPDATE CUSTOMERS SET AGE = AGE+5, SALARY = SALARY+3000;
 ```mysql
 DELETE FROM employees
 WHERE employee_id = 1;
+
+-- delete all data from the table (slow but can rollback)
+DELETE FROM employees;
 ```
 
 ## Section 3: Data Query Language (DQL)
@@ -331,9 +334,12 @@ SELECT TOP 40 PERCENT * FROM CUSTOMERS ORDER BY SALARY;
 SELECT * FROM employees FETCH FIRST 3 ROWS ONLY;
 
 SELECT * FROM employees ROWNUM = 1;
+-- or
+SELECT * FROM (SELECT * FROM employees ORDER BY salary DESC)
+WHERE ROWNUM <= 5;
 
--- ROWNUM cannot be used after order by clause and needs a subquery (Oracle)
--- FETCH ROWS is very new and does not work in all instance of plsql
+-- ROWNUM cannot be used after order by clause and needs a subquery in oracle
+-- FETCH ROWS is very new and does not work in older instances of oracle
 ```
 
 ##### 15. DISTINCT
@@ -625,6 +631,11 @@ Returns portion of characters based on start and length
 ```plsql
 SELECT SUBSTR('This is a test sentence', 1, 5) FROM dual;
 ```
+```mysql
+-- alternatives for mysql
+SELECT LEFT('This is a test sentence', 1) FROM dual; -- 'T'
+SELECT RIGHT('This is a test sentence', 1) FROM dual; -- 'e'
+```
 
 ##### 5. LENGTH
 ```mysql
@@ -863,7 +874,7 @@ DROP VIEW high_salary_employees;
 ```
 
 ##### 5. MATERIALIZED VIEWS
-**Note:** Not available in MySQL, Only in PostgreSQL / RedshiftSQL
+**Note:** Not available in MySQL, Only in PostgreSQL / RedshiftSQL / Oracle
 ```postgresql
 CREATE MATERIALIZED VIEW emp_summary AS
 SELECT department_id, AVG(salary) AS avg_salary
@@ -905,7 +916,6 @@ PRESERVE ROWS - keeps rows until session is ended
 These are database objects used to enforce data integrity and improve query performance, and help with DQL statements.
 
 > [!tip] Tips on Indexes
-> - **Data Integrity:** Constraints are rules that prevent invalid data from being entered into your tables. A `PRIMARY KEY` (which is both `UNIQUE` and `NOT NULL`) is essential for uniquely identifying each row. A `FOREIGN KEY` is crucial for maintaining referential integrity between tables.
 > - **Performance:** Indexes are the single most important factor in query performance. They allow the database to find rows with specific column values quickly without scanning the entire table. Create indexes on columns that are frequently used in `WHERE` clauses and `JOIN` conditions.
 
 ### Indexes:
@@ -933,8 +943,8 @@ DROP SYNONYM EMP;
 ```
 
 ### Sequences:
-##### 1. Create Sequence
 Sequence is used to produce a unique sequence of numeric values in a series according to specified specifications. It is user-defined schema object. It is not associated with any table.
+##### 1. Create Sequence
 ```plsql
 -- syntax
 CREATE SEQUENCE name_of_sequence (
@@ -963,7 +973,10 @@ SELECT seq1.CURRVAL FROM dual; -- get the current value in the sequence
 ```
 
 ## Section 14: Constraints
-### Constraints:
+
+> [!tip] Tips on Constraints
+> - **Data Integrity:** Constraints are rules that prevent invalid data from being entered into your tables. A `PRIMARY KEY` (which is both `UNIQUE` and `NOT NULL`) is essential for uniquely identifying each row. A `FOREIGN KEY` is crucial for maintaining referential integrity between tables.
+
 ##### 1. Primary Key
 ```mysql
 -- Create primary key for single column
@@ -1120,7 +1133,7 @@ SELECT * FROM cte_name;
 ```
 
 ### Functions
-functions manipulate data and return a result
+Functions manipulate data and return a result.
 ##### 1. Create Function
 ```mysql
 CREATE FUNCTION calculate_bonus (salary DECIMAL(10,2)) RETURNS DECIMAL(10,2)
@@ -1140,6 +1153,7 @@ FROM employees;
 
 ## Section 16: Stored Procedures & Triggers
 ### Stored Procedures:
+A stored procedure is a SQL code that can be stored and preserved for anytime use. It can be reused over and over again for repeating the SQL code. Parameters / Arguments can also be passed to the stored procedure to customize and make it more modular.
 ##### 1. Create Stored Procedure
 ```mysql
 CREATE PROCEDURE get_employees_by_dept(IN dept_id INT)
@@ -1174,11 +1188,178 @@ CALL get_employees_by_dept(10);
 ```
 
 ### Triggers
+A trigger is a special type of stored procedure that automatically gets executed when an event occurs in the database server.  It can be created of DDL, DML or logon events, but cannot be executed manually. 
 ##### 1. Create Trigger
 ```plsql
-CREATE OR REPLACE TRIGGER
+-- syntax
+CREATE OR REPLACE TRIGGER trigger_name
+[BEFORE | AFTER | INSEAD OF]
+[INSERT (OR) | UPDATE (OR) | DELETE]
+[OF column_name]
+ON table_name
+[REFERENCING OLD AS o NEW AS n]
+[FOR EACH ROW]
+WHEN (codition)
+DECLARE
+	--declaration block
+BEGIN
+	-- executable block
+EXCEPTION
+	-- exception handling
+END;
+
+-- example
+CREATE OR REPLACE TRIGGER display_salary_changes
+BEFORE DELETE OR INSERT OR UPDATE
+ON employees
+FOR EACH ROW
+WHEN (NEW.emp_id > 0)
+DECLARE
+	sal_diff NUMBER;
+BEGIN
+	sal_diff := :NEW.salary - :OLD.salary;
+	DBMS_OUTPUT.PUT_LINE('Old Salary: ' || :OLD.salary);
+	DBMS_OUTPUT.PUT_LINE('New Salary: ' || :NEW.salary);
+	DBMS_OUTPUT.PUT_LINE('Salary Difference: ' || salary_diff);
+END;
 ```
 
-## Section 17: Data Dictionary Views
+## Section 17: Data Dictionary Views - Oracle
+Apart from user-defined tables in the database, there are other system-defined collections of tables and views known as data dictionaries. They contain information about the database. There are 3 types: **USER** (Info about your own schema), **ALL** (Info of what you can access) and DBA (**DB** Admin, what's in everyone's schema).
+
+##### 1. Tables & Columns:
+```plsql
+SELECT table_name, tablespace_name, num_rows
+FROM user_tables;
+
+-- Describe columns of a specific table
+SELECT column_name, data_type, data_length, nullable
+FROM user_tab_columns
+WHERE table_name = 'EMPLOYEES';
+
+/*
+USER_TABLES
+ALL_TABLES
+USER_TAB_COLUMNS
+*/
+
+```
+##### 2. Constraints:
+```plsql
+SELECT constraint_name, constraint_type, table_name, status
+FROM user_constraints;
+
+-- Find which columns have primary keys
+SELECT table_name, column_name
+FROM user_cons_columns
+WHERE constraint_name IN (
+    SELECT constraint_name
+    FROM user_constraints
+    WHERE constraint_type = 'P'
+);
+
+/*
+USER_CONSTRAINTS
+ALL_CONSTRAINTS
+USER_CONS_COLUMNS
+*/
+```
+
+##### 3. Indexes:
+```plsql
+SELECT index_name, table_name, uniqueness
+FROM user_indexes;
+
+-- Show columns involved in each index
+SELECT index_name, column_name, column_position
+FROM user_ind_columns
+WHERE table_name = 'EMPLOYEES';
 
 
+/*
+USER_INDEXES
+USER_IND_COLUMNS
+*/
+```
+
+##### 4. Sequences:
+```plsql
+-- Check details of all user-defined sequences
+SELECT sequence_name, last_number, min_value, max_value, increment_by
+FROM user_sequences;
+
+/*
+USER_SEQUENCES
+ALL_SEQUENCES
+*/
+```
+
+##### 5. Users & Privileges:
+```plsql
+-- Info about current user
+SELECT username, account_status, created
+FROM user_users;
+
+-- Roles granted to current user
+SELECT * FROM user_role_privs;
+
+-- System privileges granted to current user
+SELECT privilege FROM user_sys_privs;
+
+-- Object-level privileges on tables
+SELECT grantee, privilege, table_name
+FROM user_tab_privs;
+
+/*
+USER_USERS – info about current user
+ALL_USERS – info about all users
+USER_ROLE_PRIVS – roles granted to user
+USER_SYS_PRIVS – system privileges
+USER_TAB_PRIVS – table privileges
+*/
+```
+
+##### 6. Views & Synonyms:
+```plsql
+SELECT view_name, text_length
+FROM user_views;
+
+-- Check definition text of a view
+SELECT text
+FROM user_views
+WHERE view_name = 'EMPLOYEE_SUMMARY';
+
+SELECT synonym_name, table_owner, table_name
+FROM user_synonyms;
+
+/*
+USER_VIEWS
+USER_MVIEWS (materialized views)
+USER_SYNONYMS
+ALL_SYNONYMS
+*/
+```
+
+##### 7. Stored Procedures & Triggers:
+```plsql
+SELECT object_name, object_type, status
+FROM user_objects
+WHERE object_type IN ('PROCEDURE', 'FUNCTION', 'PACKAGE');
+
+-- View PL/SQL source code of a stored procedure
+SELECT text
+FROM user_source
+WHERE name = 'CALC_SALARY'
+ORDER BY line;
+
+SELECT trigger_name, table_name, triggering_event, status
+FROM user_triggers;
+
+/*
+USER_PROCEDURES
+USER_SOURCE
+USER_OBJECTS
+USER_TRIGGERS
+ALL_TRIGGERS
+*/
+```
