@@ -11,7 +11,7 @@ Link to Amazon Data Engineer Interview Guide can be found [here](https://prepful
 
 ## Important Interview Topics
 - [ ] [[SQL Cheatsheet]] - Basic & Advanced, Query Optimization and Indexing, Ranking Queries
-- [ ] [[Python Cheatsheet]] - DSA and Coding
+- [ ] [[Python Cheatsheet]] - Scripting, Coding & DSA in Python
 - [ ] Python - Data Science Libraries: Pandas, NumPy, SciPy, Matplotlib & PySpark
 - [ ] Database Management Concepts: ACID, Normalization, Transactions, Distributed Comp, Scaling, Sharding and Partitioning
 - [ ] Data Pipeline: ETL (Extract, Load & Transform)

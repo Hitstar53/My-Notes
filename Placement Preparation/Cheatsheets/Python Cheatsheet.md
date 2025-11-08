@@ -1,204 +1,557 @@
 Link to External Python Cheatsheet [here](https://www.geeksforgeeks.org/python-cheat-sheet/) 
-Implementation of data structures can be found [[Data Structures in Python|here]]
-# Language Mechanics
+## Table of Contents:
+1. [[#Section 1 Python Basics]]
+2. [[#Section 2 Built-In Data Structures in Python]]
+3. [[#Section 3 Advanced Data Structures in Python]]
+4. [[#Section 4 Advanced Programming Constructs]]
+5. [[#Section 5 Exception & File Handling]]
+6. [[#Section 6 Object-Oriented Programming (OOP)]]
+7. [[#Section 7 Python Standard Libraries]]
+8. [[#Section 8 Essential Third-Party Libraries]]
 
-## Literals
+## Section 1: Python Basics
+### Language Overview
+Python is an **interpreted, object-oriented, high-level** programming language with dynamic typing and dynamic binding. It emphasizes readable, concise syntax and rapid development. Python’s interpreter and extensive standard library are freely available on all major platforms. It supports modules and packages for modularity and code reuse. Because there is no separate compilation step, the edit-test-debug cycle is very fast, and runtime errors raise exceptions with tracebacks instead of segmentation faults.
 
+**Flavors of Python:** CPython (Written in C), Jython (Converts to Java), Pypy (Written in Rpython, JIT Compiler), Anaconda Python (Distro for Data Science)
+
+Sample Program in Python:
 ```python
-255, 0b11111111, 0o377, 0xff # Integers (decimal, binary, octal, hex)
-123.0, 1.23                  # Float
-7 + 5j, 7j                   # Complex
-'a', '\141', '\x61'          # Character (literal, octal, hex)
-'\n', '\\', '\'', '\"'       # Newline, backslash, single quote, double quote
-"string\n"                   # String of characters ending with newline
-"hello"+"world"              # Concatenated strings
-True, False                  # bool constants, 1 == True, 0 == False
-[1, 2, 3, 4, 5]              # List
-['meh', 'foo', 5]            # List
-(2, 4, 6, 8)                 # Tuple, immutable
-{'name': 'a', 'age': 90}     # Dict
-{'a', 'e', 'i', 'o', 'u'}    # Set
-None                         # Null var
+print("Hello World!")
+
+Output: Hello World
+
+# single line comment
+"""
+	Docstring
+	Multi-line comment
+"""
 ```
 
-## Loops
+### Types and Values
+Python has several **primitive types**. **Numeric types** include `int` (arbitrary-precision integers), `float` (floating-point), and `complex` (complex numbers). Integers (`int`) have unlimited precision; floats follow the machine’s C double format. Boolean values `True` and `False` are a subtype of `int` (where `False==0`, `True==1`), but should be used explicitly as Booleans. Other simple types include `NoneType` (the singleton `None`, represents “no value”) and `str` (immutable text strings).
 
-Go through all elements
+Values in Python are **immutable** by default except for certain containers. Literals create values: e.g. `42` is an `int`, `3.14` a `float`, `1+2j` a `complex`, `"text"` a `str`, and `[1,2,3]` a `list`. You can convert between types with constructors like `int(x)`, `float(x)`, `complex(x)`, and `bool(x)`.
 
 ```python
+# Numeric types and basic conversions
+x, b, o, h = 255, 0b11101, 0o377, 0xff # Int (decimal, binary, octal, hex)
+y = 3.14159      # float
+z = 1 + 2j       # complex
+print(type(x), type(y), type(z))  # <class 'int'> <class 'float'> <class 'complex'>
+
+x2 = float(x)    # 42.0, converts int to float
+z2 = complex(3, 4)  # 3+4j, explicit complex from real, imag
+print(z2, z2.real, z2.imag)  # 3+4j 3.0 4.0
+
+flag = True     # bool is subclass of int, but use for truthness, anything other than                    (True, 1) is equated as (False, 0)
+print(int(flag))  # 1
+
+var = None # Null value: NoneType
+```
+##### Types Hints
+If needed, as part of code-readability and good-practice, we can introduce type-hints, so that python behaves like a statically typed language and we can avoid errors by using the `typing` module. You can refer more in this [cheat sheet](https://mypy.readthedocs.io/en/stable/cheat_sheet_py3.html)
+```python
+from typing import List, Set, Dict, Tuple, Optional
+```
+
+### Operators
+**Arithmetic operators**: `+` (add), `-` (subtract), `*` (multiply), `/` (true division), `//` (floor division), `%` (modulo), and `**` (power).
+
+**Assignment Operators:** Are used to assign values. `+=` (add & assign), `-+` (subtract & assign), `*=` (multiply & assign), `/=` or `//=` (divide & assign).
+
+**Comparison operators:** include `<`, `<=`, `>`, `>=`, ``
+equal and `!=` (not equal). `is` and `is not` test object identity, not value equality. Comparisons can be **chained** (e.g. `1 < x <= 5` is like `1 < x and x <= 5`).
+
+**Logical operators**: `and`, `or`, `not` combine Boolean values (with short-circuit evaluation). There are also **bitwise operators** for integers: `&` (and), `|` (or), `^` (xor), `~` (not), `<<` (left shift), `>>` (right shift). (Bitwise ops act on the two’s-complement binary representation of integers.
+
+**Identity operators:** `is` and `is not` check whether values are identical or not.
+
+**Membership operators:** `in` and `not in` check if a value is contained in a container (sequence, set, or other iterable).
+```python
+# Arithmetic and comparisons
+a = 7; b = 3
+print(a + b, a - b, a * b, a / b)   # 10 4 21 2.3333...
+print(a // b, a % b, a ** b)         # 2 1 343
+print(a > b, a == 7, b != 4)         # True True True
+
+# Logical and membership
+print( (a > b) and (b > 0) )        # True
+print(10 in [5, 7, 10])            # True
+
+# Bitwise
+print(bin(a), bin(b))
+print(a & b, a | b, a << 1, b >> 1) # bitwise and, or, shifts
+
+'0b{:04b}'.format(0b1100 & 0b1010) # '0b1000' and
+'0b{:04b}'.format(0b1100 | 0b1010) # '0b1110' or
+'0b{:04b}'.format(0b1100 ^ 0b1010) # '0b0110' exclusive or
+'0b{:04b}'.format(0b1100 >> 2)     # '0b0011' shift right
+'0b{:04b}'.format(0b0011 << 2)     # '0b1100' shift left
+```
+
+### Flow Control and Logic
+**Conditional statements** use `if`, `elif`, and `else`:
+```python
+# if-elif-else
+if x < 0:
+    print("Negative")
+elif x == 0:
+    print("Zero")
+else:
+    print("Positive")
+    
+# ternary operator
+a, b = 10, 20
+min = a if a < b else b
+print(min) # 10
+```
+Python tests _truthiness_ of expressions in `if` or `while`; many objects (nonzero numbers, non-empty strings/sequences) are true, and empty or zero ones are false. **Ternary operator:** Another way of writing conditional expression:
+
+**Loops**: use `for` to iterate over a sequence or other iterable, and `while` for conditional looping:
+```python
+for item in [1,2,3]:
+    print(item)
+
 i = 0
-while i < len(str):
-  i += 1
+while i < 3:
+    print(i)
+    i += 1
+```
+You can use `break` to exit a loop early, and `continue` to skip to the next iteration. `pass` can be used as a placeholder in the loop.
+
+**Advanced Loops** (`for...else`, `while...else`)
+The `else` block in a loop executes only if the loop terminates normally (i.e., not via a `break` statement). This can be useful for search operations.
+
+
+**Pattern Matching**: Python 3.10 introduced `match`/`case` for structural pattern matching, similar to a switch/case but more powerful. This allows matching on types, shapes of data (like sequences or class instances), etc. Example:
+```python
+match value:
+    case 0:
+        print("Zero")
+    case [x, y]:
+        print(f"Got a two-element list: {x}, {y}")
+    case _:
+        print("Something else")
+```
+Pattern matching lets you concisely branch on complex data structures.
+
+**Comprehensions** provide concise loops to build lists, sets, or dicts:
+```python
+evens = [x*x for x in range(6) if x % 2 == 0]  # list of squares [0,4,16]
+unique = {c for c in "abracadabra"}           # set of letters {'a','b','r','c','d'}
+squares = {x: x*x for x in range(5)}          # dict {0:0, 1:1, 2:4, 3:9, 4:16}
 ```
 
-equivalent
+## Section 2: Built-In Data Structures in Python
+Python provides several powerful **built-in data structures** to store, manipulate, and manage data efficiently. They are **Lists**, **Tuples**, **Dictionaries**, **Sets**, and **Strings**.
+
+### 1. Lists
+Lists are **ordered**, **mutable**, and can contain **heterogeneous** elements. A **list** in Python is one of the most versatile and commonly used data structures. It is an **ordered**, **mutable**, and **dynamic** collection that can hold elements of **different data types**, including other lists or objects. Lists allow for **index-based access**, meaning each element can be accessed or modified directly using its position (index).  
+
+They support a wide range of operations — from **adding**, **removing**, and **sorting** elements to **comprehensions** for quick list creation.  
+Lists in Python internally use **dynamic arrays**, meaning they automatically resize when items are added or removed, though this can involve copying elements to new memory blocks internally for efficiency.
 
 ```python
-for i in range(len(message)):
-  print(i)
+# Creating lists
+fruits = ["apple", "banana", "cherry"]
+mixed = [1, "hello", 3.14, True]
+
+# Accessing elements (indexing)
+print(fruits[0])     # apple
+print(fruits[-1])    # cherry
+
+# Slicing
+print(fruits[0:2])   # ['apple', 'banana']
+
+# Modifying elements (mutable)
+fruits[1] = "blueberry"
+print(fruits)        # ['apple', 'blueberry', 'cherry']
+
+# list comprehension
+squares = [x**2 for x in range(5)]
+print(squares)  # [0, 1, 4, 9, 16]
 ```
 
-Get largest number index from right
+##### Indexing and Slicing in Python
+Both **indexing** and **slicing** are fundamental concepts that work not just on lists, but also on strings, tuples, and other sequences.
+
+**Indexing** is used to access a single element using its position (index number).  
+Python uses **zero-based indexing**, meaning:
+- The **first element** has index `0`
+- The **last element** has index `-1` (negative indices count backward)
+
+**Slicing** is used to extract **a portion of a sequence** (sublist, substring, etc.).  
+It uses the syntax: `sequence[start:end:step]`
+- **start** → index where slicing begins (inclusive)
+- **end** → index where slicing stops (exclusive)
+- **step** → interval between elements (default = 1)
 
 ```python
-while i > 0 and nums [i-1] >= nums[i]:
-  i -= 1
+                +---+---+---+---+---+---+
+                | P | y | t | h | o | n |
+                +---+---+---+---+---+---+
+Slice position: 0   1   2   3   4   5   6
+Index position:   0   1   2   3   4   5
+p = ['P','y','t','h','o','n']
+p[0] 'P' # indexing gives items, not lists
+alpha[slice(2,4)] # equivalent to p[2:4]
+
+# example
+nums = [10, 20, 30, 40, 50]
+
+# indexing
+print(nums[0])   # 10
+print(nums[-1])  # 50
+
+# slicing
+print(nums[1:4])     # [20, 30, 40]
+print(nums[:3])      # [10, 20, 30]
+print(nums[::2])     # [10, 30, 50]
+print(nums[::-1])    # [50, 40, 30, 20, 10] (reversed list)
 ```
 
-Manually reversing
+##### Features of Lists
 
+| Property               | Description                         |
+| ---------------------- | ----------------------------------- |
+| **Ordered**            | Yes (Preserves insertion order)     |
+| **Mutable**            | Yes (Can be changed after creation) |
+| **Allows duplicates**  | Yes                                 |
+| **Heterogeneous**      | Yes                                 |
+| **Index-based access** | Yes (0-based indexing)              |
+
+##### Common List Methods
+
+| **Method**         | **Description**                                                                                       | **Example**        |
+| ------------------ | ----------------------------------------------------------------------------------------------------- | ------------------ |
+| `append(x)`        | Adds item `x` to the end of the list.                                                                 | `L.append(4)`      |
+| `extend(iterable)` | Extends the list by appending all items from `iterable`.                                              | `L.extend([5, 6])` |
+| `insert(i, x)`     | Inserts item `x` at a given position `i`.                                                             | `L.insert(0, 'a')` |
+| `remove(x)`        | Removes the _first_ item from the list whose value is `x`.                                            | `L.remove('a')`    |
+| `pop(i)`           | Removes and _returns_ the item at position `i`. If `i` is omitted, removes and returns the last item. | `item = L.pop()`   |
+| `clear()`          | Removes all items from the list.                                                                      | `L.clear()`        |
+| `index(x)`         | Returns the 0-based index of the _first_ item whose value is `x`.                                     | `i = L.index(3)`   |
+| `count(x)`         | Returns the number of times `x` appears in the list.                                                  | `c = L.count(2)`   |
+| `sort()`           | Sorts the items of the list **in-place**.                                                             | `L.sort()`         |
+| `reverse()`        | Reverses the elements of the list **in-place**.                                                       | `L.reverse()`      |
+| `copy()`           | Returns a _shallow copy_ of the list.                                                                 | `new_L = L.copy()` |
+|                    |                                                                                                       |                    |
+
+Example Usage:
 ```python
-l, r = i, len(nums) - 1
-while l < r:
-  nums[l], nums[r] = nums[r], nums[l]
-  l += 1
-  r -= 1
+nums = [4, 2, 9, 1]
+nums.sort()
+print(nums)          # [1, 2, 4, 9]
+nums.reverse()
+print(nums)          # [9, 4, 2, 1]
 ```
 
-Go past the loop if we are clever with our boundry
+### 2. Arrays
+While **lists** can store mixed data types, **arrays** (from the `array` module) are designed for **homogeneous data** (same type elements).  
+They provide **faster performance** and **lower memory consumption** when dealing with large numerical data. Arrays are especially useful when you want C-style contiguous memory storage and numerical operations without the overhead of lists.
 
 ```python
-for i in range(len(message) + 1):
-  if i == len(message) or message[i] == ' ':
+from array import array
+arr = array('i', [1, 2, 3])
+print(arr[1])  # 2
+```
+Each array must have a **type code** (like `'i'` for integer, `'f'` for float), which defines the type of its elements.
+
+|Type Code|C Type|Python Type|Example|
+|---|---|---|---|
+|`'b'`|signed char|int|-128 to 127|
+|`'B'`|unsigned char|int|0 to 255|
+|`'i'`|signed int|int|typical int range|
+|`'f'`|float|float||
+|`'d'`|double|float||
+Arrays don’t support all list methods (like `insert` or mixed data types), but they support indexing, slicing, and iteration efficiently.
+##### Lists vs Arrays in Python
+| Feature           | `list`                    | `array.array`                                |
+| ----------------- | ------------------------- | -------------------------------------------- |
+| **Data Type**     | Can hold mixed types      | Must hold same type                          |
+| **Performance**   | Slightly slower           | More memory-efficient for large numeric data |
+| **Import Needed** | No                        | Yes (`from array import array`)              |
+| **Use Case**      | General-purpose container | Numeric computation / fixed type data        |
+
+### Tuples
+A **tuple** is an **ordered**, **immutable** sequence of values. Once created, its elements **cannot be changed**, which makes tuples **hashable** and usable as keys in dictionaries or elements in sets.  
+Tuples are faster than lists due to their immutability and are often used for **fixed collections** of items — such as coordinates, database records, or constant data.
+
+Tuples are created using parentheses `()` and can contain heterogeneous elements. If only one element is needed, remember to include a comma (`t = (5,)`) to define it as a tuple.
+
+```python
+# Creating tuples
+t1 = (1, 2, 3)
+t2 = ("a", "b", "c")
+
+# Indexing & slicing
+print(t1[0])     # 1
+print(t1[1:3])   # (2, 3)
+
+# Concatenation
+print(t1 + t2)   # (1, 2, 3, 'a', 'b', 'c')
+
+# immutability
+t = (1, 2, 3)
+# t[1] = 99  ❌ TypeError
 ```
 
-Fun with Ranges - range(start, stop, step)
+##### Tuple Packing & Unpacking
+Tuples can be packed and unpacked into atomic values even in loops and `enumerate` is one such function which helps iterate by packing tuples of `(index, value)`
 
 ```python
-for a in range(0,3): # 0,1,2
-for a in reversed(range(0,3)) # 2,1,0
-for i in range(3,-1,-1) # 3,2,1,0
-for i in range(len(A)//2): # A = [0,1,2,3,4,5]
-  print(i) # 0,1,2
-  print(A[i]) # 0,1,2
-  print(~i) # -1,-2,-3
-  print(A[~i]) # 5,4,3
+person = ("Hatim", 24, "India")
+name, age, country = person
+print(name, age, country)
 ```
 
-## Strings
+##### Features of Tuples
+| Property               | Description                                    |
+| ---------------------- | ---------------------------------------------- |
+| **Ordered**            | Yes                                            |
+| **Mutable**            | No (Tuple and its elements both are immutable) |
+| **Allows duplicates**  | Yes                                            |
+| **Index-based access** | Yes                                            |
+| **Heterogeneous**      | Yes                                            |
 
+##### Common Tuple Methods
+All the list methods except the ones that try to mutate the list are also available on tuples, there are only 2 unique methods:
+
+| **Method** | **Description**                                                   | **Example**     |
+| ---------- | ----------------------------------------------------------------- | --------------- |
+| `count(x)` | Returns the number of times `x` appears in the tuple.             | `t.count('a')`  |
+| `index(x)` | Returns the 0-based index of the _first_ item whose value is `x`. | `t.index(3.14)` |
+
+Example Usage
 ```python
-str1.find('x')          # find first location of char x and return index
-str1.rfind('x')         # find first int location of char x from reverse
+t = (1, 2, 2, 3)
+print(t.count(2))  # 2
+print(t.index(3))  # 3
 ```
 
-Parse a log on ":"
+
+### Dictionaries / HashMaps
+A **dictionary** in Python is a powerful **key-value pair** data structure used for **mapping unique keys to values**. It’s **mutable**, **unordered (before 3.7)**, and optimized for **fast lookups, insertions, and deletions** using a **hash table** internally. Each key in a dictionary must be **immutable** (e.g., strings, numbers, tuples), while values can be of **any type** (even other dictionaries or lists).
 
 ```python
-l = "0:start:0"
-tokens = l.split(":")
-print(tokens) # ['0', 'start', '0']
+student = {"name": "Alice", "age": 22, "marks": 95}
+print(student["name"])        # Alice
+student["age"] = 23           # modify value
+student["city"] = "Mumbai"    # add new key-value
+
+# dict comprehension
+squares = {x: x**2 for x in range(5)}
+print(squares)  # {0: 0, 1: 1, 2: 4, 3: 9, 4: 16}
 ```
 
-Reverse words with built in split, [::-1] and " ".join()
+Python 3.7+ preserves insertion order, meaning items retain the order they were added — a feature heavily used in modern APIs and data models.
 
+##### Features of Dictionaries
+| Property               | Description                                   |
+| ---------------------- | --------------------------------------------- |
+| **Ordered**            | Yes (Python 3.7+)                             |
+| **Mutable**            | Yes: Values, No: keys are Immutable           |
+| **Allows Duplicates**  | Yes: Values, No: Keys must be unique          |
+| **Index-based access** | No, access through keys                       |
+| **Heterogeneous**      | Value: Any Type, Keys: int, str or tuple only |
+
+##### Common Dict Methods
+
+| **Method**                 | **Description**                                                                                                                               | **Example**                        |
+| -------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------- |
+| `keys()`                   | Returns a _view object_ displaying a list of all keys.                                                                                        | `my_dict.keys()`                   |
+| `values()`                 | Returns a _view object_ displaying a list of all values.                                                                                      | `my_dict.values()`                 |
+| `items()`                  | Returns a _view object_ displaying a list of key-value tuple pairs.                                                                           | `my_dict.items()`                  |
+| `get(key, default)`        | Returns the value for `key`. If `key` is not found, returns `default` (or `None`).                                                            | `my_dict.get('age', 0)`            |
+| `pop(key, default)`        | Removes and returns the value for `key`. If not found, returns `default`. Raises `KeyError` if `key` not found and `default` is not provided. | `my_dict.pop('name')`              |
+| `popitem()`                | Removes and returns the _last_ inserted (key, value) pair as a tuple.                                                                         | `my_dict.popitem()`                |
+| `update(other_dict)`       | Updates the dictionary with key-value pairs from `other_dict`, overwriting existing keys.                                                     | `my_dict.update({'city': 'LA'})`   |
+| `setdefault(key, default)` | If `key` is in dict, returns its value. If not, inserts `key` with a value of `default` and returns `default`.                                | `my_dict.setdefault('job', 'Dev')` |
+| `clear()`                  | Removes all items from the dictionary.                                                                                                        | `my_dict.clear()`                  |
+| `copy()`                   | Returns a _shallow copy_ of the dictionary.                                                                                                   | `new_d = my_dict.copy()`           |
+| `fromkeys(seq, v)`         | Creates a new dictionary with keys from `seq` and all values set to `v` (default `None`).                                                     | `dict.fromkeys(['a', 'b'], 1)`     |
+Example Usage:
 ```python
-# s = "the sky  is blue"
-def reverseWords(self, s: str) -> str:
-  wordsWithoutWhitespace = s.split() # ['the', 'sky', 'is', 'blue']
-  reversedWords = wordsWithoutWhitespace[::-1] # ['blue', 'is', 'sky', 'the']
-  final = " ".join(reversedWords) # blue is sky the
+student = {"name": "Bob", "marks": 88}
+student.update({"age": 21})
+print(student.items())  # dict_items([('name', 'Bob'), ('marks', 88), ('age', 21)])
 ```
 
-Manual split based on isalpha()
+
+### Sets
+A **set** is an **unordered**, **mutable**, and **unindexed** collection of **unique elements**.  
+They’re primarily used to perform **mathematical set operations** like union, intersection, and difference efficiently. Sets automatically eliminate duplicates and can only contain **hashable (immutable)** items.
 
 ```python
-def splitWords(input_string) -> list:
-  words = [] #
-  start = length = 0
-  for i, c in enumerate(input_string):
-    if c.isalpha():
-      if length == 0:
-        start = i
-        length += 1
-      else:
-        words.append(input_string[start:start+length])
-        length = 0
-  if length > 0:
-    words.append(input_string[start:start+length])
-  return words
+# Creating sets
+s = {1, 2, 3, 3}
+print(s)  # {1, 2, 3}
+
+# set comprehension
+squares = {x**2 for x in range(6)}
+print(squares)  # {0, 1, 4, 9, 16, 25}
 ```
 
-Test type of char
+They are ideal for:
+- Removing duplicates from data.
+- Membership testing (`in` is O(1) on average).
+- Performing mathematical operations between datasets.
 
+Under the hood, sets use a **hash table**, similar to dictionaries, but only store keys (no values).
+
+##### Features of Sets
+| Property               | Description                                                            |
+| ---------------------- | ---------------------------------------------------------------------- |
+| **Ordered**            | No, set is unorderd                                                    |
+| **Mutable**            | Yes (The set itself is mutable), No: Elements in the set are immutable |
+| **Allows Duplicates**  | No, all elements must be unique                                        |
+| **index-based access** | No indexing or slicing                                                 |
+| **Heterogeneous**      | Yes                                                                    |
+
+##### Common Set Methods
+| **Method (Mutating)**         | **Description**                                                               |
+| ----------------------------- | ----------------------------------------------------------------------------- |
+| `add(x)`                      | Adds element `x` to the set.                                                  |
+| `update(iterable)`            | Adds all elements from `iterable` to the set.                                 |
+| `remove(x)`                   | Removes element `x`. Raises `KeyError` if not found.                          |
+| `discard(x)`                  | Removes element `x` if it is present.                                         |
+| `pop()`                       | Removes and returns an _arbitrary_ element from the set.                      |
+| `clear()`                     | Removes all elements from the set.                                            |
+| **Method (Non-Mutating)**     | **Description**                                                               |
+| `union(other)`                | Returns a new set with all elements from both (same as `                      |
+| `intersection(other)`         | Returns a new set with elements common to both (same as `&`).                 |
+| `difference(other)`           | Returns a new set with elements in this set but not in `other` (same as `-`). |
+| `symmetric_difference(other)` | Returns a new set with elements in either set, but not both (same as `^`).    |
+| `issubset(other)`             | Returns `True` if this set is a subset of `other` (same as `<=`).             |
+| `issuperset(other)`           | Returns `True` if this set is a superset of `other` (same as `>=`).           |
+| `isdisjoint(other)`           | Returns `True` if the two sets have no intersection.                          |
+| `copy()`                      | Returns a _shallow copy_ of the set.                                          |
+##### Set Operations
+Just like mathematical sets, sets in python can perform the common set operation such — union, intersection, diff and symmetric diff.
 ```python
-def rotationalCipher(input, rotation_factor):
-  rtn = []
-  for c in input:
-    if c.isupper():
-      ci = ord(c) - ord('A')
-      ci = (ci + rotation_factor) % 26
-      rtn.append(chr(ord('A') + ci))
-    elif c.islower():
-      ci = ord(c) - ord('a')
-      ci = (ci + rotation_factor) % 26
-      rtn.append(chr(ord('a') + ci))
-    elif c.isnumeric():
-      ci = ord(c) - ord('0')
-      ci = (ci + rotation_factor) % 10
-      rtn.append(chr(ord('0') + ci))
-    else:
-      rtn.append(c)
-  return "".join(rtn)
+a = 3
+st = set()
+st.add(a) # Add to st
+st.remove(a) # Remove from st
+st.discard(a) # Removes from set with no error
+st.add(a) # Add to st
+next(iter(s)) # return 3 without removal
+st.pop() # returns 3
+
+# ---------------------------------
+# set operations
+a = {1, 2, 3}
+b = {3, 4, 5}
+
+print(a | b)  # Union → {1, 2, 3, 4, 5}
+print(a & b)  # Intersection → {3}
+print(a - b)  # Difference → {1, 2}
+print(a ^ b)  # Symmetric difference → {1, 2, 4, 5
 ```
 
-AlphaNumberic
+
+### Strings
+A **string** in Python is an **immutable sequence of Unicode characters**.  
+Strings are one of the most fundamental data types and are heavily used in almost every application — from user input to file processing, web data, and text analytics. Being immutable means that any modification creates a **new string object** — the original string remains unchanged. Python provides a rich set of **string methods** and supports **indexing, slicing, iteration**, and **formatting** with remarkable ease.
+
+Internally, strings are stored as arrays of Unicode code points, allowing them to handle multilingual text seamlessly.  
+They can also be encoded into bytes for low-level operations like network transmission or file I/O.
 
 ```python
-isalnum()
+text = "Hello, Python!"
+print(text[0])      # H
+print(text[-1])     # !
+print(text[0:5])    # Hello
+
+# string immutability
+s = "Python"
+# s[0] = "J"  ❌ Error
+s = "J" + s[1:]  # ✅ Create new string
+print(s)  # Jython
+
 ```
 
-Get charactor index
+##### Features of Strings
+| Property               | Description                                                      |
+| ---------------------- | ---------------------------------------------------------------- |
+| **Ordered**            | Yes                                                              |
+| **Mutable**            | No, the string itself is mutable, but its elements are immutable |
+| **Allows Duplicates**  | Yes                                                              |
+| **Indexing & slicing** | Yes, indexing and slicing both are supported                     |
+| **Heterogeneous**      | No, only str / char types                                        |
 
+##### Common String Methods
+
+| **Category**            | **Method**                | **Description**                                                                |
+| ----------------------- | ------------------------- | ------------------------------------------------------------------------------ |
+| **Case**                | `upper()`                 | Converts string to uppercase.                                                  |
+|                         | `lower()`                 | Converts string to lowercase.                                                  |
+|                         | `capitalize()`            | Converts first character to uppercase, rest to lowercase.                      |
+|                         | `title()`                 | Converts first character of each word to uppercase.                            |
+|                         | `swapcase()`              | Swaps case (lowercase becomes upper, and vice versa).                          |
+| **Splitting / Joining** | `split(sep)`              | Returns a _list_ of words, split by `sep` (default is whitespace).             |
+|                         | `rsplit(sep)`             | Same as `split`, but starts from the right.                                    |
+|                         | `splitlines()`            | Returns a list of lines, splitting at line breaks.                             |
+|                         | `join(iterable)`          | Joins elements of `iterable` (e.g., a list) _using the string as a separator_. |
+| **Stripping**           | `strip(chars)`            | Removes leading/trailing characters (default whitespace).                      |
+|                         | `lstrip(chars)`           | Removes _leading_ characters.                                                  |
+|                         | `rstrip(chars)`           | Removes _trailing_ characters.                                                 |
+| **Search / Find**       | `find(sub)`               | Returns lowest index of `sub`. Returns **-1** if not found.                    |
+|                         | `index(sub)`              | Same as `find()`, but raises **ValueError** if not found.                      |
+|                         | `rfind(sub)`              | Returns highest index of `sub`. Returns -1 if not found.                       |
+|                         | `rindex(sub)`             | Same as `rfind()`, but raises ValueError if not found.                         |
+|                         | `count(sub)`              | Returns number of non-overlapping occurrences of `sub`.                        |
+| **Check / Validate**    | `startswith(pre)`         | Returns `True` if string starts with prefix `pre`.                             |
+|                         | `endswith(suf)`           | Returns `True` if string ends with suffix `suf`.                               |
+|                         | `isdigit()`               | Returns `True` if all characters are digits.                                   |
+|                         | `isalpha()`               | Returns `True` if all characters are alphabetic.                               |
+|                         | `isalnum()`               | Returns `True` if all characters are alphanumeric (letters or numbers).        |
+|                         | `islower()`               | Returns `True` if all cased characters are lowercase.                          |
+|                         | `isupper()`               | Returns `True` if all cased characters are uppercase.                          |
+|                         | `isspace()`               | Returns `True` if all characters are whitespace.                               |
+| **Modification**        | `replace(old, new)`       | Returns a copy with all occurrences of `old` replaced by `new`.                |
+|                         | `center(width, fill)`     | Returns a centered string of `width`, padded with `fill` char.                 |
+|                         | `ljust(width, fill)`      | Left-justifies the string.                                                     |
+|                         | `rjust(width, fill)`      | Right-justifies the string.                                                    |
+|                         | `zfill(width)`            | Pads string on the left with '0' to fill `width`.                              |
+| **Formatting**          | `format(*args, **kwargs)` | Performs a string formatting operation (the "old" way).                        |
+| **Encoding**            | `encode(enc)`             | Encodes the string into a `bytes` object using `enc` (e.g., 'utf-8').          |
+
+Example Usage:
 ```python
-print(ord('A')) # 65
-print(ord('B')-ord('A')+1) # 2
-print(chr(ord('a') + 2)) # c
-```
+name = "hatim"
+print(name.capitalize())         # Hatim
+print(" ".join(["Hello", "World"]))  # Hello World
 
-Replace characters or strings
-
-```python
-def isValid(self, s: str) -> bool:
-  while '[]' in s or '()' in s or '{}' in s:
-    s = s.replace('[]','').replace('()','').replace('{}','')
-  return len(s) == 0
-```
-
-Insert values in strings
-
-```python
-txt3 = "My name is {}, I'm {}".format("John",36) # My name is John, I'm 36
-```
-
-Multiply strings/lists with \*, even booleans which map to True(1) and False(0)
-
-```python
-'meh' * 2 # mehmeh
-['meh'] * 2 # ['meh', 'meh']
-['meh'] * True #['meh']
-['meh'] * False #[]
-```
-
-Find substring in string
-
-```python
 txt = "Hello, welcome to my world."
 x = txt.find("welcome")  # 7
-```
 
-startswith and endswith are very handy
-
-```python
 str = "this is string example....wow!!!"
 str.endswith("!!") # True
 str.startswith("this") # True
 str.endswith("is", 2, 4) # True
+
+
+# reverse sentences using split, slicing, and join:
+s = "the sky is blue"
+wordsWithoutWhitespace = s.split() # ['the', 'sky', 'is', 'blue']
+reversedWords = wordsWithoutWhitespace[::-1] # ['blue', 'is', 'sky', 'the']
+s = " ".join(reversedWords) # blue is sky the
 ```
 
-Formatting strings
-
+##### String Formatting
 ```python
+name = "Alice"
+age = 25
+
+# classic syntax using .format()
+print("My name is {} and I am {} years old.".format(name, age))
+
+# new syntax using f-strings
+print(f"My name is {name} and I am {age} years old.")
+
+# multiple f-strings
 name = "Eric"
 profession = "comedian"
 affiliation = "Monty Python"
@@ -211,1395 +564,1041 @@ message
 'Hi Eric. You are a comedian. You were in Monty Python.'
 ```
 
-Print string with all chars, useful for debugging
 
+## Section 3: Advanced Data Structures in Python
+While Python provides high-level built-in data structures like **lists**, **sets**, and **dictionaries**, sometimes we need **custom data structures** to solve specific algorithmic problems efficiently. These structures can be implemented manually or using modules like `collections` and `queue`.
+
+### 1. Stack
+A **stack** is a linear data structure that follows the **Last-In, First-Out (LIFO)** principle — the last inserted element is removed first.  
+Stacks are used in function calls, undo mechanisms, expression evaluation, and backtracking algorithms.
+##### Implementation
+In python, stacks can be implemented easily using the built-in `list` class:
 ```python
-print(repr("meh\n"))     # 'meh\n'
+stack = []
+
+# Push elements
+stack.append(10)
+stack.append(20)
+stack.append(30)
+
+print(stack)  # [10, 20, 30]
+
+# Pop element
+top = stack.pop()
+print(top)    # 30
+print(stack)  # [10, 20]
+
+# Peek top element
+print(stack[-1])  # 20
 ```
-
-## Slicing
-
-Basic Slicing Techniques
-```python
-                +---+---+---+---+---+---+
-                | P | y | t | h | o | n |
-                +---+---+---+---+---+---+
-Slice position: 0   1   2   3   4   5   6
-Index position:   0   1   2   3   4   5
-p = ['P','y','t','h','o','n']
-p[0] 'P' # indexing gives items, not lists
-alpha[slice(2,4)] # equivalent to p[2:4]
-p[0:1] # ['P'] Slicing gives lists
-p[0:5] # ['P','y','t','h','o'] Start at beginning and count 5
-p[2:4] = ['t','r'] # Slice assignment  ['P','y','t','r','o','n']
-p[2:4] = ['s','p','a','m'] # Slice assignment can be any size['P','y','s','p','a','m','o','n']
-p[4:4] = ['x','y'] # insert slice ['P','y','t','h','x','y','o','n']
-p[0:5:2] # ['P', 't', 'o'] sliceable[start:stop:step]
-p[5:0:-1] # ['n', 'o', 'h', 't', 'y']
-```
-
-Go through num and get combinations missing a member
-
-```python
-numList = [1,2,3,4]
-for i in range(len(numList)):
-    newList = numList[0:i] + numList[i+1:len(numList)]
-    print(newList) # [2, 3, 4], [1, 3, 4], [1, 2, 4], [1, 2, 3]
-```
-
-## Tuple
-
-Collection that is ordered and unchangable
-
-```python
-thistuple = ("apple", "banana", "cherry")
-print(thistuple[1]) # banana
-```
-
-Can be used with Dicts
-
-```python
-def groupAnagrams(self, strs: List[str]) -> List[List[str]]:
-    d = defaultdict(list)
-    for w in strs:
-        key = tuple(sorted(w))
-        d[key].append(w)
-    return d.values()
-```
-
-## Sort
-
-sorted(iterable, key=key, reverse=reverse)
-
-Sort sorts alphabectically, from smallest to largest
-
-```python
-print(sorted(['Ford', 'BMW', 'Volvo'])) # ['BMW', 'Ford', 'Volvo']
-nums = [-4,-1,0,3,10]
-print(sorted(n*n for n in nums)) # [0,1,9,16,100]
-```
-
-```python
-cars = ['Ford', 'BMW', 'Volvo']
-cars.sort() # returns None type
-cars.sort(key=lambda x: len(x) ) # ['BMW', 'Ford', 'Volvo']
-print(sorted(cars, key=lambda x:len(x))) # ['BMW', 'Ford', 'Volvo']
-```
-
-Sort key by value, even when value is a list
-
-```python
-meh = {'a':3,'b':0,'c':2,'d':-1}
-print(sorted(meh, key=lambda x:meh[x])) # ['d', 'b', 'c', 'a']
-meh = {'a':[0,3,'a'],'b':[-2,-3,'b'],'c':[2,3,'c'],'d':[-2,-2,'d']}
-print(sorted(meh, key=lambda x:meh[x])) # ['b', 'd', 'a', 'c']
-```
-
-```python
-def merge_sorted_lists(arr1, arr2): # built in sorted does Timsort optimized for subsection sorted lists
-    return sorted(arr1 + arr2)
-```
-
-Sort an array but keep the original indexes
-
-```python
-self.idx, self.vals = zip(*sorted([(i,v) for i,v in enumerate(nums)], key=lambda x:x[1]))
-```
-
-Sort by tuple, 2nd element then 1st ascending
-
-```python
-a = [(5,10), (2,20), (2,3), (0,100)]
-test = sorted(a, key = lambda x: (x[1],x[0]))
-print(test) # [(2, 3), (5, 10), (2, 20), (0, 100)]
-test = sorted(a, key = lambda x: (-x[1],x[0]))
-print(test) # [(0, 100), (2, 20), (5, 10), (2, 3)]
-```
-
-Sort and print dict values by key
-
-```python
-ans = {-1: [(10, 1), (3, 3)], 0: [(0, 0), (2, 2), (7, 4)], -3: [(8, 5)]}
-for key, value in sorted(ans.items()): print(value)
-# [(8, 5)]
-# [(10, 1), (3, 3)]
-# [(0, 0), (2, 2), (7, 4)]
-
-# sorted transforms dicts to lists
-sorted(ans) # [-3, -1, 0]
-sorted(ans.values()) # [[(0, 0), (2, 2), (7, 4)], [(8, 5)], [(10, 1), (3, 3)]]
-sorted(ans.items()) # [(-3, [(8, 5)]), (-1, [(10, 1), (3, 3)]), (0, [(0, 0), (2, 2), (7, 4)])]
-# Or just sort the dict directly
-[ans[i] for i in sorted(ans)]
-# [[(8, 5)], [(10, 1), (3, 3)], [(0, 0), (2, 2), (7, 4)]]
-```
-
-## Hash
-
-```python
-for c in s1: # Adds counter for c
-  ht[c] = ht.get(c, 0) + 1 # ht[a] = 1, ht[a]=2, etc
-```
-
-## Set
-
-```python
-a = 3
-st = set()
-st.add(a) # Add to st
-st.remove(a) # Remove from st
-st.discard(a) # Removes from set with no error
-st.add(a) # Add to st
-next(iter(s)) # return 3 without removal
-st.pop() # returns 3
-```
-
-```python
-s = set('abc') # {'c', 'a', 'b'}
-s |= set('cdf') # {'f', 'a', 'b', 'd', 'c'} set s with elements from new set
-s &= set('bd') # {'d', 'b'} only elements from new set
-s -= set('b') # {'d'} remove elements from new set
-s ^= set('abd') # {'a', 'b'} elements from s or new but not both
-```
-
-## List
-
-Stacks are implemented with Lists. Stacks are good for parsing and graph traversal
-
-```python
-test = [0] * 100 # initialize list with 100 0's
-```
-
-2D
-
-```python
-rtn.append([])
-rtn[0].append(1) # [[1]]
-```
-
-List Comprehension
-
-```python
-number_list = [ x for x in range(20) if x % 2 == 0]
-print(number_list) # [0, 2, 4, 6, 8, 10, 12, 14, 16, 18]
-```
-
-Reverse a list
-
-```python
-ss = [1,2,3]
-ss.reverse()
-print(ss) #3,2,1
-```
-
-Join list
-
-```python
-list1 = ["a", "b" , "c"]
-list2 = [1, 2, 3]
-list3 = list1 + list2 # ['a', 'b', 'c', 1, 2, 3]
-```
-
-## Dict
-
-Hashtables are implemented with dictionaries
-
-```python
-d = {'key': 'value'}         # Declare dict{'key': 'value'}
-d['key'] = 'value'           # Add Key and Value
-{x:0 for x in {'a', 'b'}}    # {'a': 0, 'b': 0} declare through comprehension
-d['key'])                    # Access value
-d.items()                    # Items as tuple list dict_items([('key', 'value')])
-if 'key' in d: print("meh")  # Check if value exists
-par = {}
-par.setdefault(1,1)          # returns 1, makes par = { 1 : 1 }
-par = {0:True, 1:False}
-par.pop(0)                   # Remove key 0, Returns True, par now {1: False}
-for k in d: print(k)         # Iterate through keys
-```
-
-Create Dict of Lists that match length of list to count votes
-
-```python
-votes = ["ABC","CBD","BCA"]
-rnk = {v:[0] * len(votes[0]) for v in votes[0]}
-print(rnk) # {'A': [0, 0, 0], 'B': [0, 0, 0], 'C': [0, 0, 0]}
-```
-
-## Tree
-
-1. A [tree](https://www.geeksforgeeks.org/some-theorems-on-trees/) is an undirected [graph](https://www.cs.sfu.ca/~ggbaker/zju/math/trees.html) in which any two vertices are
-   connected by exactly one path.
-1. Any connected graph who has n nodes with n-1 edges is a tree.
-1. The degree of a vertex is the number of edges connected to the vertex.
-1. A leaf is a vertex of degree 1. An internal vertex is a vertex of degree at least 2.
-1. A [path graph](https://en.wikipedia.org/wiki/Path_graph) is a tree with two or more vertices with no branches, degree of 2 except for leaves which have degree of 1
-
-1. Any two vertices in G can be connected by a unique simple path.
-1. G is acyclic, and a simple cycle is formed if any edge is added to G.
-1. G is connected and has no cycles.
-1. G is connected but would become disconnected if any single edge is removed from G.
-
-## BinaryTree
-
-DFS Pre, In Order, and Post order Traversal
-
-- Preorder
-  - encounters roots before leaves
-  - Create copy
-- Inorder
-  - flatten tree back to original sequence
-  - Get values in non-decreasing order in BST
-- Post order
-  - encounter leaves before roots
-  - Helpful for deleting
-
-Recursive
-
-```python
-"""
-     1
-    / \
-   2   3
-  / \
- 4   5
-"""
-# PostOrder 4 5 2 3 1  (Left-Right-Root)
-def postOrder(node):
-  if node is None:
-    return
-  postorder(node.left)
-  postorder(node.right)
-  print(node.value, end=' ')
-```
-
-Iterative PreOrder
-
-```python
-# PreOrder  1 2 4 5 3 (Root-Left-Right)
-def preOrder(tree_root):
-  stack = [(tree_root, False)]
-  while stack:
-    node, visited = stack.pop()
-    if node:
-      if visited:
-        print(node.value, end=' ')
-      else:
-        stack.append((node.right, False))
-        stack.append((node.left, False))
-        stack.append((node, True))
-```
-
-Iterative InOrder
-
-```python
-# InOrder   4 2 5 1 3 (Left-Root-Right)
-def inOrder(tree_root):
-  stack = [(tree_root, False)]
-  while stack:
-    node, visited = stack.pop()
-    if node:
-      if visited:
-        print(node.value, end=' ')
-      else:
-        stack.append((node.right, False))
-        stack.append((node, True))
-        stack.append((node.left, False))
-```
-
-Iterative PostOrder
-
-```python
-# PostOrder 4 5 2 3 1  (Left-Right-Root)
-def postOrder(tree_root):
-  stack = [(tree_root, False)]
-  while stack:
-    node, visited = stack.pop()
-    if node:
-      if visited:
-        print(node.value, end=' ')
-      else:
-        stack.append((node, True))
-        stack.append((node.right, False))
-        stack.append((node.left, False))
-```
-
-Iterative BFS(LevelOrder)
-
+##### Alternative
+Using `collections.deque` (More Efficient), `deque` provides O(1) append and pop operations from both ends:
 ```python
 from collections import deque
 
-#BFS levelOrder 1 2 3 4 5
-def levelOrder(tree_root):
-  queue = deque([tree_root])
-  while queue:
-    node = queue.popleft()
-    if node:
-        print(node.value, end=' ')
-        queue.append(node.left)
-        queue.append(node.right)
-
-def levelOrderStack(tree_root):
-    stk = [(tree_root, 0)]
-    rtn = []
-    while stk:
-        node, depth = stk.pop()
-        if node:
-            if len(rtn) < depth + 1:
-                rtn.append([])
-            rtn[depth].append(node.value)
-            stk.append((node.right, depth+1))
-            stk.append((node.left, depth+1))
-    print(rtn)
-    return True
-
-def levelOrderStackRec(tree_root):
-    rtn = []
-
-    def helper(node, depth):
-        if len(rtn) == depth:
-            rtn.append([])
-        rtn[depth].append(node.value)
-        if node.left:
-            helper(node.left, depth + 1)
-        if node.right:
-            helper(node.right, depth + 1)
-
-    helper(tree_root, 0)
-    print(rtn)
-    return rtn
+stack = deque()
+stack.append(10)
+stack.append(20)
+stack.pop()   # removes 20
 ```
 
-Traversing data types as a graph, for example BFS
-
+### 2. Queue
+A **queue** is a linear data structure that follows the **First-In, First-Out (FIFO)** principle — elements are removed in the order they are inserted. Queues are used in scheduling, order processing, and BFS traversal of graphs.
+##### Implementation 
+Queues in Python can be easily implemented using the `collections.deque` class:
 ```python
-def removeInvalidParentheses(self, s: str) -> List[str]:
-    rtn = []
-    v = set()
-    v.add(s)
-    if len(s) == 0: return [""]
-    while True:
-        for n in v:
-            if self.isValid(n):
-                rtn.append(n)
-        if len(rtn) > 0: break
-        level = set()
-        for n in v:
-            for i, c in enumerate(n):
-                if c == '(' or c == ')':
-                    sub = n[0:i] + n[i + 1:len(n)]
-                    level.add(sub)
-        v = level
-    return rtn
+from collections import deque
+
+queue = deque()
+
+# Enqueue
+queue.append('A')
+queue.append('B')
+queue.append('C')
+print(queue)  # deque(['A', 'B', 'C'])
+
+# Dequeue
+queue.popleft()  # Removes 'A'
+print(queue)     # deque(['B', 'C'])
+```
+##### Alternative
+Else, there is a separate `queue.Queue` which is more thread-safe:
+```python
+from queue import Queue
+
+q = Queue()
+q.put(10)
+q.put(20)
+q.put(30)
+
+print(q.get())  # 10
 ```
 
-Reconstructing binary trees
+### 3. Linked List
+A **linked list** is a linear collection of nodes where each node points to the next node. Unlike lists, linked lists don’t store elements in contiguous memory — they are **dynamic** and efficient for frequent insertions/deletions.
 
-1. Binary tree could be constructed from preorder and inorder traversal
-1. Inorder traversal of BST is an array sorted in the ascending order
-
-Convert tree to array and then to balanced tree
-
+##### Implementation (Singly Linked List)
+There is no existing implementation for linked lists so they have to be made:
 ```python
-def balanceBST(self, root: TreeNode) -> TreeNode:
-    self.inorder = []
+class Node:
+    def __init__(self, data):
+        self.data = data
+        self.next = None
 
-    def getOrder(node):
-        if node is None:
+class LinkedList:
+    def __init__(self):
+        self.head = None
+
+    def append(self, data):
+        new_node = Node(data)
+        if not self.head:
+            self.head = new_node
             return
-        getOrder(node.left)
-        self.inorder.append(node.val)
-        getOrder(node.right)
+        curr = self.head
+        while curr.next:
+            curr = curr.next
+        curr.next = new_node
 
-    # Get inorder treenode ["1,2,3,4"]
-    getOrder(root)
+    def display(self):
+        curr = self.head
+        while curr:
+            print(curr.data, end=" -> ")
+            curr = curr.next
+        print("None")
 
-    # Convert to Tree
-    #        2
-    #       1 3
-    #          4
-    def bst(listTree):
-        if not listTree:
-            return None
-        mid = len(listTree) // 2
-        root = TreeNode(listTree[mid])
-        root.left = bst(listTree[:mid])
-        root.right = bst(listTree[mid+1:])
+# Usage
+ll = LinkedList()
+ll.append(10)
+ll.append(20)
+ll.append(30)
+ll.display()   # 10 -> 20 -> 30 -> None
+```
+
+### 4. Binary Tree
+A **binary tree** is a hierarchical data structure where each node has **at most two children** — `left` and `right`. It’s used for organizing hierarchical data, expression trees, and as the base for Binary Search Trees (BSTs).
+
+A **Binary Search Tree** is a binary tree with an ordering property:
+- The left subtree of a node contains only values **less than** the node’s key.
+- The right subtree contains only values **greater than** the node’s key.
+BSTs provide **O(log n)** time complexity for search, insertion, and deletion (on average).
+##### Implementation
+Similarly, trees have to be made custom in python, here is a simple implementation:
+```python
+# Binary Tree
+class Node:
+    def __init__(self, key):
+        self.key = key
+        self.left = None
+        self.right = None
+
+def inorder(root):
+    if root:
+        inorder(root.left)
+        print(root.key, end=" ")
+        inorder(root.right)
+
+# Usage
+root = Node(10)
+root.left = Node(5)
+root.right = Node(20)
+root.left.left = Node(3)
+
+inorder(root)  # 3 5 10 20
+
+# ---------------------------
+
+# Binary Search Tree
+class BSTNode:
+    def __init__(self, key):
+        self.key = key
+        self.left = None
+        self.right = None
+
+def insert(root, key):
+    if root is None:
+        return BSTNode(key)
+    if key < root.key:
+        root.left = insert(root.left, key)
+    else:
+        root.right = insert(root.right, key)
+    return root
+
+def search(root, key):
+    if root is None or root.key == key:
         return root
+    return search(root.left, key) if key < root.key else search(root.right, key)
 
-    return bst(self.inorder)
+# Usage
+root = insert(None, 50)
+insert(root, 30)
+insert(root, 70)
+insert(root, 20)
+
+found = search(root, 30)
+print(found.key if found else "Not Found")  # 30
 ```
 
-## Graph
+### 6. Graphs
+A **graph** is a collection of **nodes (vertices)** and **edges** connecting them.  
+Graphs can be **directed** or **undirected**, and are used in social networks, navigation systems, and dependency modeling.
 
-Build an [adjecency graph](https://www.khanacademy.org/computing/computer-science/algorithms/graph-representation/a/representing-graphs) from edges list
+##### Implementation
+Graphs can be implemented using either adjacency lists or adjacency matrix, here is a simple implementation using Adjacency List:
+```python
+class Graph:
+    def __init__(self):
+        self.graph = {}
+
+    def add_edge(self, u, v):
+        self.graph.setdefault(u, []).append(v)
+
+    def show(self):
+        for node, edges in self.graph.items():
+            print(f"{node} -> {edges}")
+
+# Usage
+g = Graph()
+g.add_edge('A', 'B')
+g.add_edge('A', 'C')
+g.add_edge('B', 'D')
+g.show()
+# A -> ['B', 'C']
+# B -> ['D']
+
+# -------------------------------------------
+# Traversal Example: Breadth-First Search
+from collections import deque
+
+def bfs(graph, start):
+    visited = set()
+    q = deque([start])
+    while q:
+        node = q.popleft()
+        if node not in visited:
+            print(node, end=" ")
+            visited.add(node)
+            q.extend(graph.get(node, []))
+
+# BFS traversal
+bfs(g.graph, 'A')  # A B C D
+```
+
+### 7. Heaps (Priority Queue)
+A **heap** is a complete binary tree where each node satisfies the **heap property**:
+- **Min-Heap:** Parent ≤ Children
+- **Max-Heap:** Parent ≥ Children
+Heaps are used in priority queues, scheduling, and algorithms like Dijkstra’s and Heap Sort.
+##### Implementation
+Heaps can be implemented easily in python by importing `heapq` which by defaults implements a min-heap:
+```python
+import heapq
+
+# min heap - default
+nums = [5, 1, 9, 3, 7]
+heapq.heapify(nums)        # Convert list to min-heap
+heapq.heappush(nums, 0)    # Add element
+print(heapq.heappop(nums)) # Remove smallest → 0
+print(nums)                # Heap remains ordered internally
+
+l = heapq.nlargest(3, nums) # extract nth largest element
+s = heapq.nsmallest(3, nums) # extract nth smallest element
+
+# -------------------------------
+# max heap (use negative of the element while storing)
+max_heap = []
+for n in [5, 1, 9]:
+    heapq.heappush(max_heap, -n)
+print(-heapq.heappop(max_heap))  # 9
+```
+
+
+## Section 4: Advanced Programming Constructs
+This section explores Python's powerful functional and procedural programming constructs, which enable flexible, reusable, and robust code. These features represent a spectrum of metaprogramming, allowing code to inspect, modify, or generate other code at runtime.
+
+### Scope (LEGB Rule)
+Python resolves names using the LEGB rule, searching in the following order:
+1. Local: The current function's scope.
+2. Enclosing: The scope of any enclosing functions (e.g., in nested functions).
+3. Global: The top-level module scope.
+4. Built-in: Python's built-in names like `len()`, `list`, etc.
+
+### Functions
+Functions encapsulate reusable code. Define a function with `def` or an anonymous function with `lambda`.
+##### Function Structure
+- `def` defines a named function with parameters.
+- **Default arguments** (`param2=default`) are optional values if caller omits them.
+- `*args` collects extra positional arguments as a tuple, and `**kwargs` collects extra keyword arguments as a dict.
+- Use `return` to send back a value (or omit it to return `None`)
+```python
+def func_name(param1, param2=default, *args, **kwargs):
+    """Optional docstring."""
+    # ... code ...
+    return result
+
+# example
+def greet(name, shout=False):
+    """Return a greeting."""
+    if shout:
+        return f"HELLO, {name.upper()}!"
+    return f"Hello, {name}."
+
+print(greet("Bob"))            # Hello, Bob.
+print(greet("Alice", shout=True))  # HELLO, ALICE!
+```
+
+##### Lambda Functions
+You can also define **lambda** (anonymous) functions for short one-liners, e.g. `add = lambda x, y: x+y`. These are often used where functions need other functions as arguments, or a temporary function use-case is needed without defining the function permanently.
 
 ```python
-# N = 6, edges = [[0,1],[0,2],[2,3],[2,4],[2,5]]
-graph = [[] for _ in range(N)]
-for u,v in edges:
-    graph[u].append(v)
-    graph[v].append(u)
-# [[1, 2], [0], [0, 3, 4, 5], [2], [2], [2]]
+# lambda used with map
+numbers = [1, 2, 3, 4, 5]
+squared = list(map(lambda x: x**2, numbers))
+print(squared)  
+
+# output:
+# [1, 4, 9, 16, 25]
 ```
 
-Build adjecency graph from traditional tree
+### Variable-Length Arguments
+The special `*` and `**` syntax provides a powerful way to handle a variable number of arguments in functions.
+##### In Function Definitions
+- `*args`: Gathers any number of positional arguments into a tuple. The name `args` is a convention; any name can be used (e.g., `*numbers`).
+- `**kwargs`: Gathers any number of keyword arguments into a dictionary. The name `kwargs` is also a convention.
+- **Parameter Order:** The correct order of parameters in a function definition is: standard positional arguments, `*args`, keyword-only arguments, and finally `**kwargs`.
+##### As Unpacking Operators in Function Calls
+The `*` and `**` operators can also be used to unpack iterables and dictionaries when calling a function, passing their contents as individual arguments.
+
+### Closures
+A closure is a nested function that captures and remembers the state of variables from its enclosing (non-global) scope, even after the outer function has completed execution. This is a powerful mechanism for creating function factories and encapsulating state without resorting to classes.
+
+To create a closure, three conditions must be met:
+1. There must be a nested function.
+2. The nested function must refer to a variable from its enclosing scope.
+3. The enclosing function must return the nested function.
 
 ```python
-adj = collections.defaultdict(list)
-def dfs(node):
-    if node.left:
-        adj[node].append(node.left)
-        adj[node.left].append(node)
-        dfs(node.left)
-    if node.right:
-        adj[node].append(node.right)
-        adj[node.right].append(node)
-        dfs(node.right)
-dfs(root)
+def outer_function(msg):
+    """Outer function defines a variable and returns an inner function."""
+    def inner_function():
+        print("Message from closure:", msg)
+    return inner_function  # Returning inner function without calling it
+
+# Create closure
+greet = outer_function("Hello, Python!")
+greet()  # ✅ Prints: Message from closure: Hello, Python!
+
 ```
 
-Traverse Tree in graph notation
+### Decorators
+A decorator is a design pattern in Python that allows you to add new functionality to an existing function or method without modifying its source code. It is syntactic sugar for a higher-order function that takes a function as an argument and returns a new function.
+- **Implementation and `*args`, `**kwargs`** Decorators are typically implemented using a nested `wrapper` function that forms a closure. To make a decorator generic, the wrapper should accept `*args` and `**kwargs` to handle any arguments passed to the decorated function.
+- **Preserving Metadata with `@functools.wraps`** A crucial best practice is to use the `@functools.wraps` decorator on the wrapper function. This preserves the original function's metadata (like its name, docstring, and annotations), which is essential for debugging and introspection.
 
 ```python
-# [[1, 2], [0], [0, 3, 4, 5], [2], [2], [2]]
-def dfs(node, par=-1):
-    for nei in graph[node]:
-        if nei != par:
-            res = dfs(nei, node)
-dfs(0) # 1->2->3->4->5
+def my_decorator(func):
+    def wrapper():
+        print("Before function execution 👇")
+        func()
+        print("After function execution 👆")
+    return wrapper
+
+@my_decorator  # This is equivalent to: say_hello = my_decorator(say_hello)
+def say_hello():
+    print("Hello, World!")
+
+say_hello()
+
+# Output:
+# Before function execution 👇
+# Hello, World!
+# After function execution 👆
 ```
 
-## Heapq
-
-```
-      1
-     / \
-    2   3
-   / \ / \
-  5  6 8  7
-```
-
-[Priority Queue](https://realpython.com/python-heapq-module/#data-structures-heaps-and-priority-queues)
-
-1. Implemented as complete binary tree, which has all levels as full excepted deepest
-1. In a heap tree the node is smaller than its children
+### Iterators, Generators & Built-in Functions
+##### **The Iterator Protocol**
+The iterator protocol is fundamental to how `for` loops work in Python. An object is an _iterable_ if it implements the `__iter__()` method, which must return an _iterator_ object. An iterator is an object that implements the `__next__()` method, which returns the next item in the sequence and raises a `StopIteration` exception when there are no more items.
 
 ```python
-def maximumProduct(self, nums: List[int]) -> int:
-  l = heapq.nlargest(3, nums)
-  s = heapq.nsmallest(3, nums)
-  return max(l[0]*l[1]*l[2],s[0]*s[1]*l[0])
+class CountDown:
+    def __init__(self, start):
+        self.current = start
+
+    def __iter__(self):
+        return self  # The iterator object
+
+    def __next__(self):
+        if self.current <= 0:
+            raise StopIteration
+        num = self.current
+        self.current -= 1
+        return num
+
+# Usage
+for i in CountDown(5):
+    print(i)
 ```
 
-Heap elements can be tuples, heappop() frees the smallest element (flip sign to pop largest)
+##### **Generators**
+Generators provide a convenient way to implement the iterator protocol.
+- **Generator Functions:** A function that contains one or more `yield` statements. When called, it returns a generator object (an iterator), but its code does not execute immediately. The code runs each time `__next__()` is called on the generator, executing until it hits a `yield`, which pauses execution and returns the yielded value. This allows for lazy evaluation, which is highly memory-efficient for large datasets.
+- **Generator Expressions:** A concise, memory-efficient syntax for creating generators, similar to list comprehensions but with parentheses instead of square brackets.
 
 ```python
-def kClosest(self, points: List[List[int]], K: int) -> List[List[int]]:
-    heap = []
-    for p in points:
-        distance = sqrt(p[0]* p[0] + p[1]*p[1])
-        heapq.heappush(heap,(-distance, p))
-        if len(heap) > K:
-            heapq.heappop(heap)
-    return ([h[1] for h in heap])
+def countdown(n):
+    print("Starting countdown...")
+    while n > 0:
+        yield n  # Pauses here and resumes on next() call
+        n -= 1
+    print("Done!")
+
+# Using the generator
+for number in countdown(3):
+    print(number)
 ```
 
-nsmallest can take a lambda argument
+### Built-in Functions
+Python has many **built-in functions and types** that are always available. Common ones include:
+
+| **Function(s)**                                       | **Description / Purpose**                                                                                                                                  |
+| ----------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `print()`                                             | Outputs data to the console. Accepts multiple arguments, supports `sep`, `end`, and `file` parameters.                                                     |
+| `input()`                                             | Reads a line of input from the user as a string.                                                                                                           |
+| `len()`                                               | Returns the number of items in an iterable (string, list, tuple, dict, etc.).                                                                              |
+| `type()`                                              | Returns the data type of an object.                                                                                                                        |
+| `id()`                                                | Returns the unique identifier (memory address) of an object.                                                                                               |
+| `isinstance(obj, class)` / `issubclass(sub, super)`   | Check object type or subclass relationship.                                                                                                                |
+| `dir()`                                               | Lists all valid attributes and methods for an object.                                                                                                      |
+| `eval()` / `exec()` / `compile()`                     | `eval()` executes an expression, `exec()` executes Python code dynamically, and `compile()` compiles code to a code object. ⚠️ Use carefully for security. |
+| `hash()`                                              | Returns the hash value of an object (if hashable). Used in sets/dict keys.                                                                                 |
+| `repr()` / `str()` / `ascii()`                        | Return string representations: `repr()` → developer-readable, `str()` → user-readable, `ascii()` → escapes non-ASCII characters.                           |
+| `format()`                                            | Returns a formatted version of a string or number. Similar to f-strings but as a function.                                                                 |
+| `abs()`                                               | Returns the absolute value of a number.                                                                                                                    |
+| `round(number, ndigits)`                              | Rounds a number to a given precision.                                                                                                                      |
+| `sum(iterable[, start])`                              | Returns the sum of all items in an iterable, with optional start value.                                                                                    |
+| `min(iterable)` / `max(iterable)`                     | Return the smallest/largest item in an iterable or among arguments.                                                                                        |
+| `sorted(iterable, key=None, reverse=False)`           | Returns a new sorted list. Does not modify the original.                                                                                                   |
+| `all(iterable)`                                       | Returns `True` if all elements are truthy.                                                                                                                 |
+| `any(iterable)`                                       | Returns `True` if at least one element is truthy.                                                                                                          |
+| `enumerate(iterable, start=0)`                        | Returns an iterator yielding pairs of (index, value). Often used in loops.                                                                                 |
+| `zip(*iterables)`                                     | Aggregates elements from multiple iterables into tuples.                                                                                                   |
+| `map(function, iterable)`                             | Applies a function to every item of an iterable. Returns an iterator.                                                                                      |
+| `filter(function, iterable)`                          | Filters items from iterable for which the function returns `True`.                                                                                         |
+| `reversed(seq)`                                       | Returns a reversed iterator over a sequence.                                                                                                               |
+| `range(start, stop[, step])`                          | Returns an immutable sequence of numbers from start to stop with step. Commonly used in loops.                                                             |
+| `next(iterator, default)`                             | Returns the next item from an iterator. Returns `default` if no more items.                                                                                |
+| `iter(obj[, sentinel])`                               | Returns an iterator object. With a sentinel, repeatedly calls a function until sentinel value is returned.                                                 |
+| `chr(i)` / `ord(c)`                                   | `chr()` converts an integer to a Unicode character; `ord()` does the reverse.                                                                              |
+| `bin()`, `oct()`, `hex()`                             | Convert an integer to binary, octal, or hexadecimal string representation.                                                                                 |
+| `int(x[, base])`, `float(x)`, `complex(real, imag)`   | Convert to numeric types.                                                                                                                                  |
+| `bool(x)`                                             | Converts a value to `True` or `False` according to truthiness rules.                                                                                       |
+| `list()`, `tuple()`, `set()`, `frozenset()`, `dict()` | Constructors for built-in data structures.                                                                                                                 |
+| `bytes()`, `bytearray()`, `memoryview()`              | Used for handling binary data.                                                                                                                             |
+| `classmethod()` / `staticmethod()`                    | Define class-level methods that are bound differently than instance methods.                                                                               |
+| `super()`                                             | Returns a proxy object that delegates method calls to a parent or sibling class.                                                                           |
+| `object()`                                            | Returns a new, featureless base object. Base of all new-style classes.                                                                                     |
+| `frozenset()`                                         | Immutable version of a set (can be dictionary key).                                                                                                        |
+
+
+## Section 5: Exception & File Handling
+### Exception Handling
+Errors in Python can be of 2 types: Syntax Errors & Exceptions.
+1. **Syntax Error** as the name suggests, is caused by wrong syntax in the code. It leads to the termination of the program.
+2. **Exceptions** are raised when the program is syntactically correct, but the code resulted in an error. This error does not stop the execution of the program. However, it changes the normal flow of the program. It is a python object which represents an error.
+
+Robust error handling is crucial for building reliable applications. Python provides a sophisticated exception handling mechanism.
+
+##### The Try & Except Statements:
+This full structure provides complete control over exception handling:
+- `try`: Contains code that might raise an exception.
+- `except`: Catches and handles specific exceptions.
+- `else`: Executes only if the `try` block completes without raising an exception.
+- `finally`: Executes no matter what, ensuring that cleanup code (like closing a file or releasing a lock) always runs.
+```python
+try:
+    # code that might throw an exception
+    result = 10 / 0
+except ZeroDivisionError as e:
+	# runs if exception occurs
+    print("Caught division by zero:", e)
+else:
+    # runs if no exception occurred
+    print("No exception, result is", result)
+finally:
+    # runs regardless of exceptions (for cleanup)
+    print("Done with try/except")
+```
+
+###### Raising Exceptions
+Use the `raise` keyword to throw an exception manually. You can raise built-in or custom exceptions.
+```python
+def divide(a, b):
+    if b == 0:
+        raise ZeroDivisionError("Division by zero is undefined")
+    return a / b
+
+# Usage
+try:
+    divide(10, 0)
+except ZeroDivisionError as e:
+    print("Raised Exception:", e)
+
+```
+
+##### Custom / User-Defined Exceptions
+Creating custom exception hierarchies by subclassing the built-in `Exception` class provides domain-specific error information, making code clearer and easier to debug. This allows for more granular error handling and is a best practice for libraries and large applications.
 
 ```python
-def kClosest(self, points: List[List[int]], K: int) -> List[List[int]]:
-    return heapq.nsmallest(K, points, lambda x: x[0]*x[0] + x[1]*x[1])
+# Define a custom exception
+class NegativeNumberError(Exception):
+    """Raised when a number is negative."""
+    pass
+
+def square_root(x):
+    if x < 0:
+        raise NegativeNumberError("Cannot compute square root of negative number")
+    return x ** 0.5
+
+# Example usage
+try:
+    result = square_root(-9)
+except NegativeNumberError as e:
+    print("Custom Exception Caught:", e)
+
 ```
 
-The key can be a function as well in nsmallest/nlargest
+##### Exception Chaining
+Exception chaining links exceptions together, providing a clear history of how an error occurred.
+- **Implicit Chaining:** When an exception is raised inside an `except` block, Python automatically attaches the original exception to the new one's `__context__` attribute. The traceback will show both exceptions.
+- **Explicit Chaining:** Using `raise NewException from original_exception` makes it clear that one error was a direct consequence of another. This sets the `__cause__` attribute and produces a more informative traceback, stating that one exception was raised "directly from" another.
 
 ```python
-def topKFrequent(self, nums: List[int], k: int) -> List[int]:
-    count = Counter(nums)
-    return heapq.nlargest(k, count, count.get)
+def convert_to_int(s):
+    try:
+        return int(s)
+    except ValueError as e:
+        raise TypeError("Conversion failed, wrong type provided") from e
+
+# Example
+try:
+    convert_to_int("abc")
+except TypeError as e:
+    print("Chained Exception:", e)
+    print("Original Exception:", e.__cause__)
 ```
 
-Tuple sort, 1st/2nd element. increasing frequency then decreasing order
+##### Built-In Exceptions in Python:
+| **Exception**         | **Description**                                                                   |
+| --------------------- | --------------------------------------------------------------------------------- |
+| `Exception`           | Base class for all exceptions                                                     |
+| `ArithmeticError`     | Base class for errors in numeric calculations                                     |
+| `ZeroDivisionError`   | Raised when division or modulo by zero occurs                                     |
+| `OverflowError`       | Raised when result of an arithmetic operation is too large to be represented      |
+| `ValueError`          | Raised when a function gets the right type but an inappropriate value             |
+| `TypeError`           | Raised when an operation is applied to an object of inappropriate type            |
+| `IndexError`          | Raised when a sequence subscript is out of range                                  |
+| `KeyError`            | Raised when a dictionary key is not found                                         |
+| `AttributeError`      | Raised when an invalid attribute reference is made                                |
+| `ImportError`         | Raised when an import statement fails                                             |
+| `ModuleNotFoundError` | Raised when a module cannot be found                                              |
+| `FileNotFoundError`   | Raised when a file or directory is requested but doesn't exist                    |
+| `IOError`             | Raised when an I/O operation fails (alias of `OSError` in Python 3)               |
+| `OSError`             | Base class for system-related errors (e.g., file system, OS)                      |
+| `StopIteration`       | Raised to signal the end of an iterator                                           |
+| `AssertionError`      | Raised when an `assert` statement fails                                           |
+| `RuntimeError`        | Raised when an error occurs that doesn’t fall under other categories              |
+| `NotImplementedError` | Raised when an abstract method is not implemented                                 |
+| `NameError`           | Raised when a local or global name is not found                                   |
+| `MemoryError`         | Raised when an operation runs out of memory                                       |
+| `RecursionError`      | Raised when the maximum recursion depth is exceeded                               |
+| `EOFError`            | Raised when `input()` hits end-of-file condition (EOF)                            |
+| `IndentationError`    | Raised when there is incorrect indentation                                        |
+| `TabError`            | Raised when indentation consists of inconsistent tabs & spaces                    |
+| `KeyboardInterrupt`   | Raised when the user interrupts program execution (Ctrl+C)                        |
+| `ReferenceError`      | Raised when a weak reference proxy is used to access a garbage collected referent |
+
+### File I/O Handling
+Python allows users to read & write files and many other options to operate on files. There are 2 types of files that can be handled in python: Text Files & Binary Files.
+1. **Text Files** In this type of file, each line of text is terminated with a special character called EOL, which is the newline character ("\n") in python.
+2. **Binary Files** In this type of file, there is no terminator for a line, and the data is stored after converting it into machine-readable binary language.
+
+The `with` statement is the standard, robust way to manage resources like files, ensuring that cleanup operations are always performed. This is achieved through context managers.
+
+Open files using `open()` which returns a file object. The basic usage is:
+```python
+# old / classic syntax
+f = open("file.txt", "r", encoding="utf-8")
+data = f.read()
+f.close()
+
+# new syntax
+with open("log.txt", "a") as log:
+    log.write("New entry\n")
+# file is auto-closed when exiting block
+```
+
+Using `with open(...) as f:` ensures the file is properly closed (even if exceptions occur). If `open()` fails (e.g. file not found), it raises an `OSError`. Always specify encoding in text mode (default is platform-dependent).
+
+##### File-Opening Modes in Python:
+| **Mode** | **Description**                                                                                    | **File Behavior**                                      |
+| -------- | -------------------------------------------------------------------------------------------------- | ------------------------------------------------------ |
+| `'r'`    | Read mode (default). Opens the file for reading only.                                              | File must exist; pointer at beginning.                 |
+| `'w'`    | Write mode. Opens the file for writing, truncating (overwriting) existing content.                 | Creates file if it doesn’t exist. pointer at the start |
+| `'x'`    | Exclusive creation mode. Opens for writing only if the file does not already exist.                | Raises `FileExistsError` if file exists.               |
+| `'a'`    | Append mode. Opens the file for writing, appending new content to the end.                         | Creates file if it doesn’t exist. Pointer at the end   |
+| `'b'`    | Binary mode modifier. Used with other modes to read/write binary data (e.g., images, executables). | Must be combined (e.g., `'rb'`, `'wb'`).               |
+| `'t'`    | Text mode (default). Used with other modes for reading/writing text data.                          | Implicit if not specified.                             |
+| `'+'`    | Read and write mode modifier. Allows reading and writing in the same file.                         | Must be combined (e.g., `'r+'`, `'w+'`, `'a+'`).       |
+
+##### Custom Context Managers
+You can define your own context managers to encapsulate setup and teardown logic for any resource. This is a form of metaprogramming that allows you to wrap a block of code with custom behavior.
+- **Class-based Approach:** Implement a class with `__enter__()` and `__exit__()` methods. `__enter__` sets up the resource and can return an object to be used in the `with` block. `__exit__` handles cleanup and receives exception details if an error occurred.
+- **Function-based Approach:** A more concise method using the `@contextmanager` decorator from the `contextlib` module. The function should `yield` exactly once. Code before the `yield` is the setup (`__enter__`), and code after the `yield` is the teardown (`__exit__`).
+
+
+## Section 6: Object-Oriented Programming (OOP)
+This section provides a deep dive into Python's object-oriented capabilities, from fundamental method types to the esoteric but powerful concept of metaclasses.
+
+Object-Oriented Programming is a programming paradigm based on the concept of "objects", which can contain data in the form of fields (often known as attributes or properties) and code in the form of procedures (often known as methods).
+
+### Classes & Objects
+- **Class:** A blueprint for creating objects. It defines the attributes and methods that all objects of that class will have.
+- **Object (Instance):** A specific instance of a class. All the data is stored in the objects.
+
+##### Key Concepts
+- `class`: Used to define a class.
+- `self`: The first parameter in any instance method. It refers to the **current instance** of the class. It's how the object accesses its own attributes and methods.
+- `__init__(self, ...)`: The **constructor** method. It's called automatically when a new object is created. It's used to initialize the object's attributes.
+- **Instance Attributes:** Data that is unique to each object (e.g., `dog.name`). Defined inside `__init__` using `self.attribute_name`.
+- **Class Attributes:** Data that is **shared** among _all_ instances of a class. Defined outside of any method.
+
+Example Usage
+```python
+# Define a class (blueprint)
+class Dog:
+    # Class Attribute (shared by all instances)
+    species = "Canis familiaris"
+
+    # The constructor (initializes the object)
+    def __init__(self, name, age):
+        # Instance Attributes (unique to each instance)
+        self.name = name
+        self.age = age
+
+    # Instance Method (a function inside the class)
+    def bark(self):
+        print(f"{self.name} says Woof!")
+
+    # Another instance method
+    def description(self):
+        return f"{self.name} is {self.age} years old."
+
+# Create Objects (instances) from the class
+my_dog = Dog("Buddy", 3)
+other_dog = Dog("Lucy", 5)
+
+# Accessing attributes
+print(my_dog.name)        # Output: Buddy
+print(other_dog.species)  # Output: Canis familiaris
+
+# Calling methods
+my_dog.bark()             # Output: Buddy says Woof!
+print(other_dog.description()) # Output: Lucy is 5 years old.
+```
+
+### Method Types
+Python classes support three distinct method types, each with a specific purpose and relationship to the class and its instances.
+##### 1. Instance Methods
+This is the default method type. It operates on an instance of the class and receives the instance itself as its first argument, conventionally named `self`. Instance methods are used for operations that need to access or modify instance-specific state (attributes).
+
+##### 2. Class Methods (`@classmethod`)
+A class method is bound to the class, not the instance. It is defined using the `@classmethod` decorator and receives the class as its first argument, conventionally named `cls`. Its primary use case is for factory methods—alternative constructors that can create instances of the class in different ways.
+
+##### 3. Static Methods (`@staticmethod`)
+A static method is essentially a regular function namespaced within a class. It is defined with the `@staticmethod` decorator and does not receive any implicit first argument (`self` or `cls`). It is used for utility functions that are logically related to the class but do not depend on any class or instance state.
+
+Example Usage:
+```python
+class Pizza:
+    def __init__(self, toppings):
+        self.toppings = toppings
+
+    # Instance method
+    def show_toppings(self):
+        print(f"This pizza has: {self.toppings}")
+
+    # Class method (a "factory")
+    @classmethod
+    def pepperoni(cls):
+        # 'cls' is the Pizza class
+        return cls(['pepperoni', 'cheese'])
+
+    # Static method (a "utility")
+    @staticmethod
+    def is_vegetarian(ingredients):
+        # Doesn't need instance or class data
+        return "meat" not in ingredients
+
+# Regular instance creation
+p1 = Pizza(['mushrooms', 'onions'])
+p1.show_toppings()
+
+# Factory method (using @classmethod)
+p_pep = Pizza.pepperoni()
+p_pep.show_toppings()
+
+# Utility function (using @staticmethod)
+print(Pizza.is_vegetarian(['mushrooms', 'cheese'])) # True
+```
+
+##### 4. Special (Dunder) Methods
+"Dunder" stands for "Double Underscore (`__`)". These methods let your objects integrate with built-in Python operations.
+
+| **Method**               | **Operator/Function**  | **Description**                                                                                                   |
+| ------------------------ | ---------------------- | ----------------------------------------------------------------------------------------------------------------- |
+| `__init__(self, ...)`    | Object creation        | The constructor.                                                                                                  |
+| `__str__(self)`          | `print()`, `str()`     | Returns a user-friendly string representation.                                                                    |
+| `__repr__(self)`         | `repr()`, console echo | Returns an unambiguous, developer-friendly string. A good `repr` should ideally allow you to recreate the object. |
+| `__len__(self)`          | `len()`                | Returns the "length" of the object.                                                                               |
+| `__eq__(self, other)`    | ==                     | Defines behavior for the equality operator.                                                                       |
+| `__add__(self, other)`   | `+`                    | Defines behavior for the addition operator.                                                                       |
+| `__getitem__(self, key)` | `obj[key]`             | Allows your object to act like a sequence (e.g., list, dict).                                                     |
+
+Example Usage:
+```python
+class Book:
+    def __init__(self, title, author, pages):
+        self.title = title
+        self.author = author
+        self.pages = pages
+    
+    # For print()
+    def __str__(self):
+        return f'"{self.title}" by {self.author}'
+    
+    # For developer output
+    def __repr__(self):
+        return f"Book(title='{self.title}', author='{self.author}', pages={self.pages})"
+    
+    # For len()
+    def __len__(self):
+        return self.pages
+
+book = Book("The Hobbit", "J.R.R. Tolkien", 310)
+
+print(book)      # Calls __str__ -> "The Hobbit" by J.R.R. Tolkien
+print(repr(book))  # Calls __repr__ -> Book(title='The Hobbit', ...)
+print(len(book))     # Calls __len__ -> 310
+```
+
+### Inheritance Concepts
+##### **Multiple Inheritance and the Diamond Problem**
+Python supports multiple inheritance, where a class can inherit from more than one parent class. This can lead to the "diamond problem," an ambiguity that arises when a class inherits from two classes that share a common ancestor. Python resolves this ambiguity using a well-defined Method Resolution Order (MRO).
+
+##### **Method Resolution Order (MRO)**
+The MRO is the precise order in which Python searches the class hierarchy for a method. Python uses the **C3 Linearization algorithm** to compute a deterministic and consistent MRO that satisfies several key properties, including preserving the local precedence order of base classes and monotonicity. You can inspect the MRO of a class using the `__mro__` attribute or the `.mro()` method.
+
+##### The `super()` Function
+In the context of multiple inheritance, `super()` is a dynamic proxy object that delegates method calls to the _next_ class in the MRO, not necessarily the direct parent. This is crucial for implementing "cooperative multiple inheritance," where each class in the chain calls the `super()` implementation of a method, ensuring all parent methods are executed in the correct order.
+
+
+### The Four Pillars of OOP in Python
+##### 1. Encapsulation
+Encapsulation is the bundling of data (attributes) and the methods that operate on that data into a single unit (a class). Python uses naming conventions for access control rather than strict enforcement.
+
+Python doesn't have strict `private` keywords like Java or C++. It relies on naming conventions:
+- **Public:** Attributes are accessible from anywhere (e.g., `self.name`).
+- **Protected:** Attributes prefixed with a single underscore (e.g., `self._internal_data`) are treated as non-public by convention and should not be accessed directly from outside the class.
+- **Private:** Attributes prefixed with a double underscore (e.g., `self.__private_var`) are subject to _name mangling_, where the name is changed to `_ClassName__private_var`. This makes it harder, but not impossible, to access from outside the class.
 
 ```python
-def topKFrequent(self, words: List[str], k: int) -> List[str]:
-    freq = Counter(words)
-    return heapq.nsmallest(k, freq.keys(), lambda x:(-freq[x], x))
+class Car:
+    def __init__(self, make, model):
+        self.make = make          # Public
+        self._speed = 0           # Protected
+        self.__engine_serial = "A123X" # Private (name-mangled)
+
+    def _accelerate(self):        # Protected method
+        self._speed += 10
+        print(f"Speed is now {self._speed}")
+    
+    def get_serial(self):
+        # We can access __engine_serial inside the class
+        return self.__engine_serial
+
+c = Car("Toyota", "Corolla")
+print(c.make)    # OK
+print(c._speed)  # OK (but bad practice)
+# print(c.__engine_serial) # AttributeError!
+
+# This is how you can access it (don't do this)
+print(c._Car__engine_serial) # Output: A123X
 ```
 
-## Lambda
-
-Can be used with (list).sort(), sorted(), min(), max(), (heapq).nlargest,nsmallest(), map()
-
+**Properties (The Pythonic Way):**
+A cleaner, more "Pythonic" way to manage attributes is using **properties**. They allow you to use getters, setters, and deleters to control access.
 ```python
-# a=3,b=8,target=10
-min((b,a), key=lambda x: abs(target - x)) # 8
+class Person:
+    def __init__(self, age):
+        self._age = age # Internal attribute
+    
+    # This is the "getter"
+    @property
+    def age(self):
+        """Gets the age."""
+        print("Getter called")
+        return self._age
+
+    # This is the "setter"
+    @age.setter
+    def age(self, value):
+        """Sets the age, with validation."""
+        print("Setter called")
+        if value < 0:
+            raise ValueError("Age cannot be negative")
+        self._age = value
+
+# Usage
+p = Person(25)
+print(p.age)      # Getter called. Output: 25
+
+p.age = 30        # Setter called.
+print(p.age)      # Getter called. Output: 30
 ```
 
+
+##### 2. Inheritance
+Inheritance allows a new class (the **child class** or **subclass**) to inherit attributes and methods from an existing class (the **parent class** or **superclass**). This supports the **"is-a"** relationship (e.g., a `Dog` "is-a" `Animal`).
+- `super()`: A function used to call methods from the parent class. This is crucial for extending `__init__` and other methods, rather than completely replacing them.
+- **Method Overriding:** A child class can provide its own implementation of a method that is already defined in its parent class.
+
+Example Usage:
 ```python
->>> ids = ['id1', 'id2', 'id30', 'id3', 'id22', 'id100']
->>> print(sorted(ids)) # Lexicographic sort
-['id1', 'id100', 'id2', 'id22', 'id3', 'id30']
->>> sorted_ids = sorted(ids, key=lambda x: int(x[2:])) # Integer sort
->>> print(sorted_ids)
-['id1', 'id2', 'id3', 'id22', 'id30', 'id100']
+# Parent Class
+class Animal:
+    def __init__(self, name):
+        self.name = name
+
+    def speak(self):
+        print("Some generic animal sound")
+
+# Child Class
+class Dog(Animal):
+    def __init__(self, name, breed):
+        # Call the parent's constructor
+        super().__init__(name)
+        self.breed = breed
+    
+    # Overriding the speak method
+    def speak(self):
+        print(f"{self.name} says Woof!")
+
+# Another Child Class
+class Cat(Animal):
+    # This class inherits speak() without overriding it
+    pass
+
+d = Dog("Buddy", "Golden Retriever")
+d.speak()  # Output: Buddy says Woof!
+
+c = Cat("Whiskers")
+c.speak()  # Output: Some generic animal sound
 ```
 
+**Multiple Inheritance:** A class can inherit from multiple parent classes. Python follows a **Method Resolution Order (MRO)** to determine which method to call.
 ```python
-trans = lambda x: list(al[i] for i in x) # apple, a->0..
-print(trans(words[0])) # [0, 15, 15, 11, 4]
+class A:
+    def ping(self): print("A")
+
+class B(A):
+    def ping(self): print("B")
+
+class C(A):
+    def ping(self): print("C")
+
+class D(B, C): # Inherits from B, then C
+    pass
+
+d = D()
+d.ping() # Output: B
+
+# You can inspect the MRO
+print(D.mro())
+# Output: [<class '__main__.D'>, <class '__main__.B'>, <class '__main__.C'>, <class '__main__.A'>, <class 'object'>]
 ```
 
-Lambda can sort by 1st, 2nd element in tuple
+##### 3. Polymorphism
+Polymorphism (from Greek, "many forms") means that objects of different classes can be treated as objects of a common superclass. It allows you to use a single interface (like a function) to operate on objects of different types.
 
+**Duck Typing:** This is Python's main approach to polymorphism.
+> "If it walks like a duck and it quacks like a duck, then it must be a duck."
+
+Python doesn't care about the _type_ of the object, only if it has the required _methods_.
+
+##### 4. Abstraction
+Abstraction involves hiding the complex implementation details and exposing only the essential features (interface) to the user.
+
+In Python, this is formally achieved using **Abstract Base Classes (ABCs)** from the `abc` module.
+- An **abstract class** cannot be instantiated by itself.
+- It defines one or more `@abstractmethod`, which are methods without an implementation.
+- Any concrete (non-abstract) child class _must_ implement all abstract methods. If a subclass fails to implement all abstract methods, a `TypeError` is raised.
+
+Example Usage:
 ```python
-sorted([('abc', 121),('bbb',23),('abc', 148),('bbb', 24)], key=lambda x: (x[0],x[1]))
-# [('abc', 121), ('abc', 148), ('bbb', 23), ('bbb', 24)]
+from abc import ABC, abstractmethod
+
+# Abstract Class (the "interface")
+class Shape(ABC):
+    
+    @abstractmethod
+    def area(self):
+        """Calculate the area of the shape."""
+        pass
+    
+    @abstractmethod
+    def perimeter(self):
+        """Calculate the perimeter of the shape."""
+        pass
+
+# Concrete Class (the "implementation")
+class Rectangle(Shape):
+    def __init__(self, width, height):
+        self.width = width
+        self.height = height
+    
+    def area(self):
+        return self.width * self.height
+    
+    def perimeter(self):
+        return 2 * (self.width + self.height)
+
+# Another Concrete Class
+class Circle(Shape):
+    def __init__(self, radius):
+        self.radius = radius
+    
+    def area(self):
+        return 3.14159 * self.radius**2
+    
+    def perimeter(self):
+        return 2 * 3.14159 * self.radius
+
+# You cannot create an instance of the abstract class
+# s = Shape() # TypeError: Can't instantiate abstract class Shape
+
+r = Rectangle(10, 5)
+c = Circle(7)
+
+print(f"Rectangle Area: {r.area()}") # Output: 50
+print(f"Circle Area: {c.area()}")    # Output: 153.93791
 ```
 
-## Zip
 
-Combine two dicts or lists
+## Section 7: Python Standard Libraries
+### Random
+The **`random`** module in Python is part of the standard library and provides functions to generate **pseudo-random numbers**, make **random selections**, **shuffle sequences**, and **simulate randomness** for various applications — such as simulations, gaming, sampling, and data randomization.
 
-```python
-s1 = {2, 3, 1}
-s2 = {'b', 'a', 'c'}
-list(zip(s1, s2)) # [(1, 'a'), (2, 'c'), (3, 'b')]
-```
+It uses the **Mersenne Twister algorithm**, which is deterministic but provides high-quality pseudo-random numbers.
 
-Traverse in Parallel
-
-```python
-letters = ['a', 'b', 'c']
-numbers = [0, 1, 2]
-for l, n in zip(letters, numbers):
-  print(f'Letter: {l}') # a,b,c
-  print(f'Number: {n}') # 0,1,2
-```
-
-Empty in one list is ignored
-
-```python
-letters = ['a', 'b', 'c']
-numbers = []
-for l, n in zip(letters, numbers):
-  print(f'Letter: {l}') #
-  print(f'Number: {n}') #
-```
-
-Compare characters of alternating words
-
-```python
-for a, b in zip(words, words[1:]):
-    for c1, c2 in zip(a,b):
-        print("c1 ", c1, end=" ")
-        print("c2 ", c2, end=" ")
-```
-
-Passing in [\*](https://stackoverflow.com/questions/29139350/difference-between-ziplist-and-ziplist/29139418) unpacks a list or other iterable, making each of its elements a separate argument.
-
-```python
-a = [[1,2],[3,4]]
-test = zip(*a)
-print(test) # (1, 3) (2, 4)
-matrix = [[1,2,3],[4,5,6],[7,8,9]]
-test = zip(*matrix)
-print(*test) # (1, 4, 7) (2, 5, 8) (3, 6, 9)
-```
-
-Useful when rotating a matrix
-
-```python
-# matrix = [[1,2,3],[4,5,6],[7,8,9]]
-matrix[:] = zip(*matrix[::-1]) # [[7,4,1],[8,5,2],[9,6,3]]
-```
-
-Iterate through chars in a list of strs
-
-```python
-strs = ["cir","car","caa"]
-for i, l in enumerate(zip(*strs)):
-    print(l)
-    # ('c', 'c', 'c')
-    # ('i', 'a', 'a')
-    # ('r', 'r', 'a')
-```
-
-Diagonals can be traversed with the help of a list
-
-```python
-"""
-[[1,2,3],
- [4,5,6],
- [7,8,9],
- [10,11,12]]
-"""
-def printDiagonalMatrix(self, matrix: List[List[int]]) -> bool:
-    R = len(matrix)
-    C = len(matrix[0])
-
-    tmp = [[] for _ in range(R+C-1)]
-
-    for r in range(R):
-        for c in range(C):
-            tmp[r+c].append(matrix[r][c])
-
-    for t in tmp:
-        for n in t:
-            print(n, end=' ')
-        print("")
-"""
- 1,
- 2,4
- 3,5,7
- 6,8,10
- 9,11
- 12
-"""
-```
-
-## Random
-
-```Python
-for i, l in enumerate(shuffle):
-  r = random.randrange(0+i, len(shuffle))
-  shuffle[i], shuffle[r] = shuffle[r], shuffle[i]
-return shuffle
-```
-
-Other random generators
-
+##### Example Usage
 ```Python
 import random
-ints = [0,1,2]
-random.choice(ints) # 0,1,2
-random.choices([1,2,3],[1,1,10]) # 3, heavily weighted
-random.randint(0,2) # 0,1, 2
-random.randint(0,0) # 0
-random.randrange(0,0) # error
-random.randrange(0,2) # 0,1
+
+# generate random numbers
+# Returns a float in the range [0.0, 1.0)
+print(random.random())  # e.g. 0.745325612
+
+# Returns a random float N such that a ≤ N ≤ b
+print(random.uniform(10, 20))  # e.g. 14.37
+
+# Returns a random integer N such that a ≤ N ≤ b
+print(random.randint(1, 6))  # simulates dice roll → 1 to 6
+
+# Returns a randomly selected **element** from the given range.
+print(random.randrange(0, 10, 2))  # e.g. 2  (0, 2, 4, 6, 8)
+
+# Returns a random element from a non-empty sequence (like list or tuple).
+colors = ['red', 'blue', 'green']
+print(random.choice(colors))  # e.g. 'blue'
+random.choices([1,2,3],[1,1,10]) # e.g. 3, (heavily weighted towards 3)
+
+# Shuffles the sequence in-place
+deck = [1, 2, 3, 4, 5]
+random.shuffle(deck)
+print(deck)  # shuffled order, e.g. [3, 1, 5, 2, 4]
 ```
 
-## Constants
+We, can **seed** the random number generator for reproducible results:
+- Using the same seed guarantees the same random sequence each time.
+- Good for testing or debugging.
+```python
+random.seed(42)
+print(random.random())  # always same for same seed
+```
 
-```Python
+##### Practical Use Case
+```python
+# random password generation
+import random, string
+password = ''.join(random.choices(string.ascii_letters + string.digits, k=8))
+print(password)
+
+# random sampling from a dataset
+data = ['A', 'B', 'C', 'D', 'E']
+sampled = random.sample(data, 3)
+print(sampled)
+```
+
+
+### Math
+The `math` module provides access to common mathematical functions and constants, many from the C standard library. Example functions/constants:
+- `math.sqrt(x)` – square root.
+- `math.pow(x,y)` – x raised to y (use `**` as operator or `pow(x,y)` as built-in).
+- `math.sin(x)`, `math.cos(x)`, `math.tan(x)` – trigonometry.
+- `math.log(x[, base])`, `math.log10(x)`, `math.exp(x)` – logarithms and exponentials.
+- `math.ceil(x)`, `math.floor(x)`, `math.factorial(n)`, `math.gcd(a,b)`.
+- Constants: `math.pi`, `math.e`, `math.inf`, `math.nan`, etc.
+
+All `math` functions (except those noted for complex numbers) return floats.
+```python
+import math
+print(math.pi, math.e)            # 3.14159... 2.71828...
+print(math.sqrt(16), math.log10(100))  # 4.0, 2.0
+print(math.factorial(5), math.gcd(8, 12))  # 120, 4
+
+# constants:
 max = float('-inf')
 min = float('inf')
 ```
 
-## Ternary
+### Collections
+The `collections` module provides specialized container datatypes as alternatives to built-in list/dict/set/tuple. Useful classes include:
+- `deque`: A list-like container optimized for fast appends and pops from both ends ($O(1)$ time complexity). It is implemented as a doubly-linked list.
+- `Counter`: a `dict` subclass for counting hashable objects. It is an unordered collection where elements are stored as dictionary keys and their counts are stored as dictionary values.
+- `defaultdict`: A subclass of `dict` that provides a default value for a nonexistent key, avoiding `KeyError` exceptions. It is initialized with a "default factory" function (e.g., `int`, `list`, `set`) that is called to supply the default value. A `defaultdict(int)` would create missing keys with default `0`, etc.
+- `namedtuple`: A factory function for creating tuple subclasses with named fields. This allows for more readable, self-documenting code, as elements can be accessed by name instead of just by index.
 
-a if condition else b
-
-```Python
-test = stk.pop() if stk else '#'
-```
-
-## Bitwise Operators
-
+Example Usage:
 ```python
-'0b{:04b}'.format(0b1100 & 0b1010) # '0b1000' and
-'0b{:04b}'.format(0b1100 | 0b1010) # '0b1110' or
-'0b{:04b}'.format(0b1100 ^ 0b1010) # '0b0110' exclusive or
-'0b{:04b}'.format(0b1100 >> 2)     # '0b0011' shift right
-'0b{:04b}'.format(0b0011 << 2)     # '0b1100' shift left
-```
-
-## For Else
-
-Else condition on for loops if break is not called
-
-```python
-for w1, w2 in zip(words, words[1:]): #abc, ab
-    for c1, c2 in zip(w1, w2):
-        if c1 != c2:
-            adj[c1].append(c2)
-            degrees[c2] += 1
-            break
-    else: # nobreak
-        if len(w1) > len(w2):
-            return ""   # Triggers since ab should be before abc, not after
-```
-
-## Modulo
-
-```python
-for n in range(-8,8):
-    print n, n//4, n%4
-
- -8 -2 0
- -7 -2 1
- -6 -2 2
- -5 -2 3
-
- -4 -1 0
- -3 -1 1
- -2 -1 2
- -1 -1 3
-
-  0  0 0
-  1  0 1
-  2  0 2
-  3  0 3
-
-  4  1 0
-  5  1 1
-  6  1 2
-  7  1 3
-```
-
-## Any
-
-if any element of the iterable is True
-
-```python
-def any(iterable):
-    for element in iterable:
-        if element:
-            return True
-    return False
-```
-
-## All
-
-```python
-def all(iterable):
-    for element in iterable:
-        if not element:
-            return False
-    return True
-```
-
-## Bisect
-
-- bisect.bisect_left returns the leftmost place in the sorted list to insert the given element
-- bisect.bisect_right returns the rightmost place in the sorted list to insert the given element
-
-```python
-import bisect
-bisect.bisect_left([1,2,3,4,5], 2)  # 1
-bisect.bisect_right([1,2,3,4,5], 2) # 2
-bisect.bisect_left([1,2,3,4,5], 7)  # 5
-bisect.bisect_right([1,2,3,4,5], 7) # 5
-```
-
-Insert x in a in sorted order. This is equivalent to a.insert(bisect.bisect_left(a, x, lo, hi), x) assuming that a is already sorted. Search is binary search O(logn) and insert is O(n)
-
-```python
-import bisect
-l = [1, 3, 7, 5, 6, 4, 9, 8, 2]
-result = []
-for e in l:
-    bisect.insort(result, e)
-print(result) # [1, 2, 3, 4, 5, 6, 7, 8, 9]
-```
-
-```python
-li1 = [1, 3, 4, 4, 4, 6, 7] # [1, 3, 4, 4, 4, 5, 6, 7]
-bisect.insort(li1, 5) #
-```
-
-Bisect can give two ends of a range, if the array is sorted of course
-
-```python
-s = bisect.bisect_left(nums, target)
-e = bisect.bisect(nums, target) -1
-if s <= e:
-    return [s,e]
-else:
-    return [-1,-1]
-```
-
-## Math
-
-Calulate power
-
-```python
-# (a ^ b) % p.
-d = pow(a, b, p)
-```
-
-Division with remainder
-
-```python
-divmod(8, 3) # (2, 2)
-divmod(3, 8) #  (0, 3)
-```
-
-## eval
-
-Evaluates an expression
-
-```python
-x = 1
-print(eval('x + 1'))
-```
-
-## Iter
-
-Creates iterator from container object such as list, tuple, dictionary and set
-
-```python
-mytuple = ("apple", "banana", "cherry")
-myit = iter(mytuple)
-print(next(myit)) # apple
-print(next(myit)) # banana
-```
-
-## Map
-
-map(func, \*iterables)
-
-```python
-my_pets = ['alfred', 'tabitha', 'william', 'arla']
-uppered_pets = list(map(str.upper, my_pets)) # ['ALFRED', 'TABITHA', 'WILLIAM', 'ARLA']
-my_strings = ['a', 'b', 'c', 'd', 'e']
-my_numbers = [1,2,3,4,5]
-results = list(map(lambda x, y: (x, y), my_strings, my_numbers)) # [('a', 1), ('b', 2), ('c', 3), ('d', 4), ('e', 5)]
-```
-
-```python
-A1 = [1, 4, 9]
-''.join(map(str, A1))
-```
-
-## Filter
-
-filter(func, iterable)
-
-```python
-scores = [66, 90, 68, 59, 76, 60, 88, 74, 81, 65]
-over_75 = list(filter(lambda x: x>75, scores)) # [90, 76, 88, 81]
-```
-
-```python
-scores = [66, 90, 68, 59, 76, 60, 88, 74, 81, 65]
-def is_A_student(score):
-    return score > 75
-over_75 = list(filter(is_A_student, scores)) # [90, 76, 88, 81]
-```
-
-```python
-dromes = ("demigod", "rewire", "madam", "freer", "anutforajaroftuna", "kiosk")
-palindromes = list(filter(lambda word: word == word[::-1], dromes)) # ['madam', 'anutforajaroftuna']
-```
-
-Get degrees == 0 from list
-
-```python
-stk = list(filter(lambda x: degree[x]==0, degree.keys()))
-```
-
-## Reduce
-
-reduce(func, iterable[, initial])
-where initial is optional
-
-```python
-numbers = [3, 4, 6, 9, 34, 12]
-result = reduce(lambda x, y: x+y, numbers) # 68
-result = reduce(lambda x, y: x+y, numbers, 10) #78
-```
-
-## itertools
-
-[itertools.accumulate(iterable[, func]) –> accumulate object](https://www.geeksforgeeks.org/python-itertools-accumulate/)
-
-```python
-import itertools
-data = [3, 4, 6, 2, 1, 9, 0, 7, 5, 8]
-list(itertools.accumulate(data)) # [3, 7, 13, 15, 16, 25, 25, 32, 37, 45]
-list(accumulate(data, max))  # [3, 4, 6, 6, 6, 9, 9, 9, 9, 9]
-cashflows = [1000, -90, -90, -90, -90]  # Amortize a 5% loan of 1000 with 4 annual payments of 90
-list(itertools.accumulate(cashflows, lambda bal, pmt: bal*1.05 + pmt)) [1000, 960.0, 918.0, 873.9000000000001, 827.5950000000001]
-for k,v in groupby("aabbbc")    # group by common letter
-    print(k)                    # a,b,c
-    print(list(v))              # [a,a],[b,b,b],[c,c]
-```
-
-## Regular Expression
-
-RE module allows regular expressions in python
-
-```python
-def removeVowels(self, S: str) -> str:
-    return re.sub('a|e|i|o|u', '', S)
-```
-
-## Types
-
-from typing import List, Set, Dict, Tuple, Optional
-[cheat sheet](https://mypy.readthedocs.io/en/stable/cheat_sheet_py3.html)
-
-## Grids
-
-Useful helpful function
-
-```python
-R = len(grid)
-C = len(grid[0])
-
-def neighbors(r, c):
-    for nr, nc in ((r,c-1), (r,c+1), (r-1, c), (r+1,c)):
-        if 0<=nr<R and 0<=nc<C:
-            yield nr, nc
-
-def dfs(r,c, index):
-    area = 0
-    grid[r][c] = index
-    for x,y in neighbors(r,c):
-        if grid[x][y] == 1:
-            area += dfs(x,y, index)
-    return area + 1
-```
-
-# Collections
-
-Stack with appendleft() and popleft()
-
-## Deque
-
-```python
-from collections import deque
-deq = deque([1, 2, 3])
-deq.appendleft(5)
-deq.append(6)
-deq
-deque([5, 1, 2, 3, 6])
-deq.popleft()
-5
-deq.pop()
-6
-deq
-deque([1, 2, 3])
-```
-
-## Counter
-
-```python
-from collections import Counter
-count = Counter("hello") # Counter({'h': 1, 'e': 1, 'l': 2, 'o': 1})
-count['l'] # 2
-count['l'] += 1
-count['l'] # 3
-```
-
-Get counter k most common in list of tuples
-
-```python
-# [1,1,1,2,2,3]
-# Counter  [(1, 3), (2, 2)]
-def topKFrequent(self, nums: List[int], k: int) -> List[int]:
-    if len(nums) == k:
-        return nums
-    return [n[0] for n in Counter(nums).most_common(k)] # [1,2]
-```
-
-elements() lets you walk through each number in the Counter
-
-```python
-def intersect(self, nums1: List[int], nums2: List[int]) -> List[int]:
-    c1 = collections.Counter(nums1) # [1,2,2,1]
-    c2 = collections.Counter(nums2) # [2,2]
-    dif = c1 & c2                   # {2:2}
-    return list(dif.elements())     # [2,2]
-```
-
-operators work on Counter
-
-```python
-c = Counter(a=3, b=1)
-d = Counter(a=1, b=2)
-c + d # {'a': 4, 'b': 3}
-c - d # {'a': 2}
-c & d # {'a': 1, 'b': 1}
-c | d # {'a': 3, 'b': 2}
-c = Counter(a=2, b=-4)
-+c # {'a': 2}
--c # {'b': 4}
-```
-
-## Default Dict
-
-```python
-d={}
-print(d['Grapes'])# This gives Key Error
-from collections import defaultdict
-d = defaultdict(int) # set default
-print(d['Grapes']) # 0, no key error
-d = collections.defaultdict(lambda: 1)
-print(d['Grapes']) # 1, no key error
-```
-
-```python
-from collections import defaultdict
-dd = defaultdict(list)
-dd['key'].append(1) # defaultdict(<class 'list'>, {'key': [1]})
-dd['key'].append(2) # defaultdict(<class 'list'>, {'key': [1, 2]})
-```
-
-# Algorithms
-
-## General Tips
-
-- Get all info
-- Debug example, is it a special case?
-- Brute Force
-  - Get to brute-force solution as soon as possible. State runtime and then optimize, don't code yet
-- Optimize
-  - Look for unused info
-  - Solve it manually on example, then reverse engineer thought process
-  - Space vs time, hashing
-  - BUDS (Bottlenecks, Unnecessary work, Duplication)
-- Walk through approach
-- Code
-- Test
-  - Start small
-  - Hit edge cases
-
-## Binary Search
-
-```python
-def firstBadVersion(self, n):
-    l, r = 0, n
-    while l < r:
-        m = l + (r-l) // 2
-        if isBadVersion(m):
-            r = m
-        else:
-            l = m + 1
-    return l
-```
-
-```python
-"""
-12345678
-FFTTTTTT
-"""
-def mySqrt(self, x: int) -> int:
-  def condition(value, x) -> bool:
-    return value * value > x
-
-  if x == 1:
-    return 1
-
-  left, right = 1, x
-  while left < right:
-    mid = left + (right-left) // 2
-    if condition(mid, x):
-      right = mid
-    else:
-      left = mid + 1
-
-  return left - 1
-```
-
-[binary search](https://leetcode.com/discuss/general-discussion/786126/python-powerful-ultimate-binary-search-template-solved-many-problems)
-
-## Binary Search Tree
-
-Use values to detect if number is missing
-
-```python
-def isCompleteTree(self, root: TreeNode) -> bool:
-    self.total = 0
-    self.mx = float('-inf')
-    def dfs(node, cnt):
-        if node:
-            self.total += 1
-            self.mx = max(self.mx, cnt)
-            dfs(node.left, (cnt*2))
-            dfs(node.right, (cnt*2)+1)
-    dfs(root, 1)
-    return self.total == self.mx
-```
-
-Get a range sum of values
-
-```python
-def rangeSumBST(self, root: TreeNode, L: int, R: int) -> int:
-    self.total = 0
-    def helper(node):
-        if node is None:
-            return 0
-        if L <= node.val <= R:
-            self.total += node.val
-        if node.val > L:
-            left = helper(node.left)
-        if node.val < R:
-            right = helper(node.right)
-    helper(root)
-    return self.total
-```
-
-Check if valid
-
-```python
-def isValidBST(self, root: TreeNode) -> bool:
-    if not root:
-        return True
-    stk = [(root, float(-inf), float(inf))]
-    while stk:
-        node, floor, ceil = stk.pop()
-        if node:
-            if node.val >= ceil or node.val <= floor:
-                return False
-            stk.append((node.right, node.val, ceil))
-            stk.append((node.left, floor, node.val))
-    return True
-```
-
-## Topological Sort
-
-[Kahn's algorithm](https://www.geeksforgeeks.org/all-topological-sorts-of-a-directed-acyclic-graph/), detects cycles through degrees and needs all the nodes represented to work
-
-1. Initialize vertices as unvisited
-1. Pick vertex with zero indegree, append to result, decrease indegree of neighbors
-1. Now repeat for neighbors, resulting list is sorted by source -> dest
-
-If cycle, then degree of nodes in cycle will not be 0 since there
-is no origin
-
-```python
-def canFinish(self, numCourses: int, prerequisites: List[List[int]]) -> bool:
-    # Kahns algorithm, topological sort
-    adj = collections.defaultdict(list)
-    degree = collections.Counter()
-
-    for dest, orig in prerequisites:
-        adj[orig].append(dest)
-        degree[dest] += 1
-
-    bfs = [c for c in range(numCourses) if degree[c] == 0]
-
-    for o in bfs:
-        for d in adj[o]:
-            degree[d] -= 1
-            if degree[d] == 0:
-                bfs.append(d)
-
-    return len(bfs) == numCourses
-```
-
-```python
-def alienOrder(self, words: List[str]) -> str:
-    nodes = set("".join(words))
-    adj = collections.defaultdict(list)
-    degree = collections.Counter(nodes)
-
-    for w1, w2 in zip(words, words[1:]):
-        for c1, c2 in zip(w1, w2):
-            if c1 != c2:
-                adj[c1].append(c2)
-                degree[c2] += 1
-                break
-        else:
-            if len(w1) > len(w2):
-                return ""
-
-    stk = list(filter(lambda x: degree[x]==1, degree.keys()))
-
-    ans = []
-    while stk:
-        node = stk.pop()
-        ans.append(node)
-        for nei in adj[node]:
-            degree[nei] -= 1
-            if degree[nei] == 1:
-                stk.append(nei)
-
-    return "".join(ans) * (set(ans) == nodes)
-```
-
-## Sliding Window
-
-1. Have a counter or hash-map to count specific array input and keep on increasing the window toward right using outer loop.
-1. Have a while loop inside to reduce the window side by sliding toward right. Movement will be based on constraints of problem.
-1. Store the current maximum window size or minimum window size or number of windows based on problem requirement.
-
-### Typical Problem Clues:
-
-1. Get min/max/number of satisfied sub arrays
-1. Return length of the subarray with max sum/product
-1. Return max/min length/number of subarrays whose sum/product equals K
-
-Can require [2 or 3 pointers to solve](https://medium.com/algorithms-and-leetcode/magic-solution-to-leetcode-problems-sliding-window-algorithm-891e3d60bf89)
-
-```python
-    def slidingWindowTemplate(self, s: str):
-        #init a collection or int value to save the result according the question.
-        rtn = []
-
-        # create a hashmap to save the Characters of the target substring.
-        # (K, V) = (Character, Frequence of the Characters)
-        hm = {}
-
-        # maintain a counter to check whether match the target string as needed
-        cnt = collections.Counter(s)
-
-        # Two Pointers: begin - left pointer of the window; end - right pointer of the window if needed
-        l = r = 0
-
-        # loop at the begining of the source string
-        for r, c in enumerate(s):
-
-            if c in hm:
-                l = max(hm[c]+1, l) # +/- 1 or set l to index, max = never move l left
-
-            # update hm
-            hm[c] = r
-
-            # increase l pointer to make it invalid/valid again
-            while cnt == 0: # counter condition
-                cnt[c] += 1  # modify counter if needed
-
-            # Save result / update min/max after loop is valid
-            rtn = max(rtn, r-l+1)
-
-        return rtn
-```
-
-```python
-def fruits_into_baskets(fruits):
-  maxCount, j = 0, 0
-  ht = {}
-
-  for i, c in enumerate(fruits):
-    if c in ht:
-      ht[c] += 1
-    else:
-      ht[c] = 1
-
-    if len(ht) <= 2:
-      maxCount = max(maxCount, i-j+1)
-    else:
-      jc = fruits[j]
-      ht[jc] -= 1
-      if ht[jc] <= 0:
-        del ht[jc]
-      j += 1
-
-  return maxCount
-```
-
-## Greedy
-
-Make the optimal [choice](https://brilliant.org/wiki/greedy-algorithm/) at each step.
-
-[Increasing Triplet Subsequence](https://leetcode.com/problems/increasing-triplet-subsequence/), true if i < j < k
-
-```python
-def increasingTriplet(self, nums: List[int]) -> bool:
-    l = m = float('inf')
-
-    for n in nums:
-        if n <= l:
-            l = n
-        elif n <= m:
-            m = n
-        else:
-            return True
-
-    return False
-```
-
-## Tree Tricks
-
-Bottom up solution with arguments for min, max
-
-```python
-def maxAncestorDiff(self, root: TreeNode) -> int:
-    if not root:
-        return 0
-    self.ans = 0
-    def dfs(node, minval, maxval):
-        if not node:
-            self.ans = max(self.ans, abs(maxval - minval))
-            return
-        dfs(node.left, min(node.val, minval), max(node.val, maxval))
-        dfs(node.right, min(node.val, minval), max(node.val, maxval))
-    dfs(root, float('inf'), float('-inf'))
-    return self.ans
-```
-
-Building a path through a tree
-
-```python
-def binaryTreePaths(self, root: TreeNode) -> List[str]:
-    rtn = []
-    if root is None: return []
-    stk = [(root, str(root.val))]
-    while stk:
-        node, path = stk.pop()
-        if node.left is None and node.right is None:
-            rtn.append(path)
-        if node.left:
-            stk.append((node.left, path + "->" + str(node.left.val)))
-        if node.right:
-            stk.append((node.right, path + "->" + str(node.right.val)))
-    return rtn
-```
-
-Using return value to sum
-
-```python
-def diameterOfBinaryTree(self, root: TreeNode) -> int:
-    self.mx = 0
-    def dfs(node):
-        if node:
-            l = dfs(node.left)
-            r = dfs(node.right)
-            total = l + r
-            self.mx = max(self.mx, total)
-            return max(l, r) + 1
-        else:
-            return 0
-    dfs(root)
-    return self.mx
-```
-
-Change Tree to Graph
-
-```python
-def distanceK(self, root: TreeNode, target: TreeNode, K: int) -> List[int]:
-    adj = collections.defaultdict(list)
-
-    def dfsa(node):
-        if node.left:
-            adj[node].append(node.left)
-            adj[node.left].append(node)
-            dfsa(node.left)
-        if node.right:
-            adj[node].append(node.right)
-            adj[node.right].append(node)
-            dfsa(node.right)
-
-    dfsa(root)
-
-    def dfs(node, prev, d):
-        if node:
-            if d == K:
-                rtn.append(node.val)
-            else:
-                for nei in adj[node]:
-                    if nei != prev:
-                        dfs(nei, node, d+1)
-
-    rtn = []
-    dfs(target, None, 0)
-    return rtn
-```
-
-## Anagrams
-
-Subsection of sliding window, solve with Counter Dict
-
-i.e.
-abc = bca != eba
-111 111 111
-
-```python
+from collections import deque, Counter, defaultdict, namedtuple
+d = deque([1,2,3])  
+d.appendleft(0)  
+d.pop() # 3, pops from right end
+
+words = ["apple","banana","apple","orange","banana","apple"]
+cnt = Counter(words)
+print(cnt)  # Counter({'apple':3, 'banana':2, 'orange':1})
+print(cnt.most_common(1))  # [('apple', 3)]
+
+d = defaultdict(list)
+dd['a'].append(1)
+dd['b'].append(2)
+print(dd)  # {'a':[1], 'b':[2]}
+
+Point = namedtuple('Point', ['x','y'])
+p = Point(10, 20)
+print(p.x, p.y)  # 10 20
+
+# real-life use case: To find if given str is an anagram using counter dict
 def isAnagram(self, s: str, t: str) -> bool:
     sc = collections.Counter(s)
     st = collections.Counter(t)
@@ -1608,742 +1607,81 @@ def isAnagram(self, s: str, t: str) -> bool:
     return True
 ```
 
-Sliding Window version (substring)
+The `collections` module also includes `OrderedDict` (ordered dict, though regular `dict` is ordered by default now), `ChainMap`, `UserDict`, etc. In summary, it implements “specialized container datatypes” beyond the built-ins.
 
+
+## Section 8: Essential Third-Party Libraries
+### NumPy
+NumPy provides the powerful `ndarray` for numerical computing. An `ndarray` is a multi-dimensional, homogeneous array of fixed-size items. You work with NumPy by importing it, usually as `import numpy as np`. Example:
 ```python
-def findAnagrams(self, s: str, p: str) -> List[int]:
-    cntP = collections.Counter(p)
-    cntS = collections.Counter()
-    P = len(p)
-    S = len(s)
-    if P > S:
-        return []
-    ans = []
-    for i, c in enumerate(s):
-        cntS[c] += 1
-        if i >= P:
-            if cntS[s[i-P]] > 1:
-                cntS[s[i-P]] -= 1
-            else:
-                del cntS[s[i-P]]
-        if cntS == cntP:
-            ans.append(i-(P-1))
-    return ans
+import numpy as np
+a = np.array([1,2,3])             # 1D array
+b = np.array([[1,2,3],[4,5,6]])   # 2D array
+print(a + 5)                      # elementwise add -> [6 7 8]
+print(b.shape)                    # (2,3)
+c = np.zeros((2,2))               # 2x2 array of zeros
+d = np.arange(5)                  # [0 1 2 3 4]
+```
+NumPy arrays support vectorized operations: adding, multiplying arrays does elementwise math without Python loops. Common functions include `np.mean`, `np.sum`, `np.dot` (or `@` operator for matrix multiplication), and linear algebra routines. NumPy excels at numerical computations and is the basis for many scientific Python libraries. Broadcasting rules allow combining arrays of different shapes in arithmetic.
+
+##### **Advanced Array Manipulation**
+1. **Reshaping and Transposing:**
+    - `reshape(shape)`: Returns an array with a new shape without changing its data. The new shape must be compatible with the original size.
+    - `.T` / `transpose()`: Reverses the dimensions of an array.
+2. **Joining and Splitting:**
+    - `np.concatenate((a1, a2,...), axis=0)`: Joins a sequence of arrays along an existing axis.
+    - `np.vstack(tup)` and `np.hstack(tup)`: Stack arrays vertically (row-wise) and horizontally (column-wise), respectively.
+    - `np.split(ary, indices_or_sections, axis=0)`: Splits an array into multiple sub-arrays.
+3. **Adding and Removing Elements:**
+    - `np.append(arr, values, axis=None)`: Appends values to the end of an array. Note: this returns a _new_ array, as NumPy arrays have a fixed size.
+    - `np.insert(arr, obj, values, axis=None)`: Inserts values along a given axis before given indices.
+    - `np.delete(arr, obj, axis=None)`: Returns a new array with sub-arrays along an axis deleted.
+
+**Vectorization and Performance**
+Vectorization is the practice of replacing explicit `for` loops with array expressions. This is the core of efficient NumPy programming.
+- **Boolean Indexing (Masking):** Using a Boolean array to select or modify elements. This is a highly efficient filtering technique.
+- `np.where()`: A vectorized equivalent of a ternary `if/else` expression.
+- `np.vectorize()`: A convenience function for applying a scalar Python function to arrays. This function is primarily for convenience and does _not_ provide performance benefits, as it internally uses a Python loop. For performance, rewrite the function using native NumPy operations.
+
+### Pandas
+Pandas is a popular library for data analysis. Its primary data structures are **Series** and **DataFrame**. A _Series_ is a 1D labeled array, and a _DataFrame_ is a 2D labeled table (like a spreadsheet).
+```python
+import pandas as pd
+# Create a DataFrame from a dict of lists
+df = pd.DataFrame({'col1': [1,2,3], 'col2': [4,5,6]})
+print(df)
+#    col1  col2
+# 0     1     4
+# 1     2     5
+# 2     3     6
+
+# Create a Series with custom index
+s = pd.Series([10, 20, 30], index=['a','b','c'])
+print(s)
+# a    10
+# b    20
+# c    30
+# dtype: int64
 ```
 
-## Dynamic Programming
-
-1. [dynamic programming](https://leetcode.com/discuss/general-discussion/458695/Dynamic-Programming-Patterns)
-
-```python
-def coinChange(self, coins: List[int], amount: int) -> int:
-  MAX = float('inf')
-  dp =  [MAX] * (amount + 1)
-  dp[0] = 0
-  for c in coins:
-    for a in range(c, amount+1):
-      dp[a] =  min(dp[a], dp[a-c]+1)
-  return dp[amount] if dp[amount] != MAX else -1
-```
-
-Classic DP grid, longest common subsequence
-
-```python
-def longestCommonSubsequence(self, text1: str, text2: str) -> int:
-    Y = len(text2)+1
-    X = len(text1)+1
-    dp = [[0] * Y for _ in range(X)]
-    # [[0,0,0,0],[0,0,0,0],[0,0,0,0],[0,0,0,0],[0,0,0,0],[0,0,0,0]]
-    for i, c in enumerate(text1):
-        for j, d in enumerate(text2):
-            if c == d:
-                dp[i + 1][j + 1] = 1 + dp[i][j]
-            else:
-                dp[i + 1][j + 1] = max(dp[i][j + 1], dp[i + 1][j])
-    return dp[-1][-1]
-# [[0,0,0,0],[0,1,1,1],[0,1,1,1],[0,1,2,2],[0,1,2,2],[0,1,2,3]]
-# abcde
-# "ace"
-```
-
-## Cyclic Sort
-
-1. Useful algo when sorting in place
-
-```python
-# if my number is equal to my index, i+1
-# if my number is equal to this other number, i+1 (dups)
-# else swap
-def cyclic_sort(nums):
-  i = 0
-  while i < len(nums):
-    j = nums[i] - 1
-    if nums[i] != nums[j]:
-      nums[i], nums[j] = nums[j], nums[i]
-    else:
-      i += 1
-  return nums
-```
-
-## Quick Sort
-
-1. Can be modified for divide in conquer problems
-
-```python
-def quickSort(array):
-	def sort(arr, l, r):
-		if l < r:
-			p = part(arr, l, r)
-			sort(arr, l, p-1)
-			sort(arr, p+1, r)
-
-	def part(arr, l, r):
-		pivot = arr[r]
-		a = l
-		for i in range(l,r):
-			if arr[i] < pivot:
-				arr[i], arr[a] = arr[a], arr[i]
-				a += 1
-		arr[r], arr[a] = arr[a], arr[r]
-		return a
-
-	sort(array, 0, len(array)-1)
-	return array
-```
-
-## Merge Sort
-
-```python
-from collections import deque
-def mergeSort(array):
-    def sortArray(nums):
-        if len(nums) > 1:
-            mid = len(nums)//2
-            l1 = sortArray(nums[:mid])
-            l2 = sortArray(nums[mid:])
-            nums = sort(l1,l2)
-        return nums
-
-    def sort(l1,l2):
-        result = []
-        l1 = deque(l1)
-        l2 = deque(l2)
-        while l1 and l2:
-            if l1[0] <= l2[0]:
-                result.append(l1.popleft())
-            else:
-                result.append(l2.popleft())
-        result.extend(l1 or l2)
-        return result
-	return sortArray(array)
-```
-
-## Merge Arrays
-
-Merge K sorted Arrays with a heap
-
-```python
-def mergeSortedArrays(self, arrays):
-    return list(heapq.merge(*arrays))
-```
-
-Or manually with heappush/heappop.
-
-```python
-class Solution:
-def mergeSortedArrays(self, arrays):
-    pq = []
-    for i, arr in enumerate(arrays):
-        pq.append((arr[0], i, 0))
-    heapify(pq)
-
-    res = []
-    while pq:
-        num, i, j = heappop(pq)
-        res.append(num)
-        if j + 1 < len(arrays[i]):
-            heappush(pq, (arrays[i][j + 1], i, j + 1))
-    return res
-```
-
-Merging K Sorted Lists
-
-```python
-def mergeKLists(self, lists: List[ListNode]) -> ListNode:
-    prehead = ListNode()
-    heap = []
-    for i in range(len(lists)):
-        node = lists[i]
-        while node:
-            heapq.heappush(heap, node.val)
-            node = node.next
-    node = prehead
-    while len(heap) > 0:
-        val = heapq.heappop(heap)
-        node.next = ListNode()
-        node = node.next
-        node.val = val
-    return prehead.next
-```
-
-## Linked List
-
-1. Solutions typically require 3 pointers: current, previous and next
-1. Solutions are usually made simplier with a prehead or dummy head node you create and then add to. Then return dummy.next
-
-Reverse:
-
-```python
-def reverseLinkedList(head):
-    prev, node  = None, head
-    while node:
-        node.next, prev, node = prev, node, node.next
-    return prev
-```
-
-Reversing is easier if you can modify the values of the list
-
-```python
-def reverse(head):
-  node = head
-  stk = []
-  while node:
-    if node.data % 2 == 0:
-      stk.append(node)
-    if node.data % 2 == 1 or node.next is None:
-      while len(stk) > 1:
-        stk[-1].data, stk[0].data = stk[0].data, stk[-1].data
-        stk.pop(0)
-        stk.pop(-1)
-      stk.clear()
-    node = node.next
-  return head
-```
-
-Merge:
-
-```python
-def mergeTwoLists(self, l1: ListNode, l2: ListNode) -> ListNode:
-    dummy = ListNode(-1)
-
-    prev = dummy
-
-    while l1 and l2:
-        if l1.val < l2.val:
-            prev.next = l1
-            l1 = l1.next
-        else:
-            prev.next = l2
-            l2 = l2.next
-        prev = prev.next
-
-    prev.next = l1 if l1 is not None else l2
-
-    return dummy.next
-```
-
-## Convert Base
-
-1. Typically two steps. A digit modulo step and a integer division step by the next base then reverse the result or use a deque()
-
-Base 10 to 16, or any base by changing '16' and index
-
-```python
-def toHex(self, num: int) -> str:
-  rtn = []
-  index = "0123456789abcdef"
-  if num == 0: return '0'
-  if num < 0: num += 2 ** 32
-  while num > 0:
-    digit = num % 16
-    rtn.append(index[digit])
-    num = num // 16
-  return "".join(rtn[::-1])
-```
-
-## Parenthesis
-
-1. Count can be used if simple case, otherwise stack. [Basic Calculator](#basic-calculator) is an extension of this algo
-
-```python
-def isValid(self, s) -> bool:
-  cnt = 0
-  for c in s:
-    if c == '(':
-      cnt += 1
-    elif c == ')':
-      cnt -= 1
-      if cnt < 0:
-        return False
-  return cnt == 0
-```
-
-Stack can be used if more complex
-
-```python
-def isValid(self, s: str) -> bool:
-  stk = []
-  mp = {")":"(", "}":"{", "]":"["}
-    for c in s:
-      if c in mp.values():
-        stk.append(c)
-      elif c in mp.keys():
-        test = stk.pop() if stk else '#'
-        if mp[c] != test:
-          return False
-  return len(stk) == 0
-```
-
-Or must store parenthesis index for further modification
-
-```python
-def minRemoveToMakeValid(self, s: str) -> str:
-  rtn = list(s)
-  stk = []
-  for i, c in enumerate(s):
-    if c == '(':
-      stk.append(i)
-    elif c == ')':
-      if len(stk) > 0:
-        stk.pop()
-      else:
-        rtn[i] = ''
-  while stk:
-    rtn[stk.pop()] = ''
-  return "".join(rtn)
-```
-
-## Max Profit Stock
-
-Infinite Transactions, [base formula](https://leetcode.com/problems/best-time-to-buy-and-sell-stock-with-cooldown/discuss/75924/Most-consistent-ways-of-dealing-with-the-series-of-stock-problems)
-
-```python
-def maxProfit(self, prices: List[int]) -> int:
-    t0, t1 = 0, float('-inf')
-    for p in prices:
-        t0old = t0
-        t0 = max(t0, t1 + p)
-        t1 = max(t1, t0old - p)
-    return t0
-```
-
-Single Transaction, t0 (k-1) = 0
-
-```python
-def maxProfit(self, prices: List[int]) -> int:
-    t0, t1 = 0, float('-inf')
-    for p in prices:
-        t0 = max(t0, t1 + p)
-        t1 = max(t1, - p)
-    return t0
-```
-
-K Transactions
-
-```python
-t0 = [0] * (k+1)
-t1 = [float(-inf)] * (k+1)
-for p in prices:
-    for i in range(k, 0, -1):
-        t0[i] = max(t0[i], t1[i] + p)
-        t1[i] = max(t1[i], t0[i-1] - p)
-return t0[k]
-```
-
-## Shift Array Right
-
-Arrays can be shifted right by reversing the whole string, and then reversing 0,k-1 and k,len(str)
-
-```python
-def rotate(self, nums: List[int], k: int) -> None:
-    def reverse(l, r, nums):
-        while l < r:
-            nums[l], nums[r] = nums[r], nums[l]
-            l += 1
-            r -= 1
-    if len(nums) <= 1: return
-    k = k % len(nums)
-    reverse(0, len(nums)-1, nums)
-    reverse(0, k-1, nums)
-    reverse(k, len(nums)-1, nums)
-```
-
-## Continuous Subarrays with Sum k
-
-The total number of continuous subarrays with sum k can be found by hashing the continuous sum per value and adding the count of continuous sum - k
-
-```python
-def subarraySum(self, nums: List[int], k: int) -> int:
-    mp = {0: 1}
-    rtn, total = 0, 0
-    for n in nums:
-        total += n
-        rtn += mp.get(total - k, 0)
-        mp[total] = mp.get(total, 0) + 1
-    return rtn
-```
-
-## Events
-
-Events pattern can be applied when to many interval problems such as 'Find employee free time between meetings' and 'find peak population' when individual start/ends
-are irrelavent and sum start/end times are more important
-
-```python
-def employeeFreeTime(self, schedule: '[[Interval]]') -> '[Interval]':
-    events = []
-    for e in schedule:
-        for m in e:
-            events.append((m.start, 1))
-            events.append((m.end, -1))
-    events.sort()
-    itv = []
-    prev = None
-    bal = 0
-    for t, c in events:
-        if bal == 0 and prev is not None and t != prev:
-            itv.append(Interval(prev, t))
-        bal += c
-        prev = t
-    return itv
-```
-
-## Merge Meetings
-
-Merging a new meeting into a list
-
-```python
-def insert(self, intervals: List[List[int]], newInterval: List[int]) -> List[List[int]]:
-    bisect.insort(intervals, newInterval)
-    merged = [intervals[0]]
-    for i in intervals:
-        ms, me = merged[-1]
-        s, e = i
-        if me >= s:
-            merged[-1] = (ms, max(me, e))
-        else:
-            merged.append(i)
-    return merged
-```
-
-## Trie
-
-Good for autocomplete, spell checker, IP routing (match longest prefix), predictive text, solving word games
-
-```python
-class Trie:
-    def __init__(self):
-        self.root = {}
-
-    def addWord(self, s: str):
-        tmp = self.root
-        for c in s:
-            if c not in tmp:
-                tmp[c] = {}
-            tmp = tmp[c]
-        tmp['#'] = s # Store full word at '#' to simplify
-
-    def matchPrefix(self, s: str, tmp=None):
-        if not tmp: tmp = self.root
-        for c in s:
-            if c not in tmp:
-                return []
-            tmp = tmp[c]
-
-        rtn = []
-
-        for k in tmp:
-            if k == '#':
-                rtn.append(tmp[k])
-            else:
-                rtn += self.matchPrefix('', tmp[k])
-        return rtn
-
-    def hasWord(self, s: str):
-        tmp = self.root
-        for c in s:
-            if c in tmp:
-                tmp = tmp[c]
-            else:
-                return False
-        return True
-```
-
-Search example with . for wildcards
-
-```python
-def search(self, word: str) -> bool:
-    def searchNode(word, node):
-        for i,c in enumerate(word):
-            if c in node:
-                node = node[c]
-            elif c == '.':
-                return any(searchNode(word[i+1:], node[cn]) for cn in node if cn != '$' )
-            else:
-                return False
-        return '$' in node
-    return searchNode(word, self.trie)
-```
-
-## Kadane
-
-local_maxiumum[i] = max(A[i], A[i] + local_maximum[i-1])
-[Explanation](https://medium.com/@rsinghal757/kadanes-algorithm-dynamic-programming-how-and-why-does-it-work-3fd8849ed73d)
-Determine max subarray sum
-
-```python
-# input: [-2,1,-3,4,-1,2,1,-5,4]
-def maxSubArray(self, nums: List[int]) -> int:
-    for i in range(1, len(nums)):
-        if nums[i-1] > 0:
-            nums[i] += nums[i-1]
-    return max(nums) # max([-2,1,-2,4,3,5,6,1,5]) = 6
-```
-
-## Union Find
-
-[Union Find](https://www.geeksforgeeks.org/union-find/) is a useful algorithm for graph
-
-DSU for integers
-
-```python
-class DSU:
-    def __init__(self, N):
-        self.par = list(range(N))
-
-    def find(self, x): # Find Parent
-        if self.par[x] != x:
-            self.par[x] = self.find(self.par[x])
-        return self.par[x]
-
-    def union(self, x, y):
-        xr, yr = self.find(x), self.find(y)
-        if xr == yr: # If parents are equal, return False
-            return False
-        self.par[yr] = xr # Give y node parent of x
-        return True # return True if union occured
-```
-
-DSU for strings
-
-```python
-class DSU:
-    def __init__(self):
-        self.par = {}
-
-    def find(self, x):
-        if x != self.par.setdefault(x, x):
-            self.par[x] = self.find(self.par[x])
-        return self.par[x]
-
-    def union(self, x, y):
-        xr, yr = self.find(x), self.find(y)
-        if xr == yr: return
-        self.par[yr] = xr
-```
-
-DSU with union by rank
-
-```python
-class DSU:
-    def __init__(self, N):
-        self.par = list(range(N))
-        self.sz = [1] * N
-
-    def find(self, x):
-        if self.par[x] != x:
-            self.par[x] = self.find(self.par[x])
-        return self.par[x]
-
-    def union(self, x, y):
-        xr, yr = self.find(x), self.find(y)
-        if xr == yr:
-            return False
-        if self.sz[xr] < self.sz[yr]:
-            xr, yr = yr, xr
-        self.par[yr] = xr
-        self.sz[xr] += self.sz[yr]
-        return True
-```
-
-## Fast Power
-
-Fast Power, or Exponential by [squaring](https://en.wikipedia.org/wiki/Exponentiation_by_squaring) allows calculating squares in logn time (x^n)*2 = x^(2*n)
-
-```python
-def myPow(self, x: float, n: int) -> float:
-    if n < 0:
-        n *= -1
-        x = 1/x
-    ans = 1
-    while n > 0:
-        if n % 2 == 1:
-            ans = ans * x
-        x *= x
-        n = n // 2
-    return ans
-```
-
-## Fibonacci Golden
-
-Fibonacci can be calulated with [Golden Ratio](https://demonstrations.wolfram.com/GeneralizedFibonacciSequenceAndTheGoldenRatio/)
-
-```python
-def fib(self, N: int) -> int:
-    golden_ratio = (1 + 5 ** 0.5) / 2
-    return int((golden_ratio ** N + 1) / 5 ** 0.5)
-```
-
-## Basic Calculator
-
-A calculator can be simulated with stack
-
-```python
-class Solution:
-    def calculate(self, s: str) -> int:
-        s += '$'
-        def helper(stk, i):
-            sign = '+'
-            num = 0
-            while i < len(s):
-                c = s[i]
-                if c == " ":
-                    i += 1
-                    continue
-                elif c.isdigit():
-                    num = num * 10 + int(c)
-                    i += 1
-                elif c == '(':
-                    num, i = helper([], i+1)
-                else:
-                    if sign == '+':
-                        stk.append(num)
-                    if sign == '-':
-                        stk.append(-num)
-                    if sign == '*':
-                        stk.append(stk.pop() * num)
-                    if sign == '/':
-                        stk.append(int(stk.pop() / num))
-                    i += 1
-                    num = 0
-                    if c == ')':
-                        return sum(stk), i
-                    sign = c
-            return sum(stk)
-        return helper([],0)
-```
-
-## Reverse Polish
-
-```python
-class Solution:
-    def evalRPN(self, tokens: List[str]) -> int:
-        stk = []
-        while tokens:
-            c = tokens.pop(0)
-            if c not in '+-/*':
-                stk.append(int(c))
-            else:
-                a = stk.pop()
-                b = stk.pop()
-                if c == '+':
-                    stk.append(a + b)
-                if c == '-':
-                    stk.append(b-a)
-                if c == '*':
-                    stk.append(a * b)
-                if c == '/':
-                    stk.append(int(b / a))
-        return stk[0]
-```
-
-## Resevior Sampling
-
-Used to sample large unknown populations. Each new item added has a 1/count chance of being selected
-
-```python
-def __init__(self, nums):
-    self.nums = nums
-def pick(self, target):
-    res = None
-    count = 0
-    for i, x in enumerate(self.nums):
-        if x == target:
-            count += 1
-            chance = random.randint(1, count)
-            if chance == 1:
-                res = i
-    return res
-```
-
-## String Subsequence
-
-Can find the min number of subsequences of strings in some source through binary search and a dict of the indexes of the source array
-
-```python
-def shortestWay(self, source: str, target: str) -> int:
-    ref = collections.defaultdict(list)
-    for i,c in enumerate(source):
-        ref[c].append(i)
-
-    ans = 1
-    i = -1
-    for c in target:
-        if c not in ref:
-            return -1
-        offset = ref[c]
-        j = bisect.bisect_left(offset, i)
-        if j == len(offset):
-            ans += 1
-            i = offset[0] + 1
-        else:
-            i = offset[j] + 1
-
-    return ans
-```
-
-## Candy Crush
-
-Removing adjacent duplicates is much more effective with a stack
-
-```python
-def removeDuplicates(self, s: str, k: int) -> str:
-    stk = []
-    for c in s:
-        if stk and stk[-1][0] == c:
-            stk[-1][1] += 1
-            if stk[-1][1] >= k:
-                stk.pop()
-        else:
-            stk.append([c, 1])
-    ans = []
-    for c in stk:
-        ans.extend([c[0]] * c[1])
-    return "".join(ans)
-```
-
-## Dutch Flag
-
-[Dutch National Flag Problem](https://en.wikipedia.org/wiki/Dutch_national_flag_problem) proposed by [Edsger W. Dijkstra](https://en.wikipedia.org/wiki/Edsger_W._Dijkstra)
-
-```python
-def sortColors(self, nums: List[int]) -> None:
-    """
-    Do not return anything, modify nums in-place instead.
-    """
-    # for all idx < p0 : nums[idx < p0] = 0
-    # curr is an index of element under consideration
-    p0 = curr = 0
-    # for all idx > p2 : nums[idx > p2] = 2
-    p2 = len(nums) - 1
-
-    while curr <= p2:
-        if nums[curr] == 0:
-            nums[p0], nums[curr] = nums[curr], nums[p0]
-            p0 += 1
-            curr += 1
-        elif nums[curr] == 2:
-            nums[curr], nums[p2] = nums[p2], nums[curr]
-            p2 -= 1
-        else:
-            curr += 1
-```
+Pandas offers many powerful operations: reading data from CSV/JSON/SQL (`pd.read_csv`, etc.), grouping, merging, statistics, handling missing data, and time series functionality. The DataFrame aligns on row/column labels for arithmetic and handles heterogeneous column types. Pandas objects have methods like `.head()`, `.describe()`, `.mean()`, etc., for quick insights.
+
+DataFrame is described as “two-dimensional, size-mutable, potentially heterogeneous tabular data [with] labeled axes”. It is the primary Pandas structure, analogous to a table or Excel spreadsheet.
+
+**Advanced Indexing (`.loc`, `.iloc`, Boolean Indexing)**
+Pandas offers powerful and explicit indexing methods to select subsets of data.
+- **`.loc` (Label-based):** Selects data based on index labels. Slices are _inclusive_ of the endpoint.
+- **`.iloc` (Integer-based):** Selects data based on 0-indexed integer positions. Slices are _exclusive_ of the endpoint, following standard Python slicing.
+- **Boolean Indexing (Masking):** Creates a boolean `Series` from a condition and uses it to filter a `DataFrame`. Multiple conditions must be combined with `&` (and) or `|` (or), with each condition wrapped in parentheses.
+
+**Advanced GroupBy and Aggregation**
+The `groupby` operation enables the powerful "split-apply-combine" strategy for data analysis.
+- **Aggregation (`.agg()`):** Applies one or more aggregation functions to each group. It supports named aggregations for cleaner output.
+- **Transformation (`.transform()`):** Performs a group-wise computation and broadcasts the result back to the original `DataFrame`'s shape. This is ideal for creating new features based on group properties, such as a group-wise z-score.
+- **Filtering (`.filter()`):** Subsets the `DataFrame` by keeping only groups that satisfy a Boolean condition.
+
+**Combining DataFrames (`merge`, `join`, `concat`)**
+Pandas provides several functions for combining `DataFrame` objects.
+- **`pd.concat()`:** Stacks DataFrames vertically (`axis=0`) or horizontally (`axis=1`). It aligns data based on the index.
+- **`pd.merge()`:** The most flexible function for SQL-style joins on common columns or indices. The `how` parameter specifies the join type (`'inner'`, `'left'`, `'right'`, `'outer'`).
+- **`.join()`:** A convenience method for merging `DataFrame`s based on their indices. It is equivalent to using `pd.merge` with `left_index=True` and/or `right_index=True`.
