@@ -123,7 +123,6 @@ You can use `break` to exit a loop early, and `continue` to skip to the next
 **Advanced Loops** (`for...else`, `while...else`)
 The `else` block in a loop executes only if the loop terminates normally (i.e., not via a `break` statement). This can be useful for search operations.
 
-
 **Pattern Matching**: Python 3.10 introduced `match`/`case` for structural pattern matching, similar to a switch/case but more powerful. This allows matching on types, shapes of data (like sequences or class instances), etc. Example:
 ```python
 match value:
@@ -144,7 +143,7 @@ squares = {x: x*x for x in range(5)}          # dict {0:0, 1:1, 2:4, 3:9, 4:16}
 ```
 
 ## Section 2: Built-In Data Structures in Python
-Python provides several powerful **built-in data structures** to store, manipulate, and manage data efficiently. They are **Lists**, **Tuples**, **Dictionaries**, **Sets**, and **Strings**.
+Python provides several powerful built-in data structures to store, manipulate, and manage data efficiently. They are **Lists**, **Tuples**, **Dictionaries**, **Sets**, and **Strings**.
 
 ### 1. Lists
 Lists are **ordered**, **mutable**, and can contain **heterogeneous** elements. A **list** in Python is one of the most versatile and commonly used data structures. It is an **ordered**, **mutable**, and **dynamic** collection that can hold elements of **different data types**, including other lists or objects. Lists allow for **index-based access**, meaning each element can be accessed or modified directly using its position (index).  
@@ -236,9 +235,8 @@ print(nums[::-1])    # [50, 40, 30, 20, 10] (reversed list)
 | `sort()`           | Sorts the items of the list **in-place**.                                                             | `L.sort()`         |
 | `reverse()`        | Reverses the elements of the list **in-place**.                                                       | `L.reverse()`      |
 | `copy()`           | Returns a _shallow copy_ of the list.                                                                 | `new_L = L.copy()` |
-|                    |                                                                                                       |                    |
 
-Example Usage:
+##### Example Usage:
 ```python
 nums = [4, 2, 9, 1]
 nums.sort()
@@ -323,7 +321,7 @@ All the list methods except the ones that try to mutate the list are also availa
 | `count(x)` | Returns the number of times `x` appears in the tuple.             | `t.count('a')`  |
 | `index(x)` | Returns the 0-based index of the _first_ item whose value is `x`. | `t.index(3.14)` |
 
-Example Usage
+##### Example Usage
 ```python
 t = (1, 2, 2, 3)
 print(t.count(2))  # 2
@@ -371,7 +369,7 @@ Python 3.7+ preserves insertion order, meaning items retain the order they were 
 | `clear()`                  | Removes all items from the dictionary.                                                                                                        | `my_dict.clear()`                  |
 | `copy()`                   | Returns a _shallow copy_ of the dictionary.                                                                                                   | `new_d = my_dict.copy()`           |
 | `fromkeys(seq, v)`         | Creates a new dictionary with keys from `seq` and all values set to `v` (default `None`).                                                     | `dict.fromkeys(['a', 'b'], 1)`     |
-Example Usage:
+##### Example Usage:
 ```python
 student = {"name": "Bob", "marks": 88}
 student.update({"age": 21})
@@ -428,7 +426,7 @@ Under the hood, sets use a **hash table**, similar to dictionaries, but only sto
 | `isdisjoint(other)`           | Returns `True` if the two sets have no intersection.                          |
 | `copy()`                      | Returns a _shallow copy_ of the set.                                          |
 ##### Set Operations
-Just like mathematical sets, sets in python can perform the common set operation such — union, intersection, diff and symmetric diff.
+Just like mathematical sets, sets in python can perform the common set operation such as: union, intersection, diff and symmetric diff.
 ```python
 a = 3
 st = set()
@@ -453,7 +451,7 @@ print(a ^ b)  # Symmetric difference → {1, 2, 4, 5
 
 ### Strings
 A **string** in Python is an **immutable sequence of Unicode characters**.  
-Strings are one of the most fundamental data types and are heavily used in almost every application — from user input to file processing, web data, and text analytics. Being immutable means that any modification creates a **new string object** — the original string remains unchanged. Python provides a rich set of **string methods** and supports **indexing, slicing, iteration**, and **formatting** with remarkable ease.
+Strings are one of the most fundamental data types and are heavily used in almost every application, from user input to file processing, web data, and text analytics. Being immutable means that any modification creates a **new string object**, the original string remains unchanged. Python provides a rich set of **string methods** and supports **indexing, slicing, iteration**, and **formatting** with remarkable ease.
 
 Internally, strings are stored as arrays of Unicode code points, allowing them to handle multilingual text seamlessly.  
 They can also be encoded into bytes for low-level operations like network transmission or file I/O.
@@ -518,7 +516,7 @@ print(s)  # Jython
 | **Formatting**          | `format(*args, **kwargs)` | Performs a string formatting operation (the "old" way).                        |
 | **Encoding**            | `encode(enc)`             | Encodes the string into a `bytes` object using `enc` (e.g., 'utf-8').          |
 
-Example Usage:
+##### Example Usage:
 ```python
 name = "hatim"
 print(name.capitalize())         # Hatim
@@ -1548,7 +1546,6 @@ sampled = random.sample(data, 3)
 print(sampled)
 ```
 
-
 ### Math
 The `math` module provides access to common mathematical functions and constants, many from the C standard library. Example functions/constants:
 - `math.sqrt(x)` – square root.
@@ -1577,7 +1574,7 @@ The `collections` module provides specialized container datatypes as alternati
 - `defaultdict`: A subclass of `dict` that provides a default value for a nonexistent key, avoiding `KeyError` exceptions. It is initialized with a "default factory" function (e.g., `int`, `list`, `set`) that is called to supply the default value. A `defaultdict(int)` would create missing keys with default `0`, etc.
 - `namedtuple`: A factory function for creating tuple subclasses with named fields. This allows for more readable, self-documenting code, as elements can be accessed by name instead of just by index.
 
-Example Usage:
+##### Example Usage:
 ```python
 from collections import deque, Counter, defaultdict, namedtuple
 d = deque([1,2,3])  

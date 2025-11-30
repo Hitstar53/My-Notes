@@ -212,7 +212,7 @@ Both transitions and animations can bring a UI to life, but understanding their 
 ## Section 3: JavaScript Fundamentals
 A profound understanding of JavaScript's core runtime environment is a non-negotiable prerequisite for senior frontend roles. Interviewers at leading companies frequently test these fundamentals to gauge a candidate's depth of knowledge beyond the frameworks they use. This section deconstructs the essential mechanics of the JavaScript engine.
 
-### The Event Loop: A Visual and Conceptual Deep Dive
+### The Event Loop: A Visual & Conceptual Deep Dive
 JavaScript operates on a single-threaded model, meaning it can only execute one piece of code at a time. The event loop is the fundamental mechanism that enables this single thread to perform non-blocking, asynchronous operations, which is the cornerstone of a responsive user interface. It is the heart of JavaScript's concurrency model.
 
 ![[Pasted image 20250818130821.png]]

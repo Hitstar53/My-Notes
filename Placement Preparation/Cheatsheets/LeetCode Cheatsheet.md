@@ -401,6 +401,9 @@ def find_k_smallest(nums, k):
 #### Core Concept
 Dynamic Programming is a method for solving complex problems by breaking them down into a collection of simpler, overlapping subproblems. The results of these subproblems are stored (memoized or tabulated) to avoid redundant computations. DP is applicable when a problem exhibits two key properties: **optimal substructure** (the optimal solution to the overall problem can be constructed from the optimal solutions of its subproblems) and **overlapping subproblems** (the same subproblems are solved multiple times).
 
+> [!seealso] 
+> For more information on DP, its approaches and common DP patterns refer to this article [[Dynamic Programming]]
+
 #### Common Approaches
 1. **Top-Down with Memoization:** This approach uses recursion to solve the problem from the top (the original problem) down to the base cases. A cache (e.g., a hash map or an array) is used to store the results of subproblems. Before computing a subproblem, the algorithm checks if the result is already in the cache; if so, it returns the cached value. This approach often feels more intuitive as it directly follows the recursive structure of the problem.
     

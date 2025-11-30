@@ -702,7 +702,7 @@ While Docker provides a way to run a container on a single host, Kubernetes (K8s
 ### Infrastructure as Code (IaC) and CI/CD
 DataOps seeks to automate the entire data platform lifecycle, from provisioning the underlying infrastructure to deploying the data pipelines themselves.
 
-#### 1. **Infrastructure as Code (IaC)**
+#### 1. Infrastructure as Code (IaC)
 IaC is the practice of managing and provisioning computer data centers through machine-readable definition files, rather than physical hardware configuration or interactive configuration tools.
 
 **Terraform**: Terraform is the industry-standard tool for building, changing, and versioning infrastructure safely and efficiently. It is cloud-agnostic, meaning you can use it to manage infrastructure on AWS, GCP, Azure, and other platforms with a consistent workflow. You define your desired infrastructure (e.g., "I need an S3 bucket and an EC2 instance with these specifications") in declarative configuration files, and Terraform will figure out how to create, update, or destroy those resources to match your definition.
@@ -723,7 +723,7 @@ resource "aws_s3_bucket" "data_lake_bucket" {
 }
 ```
 
-#### 2. **CI/CD (Continuous Integration / Continuous Deployment)**
+#### 2. CI/CD (Continuous Integration / Continuous Deployment)
 CI/CD is a set of practices that automate the software development lifecycle.
 
 **Continuous Integration (CI)**: Developers frequently merge their code changes into a central repository, after which automated builds and tests are run.
